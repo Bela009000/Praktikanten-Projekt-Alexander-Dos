@@ -1,1 +1,70 @@
-<p>topics works!</p>
+<div class="topics-page">
+
+  <div class="topics-card">
+
+    <div class="header">
+
+      <button
+        class="back-button"
+        routerLink="/dashboard">
+
+        ← Dashboard
+
+      </button>
+
+      <h1>📂 Meine Themen</h1>
+
+      <p>Erstelle und verwalte deine Lern-Themen.</p>
+
+    </div>
+
+    <div class="add-topic-section">
+
+      <input
+        type="text"
+        placeholder="Neues Thema eingeben..."
+        [(ngModel)]="topicName">
+
+      <button
+        class="add-button"
+        (click)="addTopic()">
+
+        Thema hinzufügen
+
+      </button>
+
+    </div>
+
+    <div class="topics-list">
+
+      @for(topic of topics; track topic; let i = $index){
+
+      <div class="topic-item">
+
+        <div class="topic-info">
+
+          <span class="topic-icon">📘</span>
+
+          <span class="topic-name">
+            {{ topic }}
+          </span>
+
+        </div>
+
+        <button
+          class="delete-button"
+          (click)="deleteTopic(i)">
+
+          Löschen
+
+        </button>
+
+      </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>

@@ -29,6 +29,7 @@ export class LoginComponent {
     if (this.username === savedUsername && this.password === savedPassword) {
       this.errorMessage = '';
       this.isLoggedIn = true;
+      localStorage.setItem('loginSuccess', 'true');
       this.router.navigate(['/dashboard']);
       return;
     }
@@ -42,6 +43,7 @@ export class LoginComponent {
     this.username = '';
     this.password = '';
     this.errorMessage = '';
+    localStorage.removeItem('loginSuccess');
     this.router.navigate(['/login']);
   }
 }
