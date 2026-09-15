@@ -1,0 +1,51 @@
+@if(!isLoggedIn){
+
+<div class="login-container">
+  <div class="login-card">
+
+    <h1>Lernkarten App</h1>
+
+    <input
+      type="text"
+      placeholder="Benutzername"
+      [(ngModel)]="username">
+
+    <input
+      type="password"
+      placeholder="Passwort"
+      [(ngModel)]="password">
+
+    <p class="error">
+      {{ errorMessage }}
+    </p>
+
+    <button (click)="login()">
+      Login
+    </button>
+
+    <p>Noch kein Konto?</p>
+
+    <a href="/register">
+      <button>
+        Registrieren
+      </button>
+    </a>
+
+  </div>
+</div>
+
+}
+
+@else {
+
+<div class="dashboard">
+
+  <h1>Willkommen {{ username }}!</h1>
+
+  <button (click)="logout()">
+    Abmelden
+  </button>
+
+</div>
+
+}
