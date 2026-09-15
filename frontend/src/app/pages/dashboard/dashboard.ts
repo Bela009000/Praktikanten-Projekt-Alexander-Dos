@@ -10,26 +10,44 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class DashboardComponent {
 
+  topicCount: number = 0;
+
+  flashcardCount: number = 0;
+
+  quizSuccess: number = 0;
+
   successMessage: string = '';
 
   constructor(private router: Router) {
 
-    const loginSuccess =
-      localStorage.getItem('loginSuccess');
+    const currentUser =
+      localStorage.getItem('currentUser');
 
-    if (loginSuccess) {
+    const savedTopics =
+      localStorage.getItem(
+        `topics_${currentUser}`
+      );
 
-      this.successMessage =
-        '✅ Login erfolgreich!';
+    if(savedTopics){
 
-      localStorage.removeItem('loginSuccess');
+      this.topicCount =
+        JSON.parse(savedTopics).length;
+
     }
+
   }
 
   logout() {
 
-    this.router.navigate(['/login']);
+    localStorage.removeItem(
+      'currentUser'
+    );
+
+    this.router.navigate([
+      '/login'
+    ]);
 
   }
+
 }
 

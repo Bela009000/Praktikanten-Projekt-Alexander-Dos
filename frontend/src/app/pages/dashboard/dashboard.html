@@ -1,41 +1,171 @@
-<div class="dashboard-container">
+<div class="dashboard-page">
 
-    <div class="dashboard-card">
+    <nav class="navbar">
 
-        <p>{{ successMessage }}</p>
+        <div class="logo">
 
-        <h1>Alexander seine Lernkarten App</h1>
+            <span class="material-icons">
+                auto_stories
+            </span>
 
-        <p>Willkommen in deiner persönlichen Lernumgebung die von mir entwickelt wurde (Alexander)</p>
-
-        <div class="button-container">
-
-            <button routerLink="/topics">
-                📂 Meine Themen
-            </button>
-
-            <button>
-                ➕ Neue Karteikarten
-            </button>
-
-            <button>
-                🎓 Lernmodus
-            </button>
-
-            <button>
-                📝 Quiz
-            </button>
-
-            <button
-                class="logout-button"
-                (click)="logout()">
-
-                🚪 Abmelden
-            </button>
-            
+            <span>
+                Lernkarten App
+            </span>
 
         </div>
 
-    </div>
+        <div class="nav-links">
+
+            <a routerLink="/dashboard">
+
+                <span class="material-icons">
+                    dashboard
+                </span>
+
+                Dashboard
+
+            </a>
+
+            <a routerLink="/topics">
+
+                <span class="material-icons">
+                    folder
+                </span>
+
+                Themen
+
+            </a>
+
+            <a (click)="logout()">
+
+                <span class="material-symbols-outlined">
+                    logout
+                </span>
+
+                Abmelden
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <section class="welcome-section">
+
+        <h1>
+            Willkommen Alexander
+        </h1>
+
+        <p>
+            Deine persönliche Lernplattform
+        </p>
+
+    </section>
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <h2>{{ topicCount }}</h2>
+
+            <p>Themen</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2>{{ flashcardCount }}</h2>
+
+            <p>Karteikarten</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2>{{ quizSuccess }}%</h2>
+
+            <p>Quiz-Erfolg</p>
+
+        </div>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div
+            class="dashboard-box"
+            routerLink="/topics">
+
+            <div class="card-icon">
+
+                <span class="material-symbols-outlined">
+                    folder
+                </span>
+
+            </div>
+
+            <h2>Themen</h2>
+
+            <p>
+                Themen verwalten
+            </p>
+
+        </div>
+
+        <div class="dashboard-box">
+
+            <div class="card-icon">
+
+                <span class="material-symbols-outlined">
+                    style
+                </span>
+
+            </div>
+
+            <h2>Karteikarten</h2>
+
+            <p>
+                Karteikarten erstellen
+            </p>
+
+        </div>
+
+        <div class="dashboard-box">
+
+            <div class="card-icon">
+
+                <span class="material-symbols-outlined">
+                    school
+                </span>
+
+            </div>
+
+            <h2>Lernmodus</h2>
+
+            <p>
+                Karten lernen
+            </p>
+
+        </div>
+
+        <div class="dashboard-box">
+
+            <div class="card-icon">
+
+                <span class="material-symbols-outlined">
+                    quiz
+                </span>
+
+            </div>
+
+            <h2>Quiz</h2>
+
+            <p>
+                Wissen testen
+            </p>
+
+        </div>
+
+    </section>
 
 </div>

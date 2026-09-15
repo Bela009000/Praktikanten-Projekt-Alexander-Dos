@@ -15,23 +15,66 @@ export class TopicsComponent {
 
   topics: string[] = [];
 
+  constructor() {
+
+    const currentUser =
+      localStorage.getItem('currentUser');
+
+    const savedTopics =
+      localStorage.getItem(
+        `topics_${currentUser}`
+      );
+
+    if (savedTopics) {
+
+      this.topics =
+        JSON.parse(savedTopics);
+
+    }
+
+  }
+
   addTopic() {
 
     if (this.topicName.trim() === '') {
       return;
     }
 
-    this.topics.push(this.topicName);
+    this.topics.push(
+      this.topicName
+    );
+
+    const currentUser =
+      localStorage.getItem(
+        'currentUser'
+      );
+
+    localStorage.setItem(
+      `topics_${currentUser}`,
+      JSON.stringify(this.topics)
+    );
 
     this.topicName = '';
+
   }
 
   deleteTopic(index: number) {
 
-    this.topics.splice(index, 1);
+    this.topics.splice(
+      index,
+      1
+    );
+
+    const currentUser =
+      localStorage.getItem(
+        'currentUser'
+      );
+
+    localStorage.setItem(
+      `topics_${currentUser}`,
+      JSON.stringify(this.topics)
+    );
 
   }
-}
-``
-  
+
 }

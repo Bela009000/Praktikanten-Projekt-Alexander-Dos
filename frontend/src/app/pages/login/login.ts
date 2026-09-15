@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -27,12 +27,33 @@ export class LoginComponent {
     const savedPassword = localStorage.getItem('password');
 
     if (this.username === savedUsername && this.password === savedPassword) {
+
+      localStorage.setItem(
+        'CurrentUser',
+        this.username
+      );
+
       this.errorMessage = '';
+
       this.isLoggedIn = true;
-      localStorage.setItem('loginSuccess', 'true');
-      this.router.navigate(['/dashboard']);
+
+      localStorage.setItem(
+        'currentUser',
+        this.username
+      );
+
+      localStorage.setItem(
+        'loginSuccess',
+        'true'
+      );
+
+      this.router.navigate([
+        '/dashboard'
+      ]);
+
       return;
     }
+
 
     this.errorMessage = 'Benutzername oder Passwort falsch!';
     this.password = '';

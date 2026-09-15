@@ -1,70 +1,74 @@
 <div class="topics-page">
 
-  <div class="topics-card">
+    <nav class="navbar">
 
-    <div class="header">
+        <div class="logo">
+            Lernkarten App
+        </div>
 
-      <button
-        class="back-button"
-        routerLink="/dashboard">
+        <div class="nav-links">
 
-        ← Dashboard
+            <a routerLink="/dashboard">
+                Dashboard
+            </a>
 
-      </button>
-
-      <h1>📂 Meine Themen</h1>
-
-      <p>Erstelle und verwalte deine Lern-Themen.</p>
-
-    </div>
-
-    <div class="add-topic-section">
-
-      <input
-        type="text"
-        placeholder="Neues Thema eingeben..."
-        [(ngModel)]="topicName">
-
-      <button
-        class="add-button"
-        (click)="addTopic()">
-
-        Thema hinzufügen
-
-      </button>
-
-    </div>
-
-    <div class="topics-list">
-
-      @for(topic of topics; track topic; let i = $index){
-
-      <div class="topic-item">
-
-        <div class="topic-info">
-
-          <span class="topic-icon">📘</span>
-
-          <span class="topic-name">
-            {{ topic }}
-          </span>
+            <a routerLink="/topics">
+                Themen
+            </a>
 
         </div>
 
-        <button
-          class="delete-button"
-          (click)="deleteTopic(i)">
+    </nav>
 
-          Löschen
+    <section class="topics-header">
+
+        <h1>Meine Themen</h1>
+
+        <p>
+            Verwalte deine Themen und erstelle neue Lernbereiche
+        </p>
+
+    </section>
+
+    <section class="topic-input-section">
+
+        <input
+            type="text"
+            placeholder="Neues Thema eingeben..."
+            [(ngModel)]="topicName">
+
+        <button
+            class="add-button"
+            (click)="addTopic()">
+
+            Thema hinzufügen
 
         </button>
 
-      </div>
+    </section>
 
-      }
+    <section class="topics-grid">
 
-    </div>
+        @for(topic of topics; track topic; let i = $index){
 
-  </div>
+        <div class="topic-card">
+
+            <h3>
+                {{ topic }}
+            </h3>
+
+            <button
+                class="delete-button"
+                (click)="deleteTopic(i)">
+
+                Löschen
+
+            </button>
+
+        </div>
+
+        }
+
+    </section>
 
 </div>
