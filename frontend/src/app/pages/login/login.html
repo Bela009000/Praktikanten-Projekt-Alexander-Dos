@@ -1,17 +1,21 @@
 <div class="login-container">
   <div class="login-card">
+
     <h1>Lernkarten App</h1>
 
     <input
       type="text"
-      placeholder="Benutzername">
+      placeholder="Benutzername"
+      [(ngModel)]="username">
 
     <input
       type="password"
-      placeholder="Passwort">
+      placeholder="Passwort"
+      [(ngModel)]="password">
 
-    <button>
+    <button (click)="login()">
       Login
     </button>
+
   </div>
 </div>
