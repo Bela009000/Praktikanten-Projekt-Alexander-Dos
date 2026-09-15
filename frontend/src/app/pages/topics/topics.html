@@ -1,1 +1,32 @@
-<p>topics works!</p>
+<div class="container">
+
+    <h1>Meine Themen</h1>
+
+    <input
+        type="text"
+        placeholder="Neues Thema"
+        [(ngModel)]="topicName">
+
+    <button (click)="addTopic()">
+        Thema hinzufügen
+    </button>
+
+    <ul>
+
+        @for(topic of topics; track topic; let i = $index){
+
+        <li>
+
+            {{ topic }}
+
+            <button (click)="deleteTopic(i)">
+                Löschen
+            </button>
+
+        </li>
+
+        }
+
+    </ul>
+
+</div>
