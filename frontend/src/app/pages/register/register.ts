@@ -15,9 +15,47 @@ export class RegisterComponent {
   password: string = '';
 
   successMessage: string = '';
+  errorMessage: string = '';
+  
   registrationSuccessful: boolean = false;
 
   register() {
+
+  const usernamePattern = /^[a-zA-Z0-9]+$/;
+
+  if (!usernamePattern.test(this.username)) {
+
+    this.errorMessage =
+      'Benutzername darf nur Buchstaben und Zahlen enthalten.';
+
+    return;
+  }
+
+  if (this.password.length < 8) {
+
+    this.errorMessage =
+      'Passwort muss mindestens 8 Zeichen lang sein.';
+
+    return;
+  }
+
+  const specialCharacters =
+    this.password.match(/[^a-zA-Z0-9]/g);
+
+  const specialCount =
+    specialCharacters
+      ? specialCharacters.length
+      : 0;
+
+  if (specialCount < 2) {
+
+    this.errorMessage =
+      'Passwort muss mindestens 2 Sonderzeichen enthalten.';
+
+    return;
+  }
+
+  this.errorMessage = '';
 
   localStorage.setItem(
     'username',
@@ -30,7 +68,7 @@ export class RegisterComponent {
   );
 
   this.successMessage =
-    'Registrierung erfolgreich! Du kannst dich jetzt anmelden.';
+    'Registrierung erfolgreich!';
 
   this.registrationSuccessful = true;
 }

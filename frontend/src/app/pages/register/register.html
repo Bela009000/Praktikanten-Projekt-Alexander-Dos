@@ -4,14 +4,20 @@
     <h1>Registrieren</h1>
 
     <input
+        [disabled]="registrationSuccessful"
         type="text"
         placeholder="Benutzername"
         [(ngModel)]="username">
 
     <input
+        [disabled]="registrationSuccessful"
         type="password"
         placeholder="Passwort"
         [(ngModel)]="password">
+
+    <p class="error">
+        {{ errorMessage }}
+    </p>
 
     <p class="success">
         {{ successMessage }}

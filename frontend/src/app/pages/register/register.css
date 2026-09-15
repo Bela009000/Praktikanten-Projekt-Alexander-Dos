@@ -42,3 +42,15 @@ button{
     font-weight: bold;
     text-align: center;
 }
+
+.error{
+  color:red;
+  text-align:center;
+  font-weight:bold;
+}
+
+.success{
+  color:red;
+  text-align:center;
+  font-weight:bold;
+}
