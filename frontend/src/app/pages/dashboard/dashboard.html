@@ -1,3 +1,41 @@
-<button routerLink="/topics">
-    Meine Themen
-</button>
+<div class="dashboard-container">
+
+    <div class="dashboard-card">
+
+        <p>{{ successMessage }}</p>
+
+        <h1>Alexander seine Lernkarten App</h1>
+
+        <p>Willkommen in deiner persönlichen Lernumgebung die von mir entwickelt wurde (Alexander)</p>
+
+        <div class="button-container">
+
+            <button routerLink="/topics">
+                📂 Meine Themen
+            </button>
+
+            <button>
+                ➕ Neue Karteikarten
+            </button>
+
+            <button>
+                🎓 Lernmodus
+            </button>
+
+            <button>
+                📝 Quiz
+            </button>
+
+            <button
+                class="logout-button"
+                (click)="logout()">
+
+                🚪 Abmelden
+            </button>
+            
+
+        </div>
+
+    </div>
+
+</div>
