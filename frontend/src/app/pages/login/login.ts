@@ -12,9 +12,35 @@ export class LoginComponent {
 
   username: string = '';
   password: string = '';
+  errorMessage: string = '';
+  isLoggedIn: boolean = false;
 
   login() {
-    console.log('Benutzername:', this.username);
-    console.log('Passwort:', this.password);
+
+  if (this.username === '' || this.password === '') {
+    this.errorMessage = 'Bitte alle Felder ausfüllen!';
+    return;
+  }
+
+  const savedUsername = localStorage.getItem('username');
+  const savedPassword = localStorage.getItem('password');
+
+  if (
+    this.username === savedUsername &&
+    this.password === savedPassword
+  ) {
+    this.errorMessage = '';
+    this.isLoggedIn = true;
+  }
+  else {
+    this.errorMessage = 'Benutzername oder Passwort falsch!';
+  }
+}
+
+  logout() {
+    this.isLoggedIn = false;
+    this.username = '';
+    this.password = '';
+    this.errorMessage = '';
   }
 }

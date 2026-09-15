@@ -1,3 +1,5 @@
+@if(!isLoggedIn){
+
 <div class="login-container">
   <div class="login-card">
 
@@ -13,9 +15,37 @@
       placeholder="Passwort"
       [(ngModel)]="password">
 
+    <p class="error">
+      {{ errorMessage }}
+    </p>
+
     <button (click)="login()">
       Login
     </button>
 
+    <p>Noch kein Konto?</p>
+
+    <a href="/register">
+      <button>
+        Registrieren
+      </button>
+    </a>
+
   </div>
 </div>
+
+}
+
+@else {
+
+<div class="dashboard">
+
+  <h1>Willkommen {{ username }}!</h1>
+
+  <button (click)="logout()">
+    Abmelden
+  </button>
+
+</div>
+
+}

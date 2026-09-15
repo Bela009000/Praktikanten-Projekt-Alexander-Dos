@@ -40,3 +40,22 @@ button {
 button:hover {
   background: #1d4ed8;
 }
+
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dashboard{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboard h1{
+  color:#1d4ed8;
+}

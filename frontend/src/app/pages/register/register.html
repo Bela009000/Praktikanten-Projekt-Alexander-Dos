@@ -1,0 +1,30 @@
+<div class="register-container">
+  <div class="register-card">
+
+    <h1>Registrieren</h1>
+
+    <input
+        type="text"
+        placeholder="Benutzername"
+        [(ngModel)]="username">
+
+    <input
+        type="password"
+        placeholder="Passwort"
+        [(ngModel)]="password">
+
+    <p class="success">
+        {{ successMessage }}
+    </p>
+    
+    @if(!registrationSuccessful){
+    <button (click)="register()">
+    Registrieren
+    </button>
+    }
+    <button routerLink="/login">
+        Zurück zum Login
+    </button>
+
+  </div>
+</div>
