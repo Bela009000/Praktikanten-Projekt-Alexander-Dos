@@ -2,50 +2,99 @@
 
     <nav class="navbar">
 
-        <div class="logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M4 5.5C4 4.67 4.67 4 5.5 4H18.5C19.33 4 20 4.67 20 5.5V18.5C20 19.33 19.33 20 18.5 20H5.5C4.67 20 4 19.33 4 18.5V5.5Z"
-                    stroke="currentColor"
-                    stroke-width="2"/>
-                <path
-                    d="M8 8H16M8 12H16M8 16H13"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"/>
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
             </svg>
 
-            Lernkarten App
-        </div>
+            <span>Lernkarten App</span>
+
+        </a>
 
         <div class="nav-links">
 
-            <a routerLink="/dashboard">
+            <a
+                routerLink="/dashboard"
+                routerLinkActive="active-link">
+
                 Dashboard
+
             </a>
 
-            <a routerLink="/topics" class="active">
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
+
                 Themen
+
             </a>
 
-            <a (click)="logout()" class="logout-link">
-                Logout
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
+
+                Karteikarten
+
             </a>
+
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
+
+                Lernmodus
+
+            </a>
+
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
+
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                type="button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
 
         </div>
 
     </nav>
 
-
     <section class="topics-header">
 
         <div class="header-icon">
 
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none">
+
                 <path
                     d="M3 7.5C3 6.67 3.67 6 4.5 6H9L11 8H19.5C20.33 8 21 8.67 21 9.5V17.5C21 18.33 20.33 19 19.5 19H4.5C3.67 19 3 18.33 3 17.5V7.5Z"
                     stroke="currentColor"
                     stroke-width="2"/>
+
             </svg>
 
         </div>
@@ -62,8 +111,6 @@
 
     </section>
 
-
-
     <section class="topic-input-section">
 
         <input
@@ -76,21 +123,11 @@
             class="add-button"
             (click)="addTopic()">
 
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M12 5V19M5 12H19"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"/>
-            </svg>
-
             Thema hinzufügen
 
         </button>
 
     </section>
-
-
 
     <section class="topics-grid">
 
@@ -98,9 +135,7 @@
 
             <div class="topic-card">
 
-
                 @if(editingIndex === i){
-
 
                     <div class="edit-area">
 
@@ -135,7 +170,6 @@
 
                 @else {
 
-
                     <div class="topic-content">
 
                         <div class="topic-icon">
@@ -156,13 +190,12 @@
                         </div>
 
                         <h3>
+
                             {{ topic.name }}
+
                         </h3>
 
                     </div>
-
-
-                    <!-- Buttons -->
 
                     <div class="topic-actions">
 
@@ -176,68 +209,17 @@
 
                         <button
                             class="edit-button"
-                            (click)="startEdit(i)"
-                            title="Bearbeiten">
+                            (click)="startEdit(i)">
 
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none">
-
-                                <path
-                                    d="M12 20H21"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-
-                                <path
-                                    d="M16.5 3.5C17.3284 2.67157 18.6716 2.67157 19.5 3.5C20.3284 4.32843 20.3284 5.67157 19.5 6.5L7 19L3 20L4 16L16.5 3.5Z"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"/>
-
-                            </svg>
+                            Bearbeiten
 
                         </button>
 
                         <button
                             class="delete-button"
-                            (click)="deleteTopic(i)"
-                            title="Löschen">
+                            (click)="deleteTopic(i)">
 
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none">
-
-                                <path
-                                    d="M4 7H20"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-
-                                <path
-                                    d="M10 11V17M14 11V17"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"/>
-
-                                <path
-                                    d="M6 7L7 20H17L18 7"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linejoin="round"/>
-
-                                <path
-                                    d="M9 7V4H15V7"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linejoin="round"/>
-
-                            </svg>
+                            Löschen
 
                         </button>
 

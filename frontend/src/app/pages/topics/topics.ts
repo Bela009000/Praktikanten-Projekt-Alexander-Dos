@@ -138,10 +138,6 @@ export class TopicsComponent {
     );
 
     localStorage.removeItem(
-      'CurrentUser'
-    );
-
-    localStorage.removeItem(
       'loginSuccess'
     );
 
@@ -149,6 +145,6 @@ export class TopicsComponent {
       '/login'
     ]);
 
-  }
+}
 
 }
