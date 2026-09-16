@@ -4,6 +4,8 @@ import { LoginComponent } from './pages/login/login';
 import { RegisterComponent } from './pages/register/register';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { TopicsComponent } from './pages/topics/topics';
+import { FlashcardsComponent } from './pages/flashcards/flashcards';
+import { TopicDetailComponent } from './pages/topic-detail/topic-detail';
 
 export const routes: Routes = [
 
@@ -32,9 +34,12 @@ export const routes: Routes = [
     path: 'topics',
     component: TopicsComponent
   },
-  
   {
-    path: 'dashboard',
-    component: DashboardComponent
+    path: 'flashcards',
+    component: FlashcardsComponent
+  },
+  {
+    path: 'topic-cards',
+    component: TopicDetailComponent
   }
 ];

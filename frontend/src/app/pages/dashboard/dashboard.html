@@ -1,171 +1,259 @@
 <div class="dashboard-page">
 
-    <nav class="navbar">
+  <nav class="navbar">
 
-        <div class="logo">
+    <a class="logo" routerLink="/dashboard">
 
-            <span class="material-icons">
-                auto_stories
-            </span>
+      <svg
+        class="nav-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
 
-            <span>
-                Lernkarten App
-            </span>
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
 
-        </div>
+      </svg>
 
-        <div class="nav-links">
+      <span>Lernkarten App</span>
 
-            <a routerLink="/dashboard">
+    </a>
 
-                <span class="material-icons">
-                    dashboard
-                </span>
+    <div class="nav-links">
 
-                Dashboard
+      <a routerLink="/dashboard">
 
-            </a>
+        <svg
+          class="nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
 
-            <a routerLink="/topics">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
 
-                <span class="material-icons">
-                    folder
-                </span>
+        </svg>
 
-                Themen
+        <span>Dashboard</span>
 
-            </a>
+      </a>
 
-            <a (click)="logout()">
+      <a routerLink="/topics">
 
-                <span class="material-symbols-outlined">
-                    logout
-                </span>
+        <svg
+          class="nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
 
-                Abmelden
+          <path d="M3 7h5l2 2h11v10a2 2 0 0 1-2 2H3z"></path>
+          <path d="M3 7V5a2 2 0 0 1 2-2h3l2 2h9a2 2 0 0 1 2 2"></path>
 
-            </a>
+        </svg>
 
-        </div>
+        <span>Themen</span>
 
-    </nav>
+      </a>
 
-    <section class="welcome-section">
+      <button
+        class="logout-button"
+        type="button"
+        (click)="logout()">
 
-        <h1>
-            Willkommen Alexander
-        </h1>
+        <svg
+          class="nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
 
-        <p>
-            Deine persönliche Lernplattform
-        </p>
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
 
-    </section>
+        </svg>
 
-    <section class="stats-grid">
+        <span>Abmelden</span>
 
-        <div class="stat-card">
+      </button>
 
-            <h2>{{ topicCount }}</h2>
+    </div>
 
-            <p>Themen</p>
+  </nav>
 
-        </div>
+  <section class="welcome-section">
 
-        <div class="stat-card">
+    <h1>Willkommen Alexander</h1>
 
-            <h2>{{ flashcardCount }}</h2>
+    <p>Deine persönliche Lernplattform</p>
 
-            <p>Karteikarten</p>
+  </section>
 
-        </div>
+  <section class="stats-grid">
 
-        <div class="stat-card">
+    <div class="stat-card">
 
-            <h2>{{ quizSuccess }}%</h2>
+      <h2>{{ topicCount }}</h2>
 
-            <p>Quiz-Erfolg</p>
+      <p>Themen</p>
 
-        </div>
+    </div>
 
-    </section>
+    <div class="stat-card">
 
-    <section class="dashboard-grid">
+      <h2>{{ flashcardCount }}</h2>
 
-        <div
-            class="dashboard-box"
-            routerLink="/topics">
+      <p>Karteikarten</p>
 
-            <div class="card-icon">
+    </div>
 
-                <span class="material-symbols-outlined">
-                    folder
-                </span>
+    <div class="stat-card">
 
-            </div>
+      <h2>{{ quizSuccess }}%</h2>
 
-            <h2>Themen</h2>
+      <p>Quiz-Erfolg</p>
 
-            <p>
-                Themen verwalten
-            </p>
+    </div>
 
-        </div>
+  </section>
 
-        <div class="dashboard-box">
+  <section class="dashboard-grid">
 
-            <div class="card-icon">
+    <div
+      class="dashboard-box"
+      routerLink="/topics">
 
-                <span class="material-symbols-outlined">
-                    style
-                </span>
+      <div class="card-icon">
 
-            </div>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
 
-            <h2>Karteikarten</h2>
+          <path d="M3 7h5l2 2h11v10a2 2 0 0 1-2 2H3z"></path>
 
-            <p>
-                Karteikarten erstellen
-            </p>
+          <path d="M3 7V5a2 2 0 0 1 2-2h3l2 2h9a2 2 0 0 1 2 2"></path>
 
-        </div>
+        </svg>
 
-        <div class="dashboard-box">
+      </div>
 
-            <div class="card-icon">
+      <h2>Themen</h2>
 
-                <span class="material-symbols-outlined">
-                    school
-                </span>
+      <p>Themen verwalten</p>
 
-            </div>
+    </div>
 
-            <h2>Lernmodus</h2>
+    <div
+      class="dashboard-box"
+      routerLink="/flashcards">
 
-            <p>
-                Karten lernen
-            </p>
+      <div class="card-icon">
 
-        </div>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
 
-        <div class="dashboard-box">
+          <rect
+            x="4"
+            y="4"
+            width="13"
+            height="13"
+            rx="2">
+          </rect>
 
-            <div class="card-icon">
+          <path d="M7 8h7"></path>
 
-                <span class="material-symbols-outlined">
-                    quiz
-                </span>
+          <path d="M7 11h5"></path>
 
-            </div>
+          <path d="M7 14h3"></path>
 
-            <h2>Quiz</h2>
+          <path d="M8 20h10a2 2 0 0 0 2-2V8"></path>
 
-            <p>
-                Wissen testen
-            </p>
+        </svg>
 
-        </div>
+      </div>
 
-    </section>
+      <h2>Karteikarten</h2>
+
+      <p>Karteikarten erstellen</p>
+
+    </div>
+
+    <div
+      class="dashboard-box"
+      routerLink="/learn">
+
+      <div class="card-icon">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
+
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+          <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+          <path d="M12 6v7"></path>
+
+          <path d="M9 10l3 3 3-3"></path>
+
+        </svg>
+
+      </div>
+
+      <h2>Lernmodus</h2>
+
+      <p>Karten lernen</p>
+
+    </div>
+
+    <div
+      class="dashboard-box"
+      routerLink="/quiz">
+
+      <div class="card-icon">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
+
+          <circle cx="12" cy="12" r="9"></circle>
+
+          <path d="M9.5 9a2.5 2.5 0 1 1 4.3 1.8c-.9.8-1.8 1.2-1.8 2.7"></path>
+
+          <circle
+            cx="12"
+            cy="16.8"
+            r="0.7"
+            fill="currentColor"
+            stroke="none">
+          </circle>
+
+        </svg>
+
+      </div>
+
+      <h2>Quiz</h2>
+
+      <p>Wissen testen</p>
+
+    </div>
+
+  </section>
 
 </div>

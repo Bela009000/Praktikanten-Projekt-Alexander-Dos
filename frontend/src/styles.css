@@ -1,3 +1,5 @@
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
 * {
 	box-sizing: border-box;
 }
@@ -9,4 +11,33 @@ body {
 	font-family: Arial, sans-serif;
 	color: #222;
 	background: #f5f5f5;
+}
+
+/* =========================================
+   GLOBALES DESIGN
+   ========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a 0%,
+      #141835 50%,
+      #1a1745 100%
+    );
+
+  color: #f8fafc;
 }

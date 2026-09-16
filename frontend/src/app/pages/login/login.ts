@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
+interface User {
+  username: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -10,6 +15,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './login.css'
 })
 export class LoginComponent {
+
   constructor(private router: Router) {}
 
   username = '';
@@ -18,34 +24,59 @@ export class LoginComponent {
   isLoggedIn = false;
 
   login(): void {
-    if (this.username.trim() === '' || this.password.trim() === '') {
-      this.errorMessage = 'Bitte alle Felder ausfüllen!';
+
+    // Felder prüfen
+    if (
+      this.username.trim() === '' ||
+      this.password.trim() === ''
+    ) {
+
+      this.errorMessage =
+        'Bitte alle Felder ausfüllen!';
+
       return;
     }
 
-    const savedUsername = localStorage.getItem('username');
-    const savedPassword = localStorage.getItem('password');
+    // Gespeicherte Benutzer holen
+    const savedUsers =
+      localStorage.getItem('users');
 
-    if (this.username === savedUsername && this.password === savedPassword) {
+    const users: User[] =
+      savedUsers
+        ? JSON.parse(savedUsers)
+        : [];
 
-      localStorage.setItem(
-        'CurrentUser',
-        this.username
+    // Benutzer suchen
+    const user =
+      users.find(
+        user =>
+          user.username.toLowerCase() ===
+          this.username.trim().toLowerCase()
+          &&
+          user.password === this.password
       );
 
-      this.errorMessage = '';
-
-      this.isLoggedIn = true;
+    // Benutzer gefunden
+    if (user) {
 
       localStorage.setItem(
         'currentUser',
-        this.username
+        user.username
+      );
+
+      localStorage.setItem(
+        'CurrentUser',
+        user.username
       );
 
       localStorage.setItem(
         'loginSuccess',
         'true'
       );
+
+      this.errorMessage = '';
+
+      this.isLoggedIn = true;
 
       this.router.navigate([
         '/dashboard'
@@ -54,17 +85,35 @@ export class LoginComponent {
       return;
     }
 
+    // Kein Benutzer gefunden
+    this.errorMessage =
+      'Benutzername oder Passwort falsch!';
 
-    this.errorMessage = 'Benutzername oder Passwort falsch!';
     this.password = '';
   }
 
   logout(): void {
+
     this.isLoggedIn = false;
+
     this.username = '';
     this.password = '';
     this.errorMessage = '';
-    localStorage.removeItem('loginSuccess');
-    this.router.navigate(['/login']);
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
+    localStorage.removeItem(
+      'currentUser'
+    );
+
+    localStorage.removeItem(
+      'CurrentUser'
+    );
+
+    this.router.navigate([
+      '/login'
+    ]);
   }
 }

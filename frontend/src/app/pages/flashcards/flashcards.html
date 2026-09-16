@@ -1,1 +1,155 @@
-<p>flashcards works!</p>
+<div class="flashcards-page">
+
+    <nav class="navbar">
+
+        <a routerLink="/dashboard">
+            Dashboard
+        </a>
+
+        <a routerLink="/topics">
+            Themen
+        </a>
+
+        <a routerLink="/flashcards">
+            Karteikarten
+        </a>
+
+    </nav>
+
+    <h1>
+        Karteikarten erstellen
+    </h1>
+
+    <select [(ngModel)]="selectedTopic">
+
+        <option value="">
+            Thema auswählen
+        </option>
+
+        @for(topic of topics; track topic){
+
+            <option [value]="topic.name">
+
+                {{ topic.name }}
+
+            </option>
+
+        }
+
+    </select>
+
+    <input
+        type="text"
+        placeholder="Frage"
+        [(ngModel)]="question">
+
+    <textarea
+        placeholder="Antwort"
+        [(ngModel)]="answer">
+    </textarea>
+
+    <button
+        (click)="addFlashcard()">
+
+        Karteikarte speichern
+
+    </button>
+
+    @if(editingCard){
+
+        <div class="modal-overlay">
+
+            <div class="edit-modal">
+
+                <button
+                    class="close-btn"
+                    (click)="cancelEdit()">
+
+                    ✕
+
+                </button>
+
+                <h2>
+                    Karteikarte bearbeiten
+                </h2>
+
+                <input
+                    type="text"
+                    [(ngModel)]="editQuestion">
+
+                <textarea
+                    [(ngModel)]="editAnswer">
+                </textarea>
+
+                <div class="modal-buttons">
+
+                    <button
+                        class="save-btn"
+                        (click)="saveEdit()">
+
+                        Speichern
+
+                    </button>
+
+                    <button
+                        class="cancel-btn"
+                        (click)="cancelEdit()">
+
+                        Abbrechen
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+    <div class="cards-grid">
+
+        @for(topic of topics; track topic){
+
+            @for(card of topic.flashcards; track card){
+
+                <div class="flashcard">
+
+                    <h3>
+
+                        {{ card.question }}
+
+                    </h3>
+
+                    <p>
+
+                        {{ card.answer }}
+
+                    </p>
+
+                    <div class="card-actions">
+
+                        <button
+                            class="edit-btn"
+                            (click)="startEdit(card, topic)">
+
+                            Bearbeiten
+
+                        </button>
+
+                        <button
+                            class="delete-btn"
+                            (click)="deleteFlashcard(card, topic)">
+
+                            Löschen
+
+                        </button>
+
+                    </div>
+                </div>
+            }
+
+        }
+
+    </div>
+
+</div>

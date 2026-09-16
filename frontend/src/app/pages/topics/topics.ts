@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-topics',
@@ -11,11 +11,17 @@ import { RouterLink } from '@angular/router';
 })
 export class TopicsComponent {
 
-  topicName: string = '';
+  topicName = '';
 
-  topics: string[] = [];
+  topics: any[] = [];
 
-  constructor() {
+  editingIndex = -1;
+
+  editingName = '';
+
+  constructor(
+    private router: Router
+  ) {
 
     const currentUser =
       localStorage.getItem('currentUser');
@@ -34,46 +40,114 @@ export class TopicsComponent {
 
   }
 
-  addTopic() {
+  addTopic(): void {
 
     if (this.topicName.trim() === '') {
       return;
     }
 
-    this.topics.push(
-      this.topicName
-    );
+    this.topics.push({
 
-    const currentUser =
-      localStorage.getItem(
-        'currentUser'
-      );
+      name: this.topicName.trim(),
 
-    localStorage.setItem(
-      `topics_${currentUser}`,
-      JSON.stringify(this.topics)
-    );
+      flashcards: []
+
+    });
+
+    this.saveTopics();
 
     this.topicName = '';
 
   }
 
-  deleteTopic(index: number) {
+  deleteTopic(index: number): void {
 
     this.topics.splice(
       index,
       1
     );
 
+    this.saveTopics();
+
+  }
+
+  startEdit(index: number): void {
+
+    this.editingIndex =
+      index;
+
+    this.editingName =
+      this.topics[index].name;
+
+  }
+
+  saveEdit(): void {
+
+    if (this.editingName.trim() === '') {
+      return;
+    }
+
+    this.topics[this.editingIndex].name =
+      this.editingName.trim();
+
+    this.saveTopics();
+
+    this.editingIndex = -1;
+
+    this.editingName = '';
+
+  }
+
+  cancelEdit(): void {
+
+    this.editingIndex = -1;
+
+    this.editingName = '';
+
+  }
+
+  openTopic(topic: any): void {
+
+  localStorage.setItem(
+    'selectedTopic',
+    topic.name
+  );
+
+  this.router.navigate([
+    '/topic-cards'
+  ]);
+
+}
+
+  private saveTopics(): void {
+
     const currentUser =
-      localStorage.getItem(
-        'currentUser'
-      );
+      localStorage.getItem('currentUser');
 
     localStorage.setItem(
       `topics_${currentUser}`,
       JSON.stringify(this.topics)
     );
+
+  }
+
+  logout(): void {
+
+    localStorage.removeItem(
+      'currentUser'
+    );
+
+    localStorage.removeItem(
+      'CurrentUser'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
+    this.router.navigate([
+      '/login'
+    ]);
 
   }
 
