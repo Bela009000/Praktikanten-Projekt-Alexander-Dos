@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterLink,
-    FormsModule
+    FormsModule,
+    RouterLinkActive
   ],
   templateUrl: './quiz.html',
   styleUrl: './quiz.css'
@@ -38,7 +39,9 @@ export class QuizComponent {
 
   isCorrect = false;
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
 
     const currentUser =
       localStorage.getItem('currentUser');
@@ -159,7 +162,14 @@ export class QuizComponent {
 
       );
 
-    this.quizFinished = true;
+    localStorage.setItem(
+
+      'quizSuccess',
+
+      this.successRate.toString()
+
+    );
+      this.quizFinished = true;
 
   }
 
@@ -183,6 +193,43 @@ export class QuizComponent {
     this.wrongCards = [];
 
     this.isCorrect = false;
+
+  }
+
+  cancelQuiz(): void {
+
+    this.questions = [];
+
+    this.currentIndex = 0;
+
+    this.userAnswer = '';
+
+    this.showSolution = false;
+
+    this.correctAnswers = 0;
+
+    this.wrongCards = [];
+
+    this.quizFinished = false;
+
+    this.successRate = 0;
+
+    this.isCorrect = false;
+
+  }
+  logout(): void {
+
+    localStorage.removeItem(
+      'currentUser'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
+    this.router.navigate([
+      '/login'
+    ]);
 
   }
 

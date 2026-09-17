@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterLink,
-    FormsModule
+    FormsModule,
+    RouterLinkActive
   ],
   templateUrl: './topic-detail.html',
   styleUrl: './topic-detail.css'
@@ -23,7 +24,7 @@ export class TopicDetailComponent {
 
   editAnswer = '';
 
-  constructor() {
+  constructor(private router: Router) {
 
     const currentUser =
       localStorage.getItem('currentUser');
@@ -137,6 +138,22 @@ export class TopicDetailComponent {
     this.editQuestion = '';
 
     this.editAnswer = '';
+
+  }
+
+  logout(): void {
+
+    localStorage.removeItem(
+      'currentUser'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
+    this.router.navigate([
+      '/login'
+    ]);
 
   }
 

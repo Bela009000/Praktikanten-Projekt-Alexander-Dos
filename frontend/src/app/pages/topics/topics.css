@@ -1,29 +1,26 @@
-/* =========================================
-   THEMEN SEITE
-   ========================================= */
-
 .topics-page{
+
     min-height:100vh;
 
-    background:linear-gradient(
+    padding:40px;
+
+    background:
+    linear-gradient(
         135deg,
-        #0f172a 0%,
-        #141835 50%,
-        #1a1745 100%
+        #0f172a,
+        #1a1745
     );
 
-    color:#f8fafc;
+    color:white;
 }
-
-/* =========================================
-   NAVBAR
-   ========================================= */
-
 .navbar{
+
     height:70px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     padding:0 32px;
@@ -34,9 +31,13 @@
     1px solid rgba(255,255,255,.08);
 }
 
+
 .logo{
+
     display:flex;
+
     align-items:center;
+
     gap:10px;
 
     color:white;
@@ -49,64 +50,74 @@
 }
 
 .nav-icon{
+
     width:22px;
+
     height:22px;
 
     color:#3b82f6;
 }
 
+
 .nav-links{
+
     display:flex;
+
     align-items:center;
+
     gap:28px;
 }
 
 .nav-links a{
+
     color:#cbd5e1;
 
     text-decoration:none;
-
-    font-size:15px;
 
     transition:.2s;
 }
 
 .nav-links a:hover{
+
     color:white;
 }
 
 .active-link{
+
     color:#60a5fa !important;
 
     font-weight:700;
 
-    border-bottom:
-    2px solid #60a5fa;
+    border-bottom:2px solid #60a5fa;
 
     padding-bottom:4px;
 }
 
 .logout-button{
+
     background:none;
 
     border:none;
 
     color:#cbd5e1;
 
-    cursor:pointer;
-
     font-size:15px;
+
+    font-weight:500;
+
+    cursor:pointer;
 
     transition:.2s;
 }
 
 .logout-button:hover{
+
     color:#ef4444;
 }
 
-/* =========================================
-   HEADER
-   ========================================= */
+.logout-button:hover{
+    color:#ef4444;
+}
 
 .topics-header{
     max-width:1100px;
@@ -152,10 +163,6 @@
 
     color:#cbd5e1;
 }
-
-/* =========================================
-   INPUT
-   ========================================= */
 
 .topic-input-section{
     max-width:1100px;
@@ -216,10 +223,6 @@
     background:#2563eb;
 }
 
-/* =========================================
-   GRID
-   ========================================= */
-
 .topics-grid{
     max-width:1100px;
 
@@ -234,10 +237,6 @@
 
     gap:20px;
 }
-
-/* =========================================
-   TOPIC CARD
-   ========================================= */
 
 .topic-card{
     display:flex;
@@ -310,9 +309,6 @@
     font-size:20px;
 }
 
-/* =========================================
-   BUTTONS
-   ========================================= */
 
 .topic-actions{
     display:flex;
@@ -390,9 +386,6 @@
     rgba(239,68,68,.25);
 }
 
-/* =========================================
-   EDITIEREN
-   ========================================= */
 
 .edit-area{
     display:flex;
@@ -459,9 +452,6 @@
     background:#64748b;
 }
 
-/* =========================================
-   RESPONSIVE
-   ========================================= */
 
 @media(max-width:800px){
 

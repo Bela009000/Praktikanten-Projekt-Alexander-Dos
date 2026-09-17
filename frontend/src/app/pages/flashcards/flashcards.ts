@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-flashcards',
@@ -9,6 +9,7 @@ import { RouterLink } from '@angular/router';
   imports: [
     CommonModule,
     RouterLink,
+    RouterLinkActive,
     FormsModule
   ],
   templateUrl: './flashcards.html',
@@ -32,7 +33,9 @@ export class FlashcardsComponent {
 
   editAnswer = '';
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
 
     const currentUser =
       localStorage.getItem('currentUser');
@@ -185,6 +188,21 @@ export class FlashcardsComponent {
       JSON.stringify(this.topics)
 
     );
+
+  }
+  logout(): void {
+
+    localStorage.removeItem(
+      'currentUser'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
+    this.router.navigate([
+      '/login'
+    ]); 
 
   }
 

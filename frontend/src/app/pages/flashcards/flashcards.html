@@ -2,58 +2,171 @@
 
     <nav class="navbar">
 
-        <a routerLink="/dashboard">
-            Dashboard
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
         </a>
 
-        <a routerLink="/topics">
-            Themen
-        </a>
+        <div class="nav-links">
 
-        <a routerLink="/flashcards">
-            Karteikarten
-        </a>
+            <a
+                routerLink="/dashboard"
+                routerLinkActive="active-link">
+
+                Dashboard
+
+            </a>
+
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
+
+                Themen
+
+            </a>
+
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
+
+                Karteikarten
+
+            </a>
+
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
+
+                Lernmodus
+
+            </a>
+
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
+
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                type="button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
+
+        </div>
 
     </nav>
 
-    <h1>
-        Karteikarten erstellen
-    </h1>
+    <section class="page-header">
 
-    <select [(ngModel)]="selectedTopic">
+        <h1>
+            Karteikarten erstellen
+        </h1>
 
-        <option value="">
-            Thema auswählen
-        </option>
+        <p>
+            Erstelle neue Karteikarten und verwalte bestehende Lernkarten.
+        </p>
 
-        @for(topic of topics; track topic){
+    </section>
 
-            <option [value]="topic.name">
+    <section class="form-card">
 
-                {{ topic.name }}
+        <h2>
+            Neue Karteikarte
+        </h2>
 
-            </option>
+        <div class="form-group">
 
-        }
+            <label>
+                Thema
+            </label>
 
-    </select>
+            <select [(ngModel)]="selectedTopic">
 
-    <input
-        type="text"
-        placeholder="Frage"
-        [(ngModel)]="question">
+                <option value="">
+                    Thema auswählen
+                </option>
 
-    <textarea
-        placeholder="Antwort"
-        [(ngModel)]="answer">
-    </textarea>
+                @for(topic of topics; track topic){
 
-    <button
-        (click)="addFlashcard()">
+                    <option [value]="topic.name">
 
-        Karteikarte speichern
+                        {{ topic.name }}
 
-    </button>
+                    </option>
+
+                }
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Frage
+            </label>
+
+            <input
+                type="text"
+                placeholder="Frage eingeben..."
+                [(ngModel)]="question">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Antwort
+            </label>
+
+            <textarea
+                placeholder="Antwort eingeben..."
+                [(ngModel)]="answer">
+            </textarea>
+
+        </div>
+
+        <button
+            class="save-flashcard-btn"
+            (click)="addFlashcard()">
+
+            Karteikarte speichern
+
+        </button>
+
+    </section>
+
+    <section class="cards-header">
+
+        <h2>
+            Gespeicherte Karteikarten
+        </h2>
+
+    </section>
 
     @if(editingCard){
 
@@ -106,6 +219,7 @@
         </div>
 
     }
+
     <div class="cards-grid">
 
         @for(topic of topics; track topic){
@@ -114,17 +228,21 @@
 
                 <div class="flashcard">
 
-                    <h3>
+                    <div class="card-content">
 
-                        {{ card.question }}
+                        <h3>
 
-                    </h3>
+                            {{ card.question }}
 
-                    <p>
+                        </h3>
 
-                        {{ card.answer }}
+                        <p>
 
-                    </p>
+                            {{ card.answer }}
+
+                        </p>
+
+                    </div>
 
                     <div class="card-actions">
 
@@ -145,7 +263,9 @@
                         </button>
 
                     </div>
+
                 </div>
+
             }
 
         }

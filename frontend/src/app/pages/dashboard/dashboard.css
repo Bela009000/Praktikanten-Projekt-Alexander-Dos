@@ -9,27 +9,40 @@ body {
     margin: 0;
 }
 
-.dashboard-page {
-    min-height: 100vh;
-    padding: 25px;
-    background: linear-gradient(135deg, #0f172a, #1e1b4b);
+.dashboard-page{
+
+    min-height:100vh;
+
+    padding:40px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1a1745
+    );
+
+    color:white;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar{
 
-    padding: 20px 30px;
+    height:70px;
 
-    background: rgba(255,255,255,0.08);
+    display:flex;
 
-    border-radius: 15px;
+    align-items:center;
 
-    backdrop-filter: blur(20px);
+    justify-content:space-between;
 
-    margin-bottom: 40px;
+    padding:0 32px;
+
+    background:#0f172a;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.08);
 }
+
 
 .logo {
     color: white;
@@ -37,21 +50,29 @@ body {
     font-weight: bold;
 }
 
-.nav-links {
-    display: flex;
-    gap: 30px;
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:28px;
 }
 
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.3s;
+.nav-links a{
+
+    color:#cbd5e1;
+
+    text-decoration:none;
+
+    transition:.2s;
 }
 
-.nav-links a:hover {
-    color: #60a5fa;
+.nav-links a:hover{
+
+    color:white;
 }
+
 
 .welcome-section {
     margin-bottom: 40px;
@@ -150,9 +171,6 @@ body {
     }
 }
 
-/* =========================================
-   DASHBOARD
-   ========================================= */
 
 .dashboard-page {
   min-height: 100vh;
@@ -169,37 +187,32 @@ body {
 }
 
 
-/* =========================================
-   NAVIGATION
-   ========================================= */
 
-.navbar {
-  height: 70px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.logo{
 
-  padding: 0 32px;
+    display:flex;
 
-  background: #0f172a;
+    align-items:center;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    gap:10px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:22px;
+
+    font-weight:700;
 }
 
+.nav-icon{
 
-/* Logo */
+    width:22px;
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    height:22px;
 
-  color: #f8fafc;
-  text-decoration: none;
-
-  font-size: 20px;
-  font-weight: 700;
+    color:#3b82f6;
 }
 
 .logo .nav-icon {
@@ -207,9 +220,6 @@ body {
 }
 
 
-/* =========================================
-   NAVIGATION LINKS
-   ========================================= */
 
 .nav-links {
   display: flex;
@@ -265,9 +275,6 @@ body {
 }
 
 
-/* =========================================
-   WILLKOMMEN
-   ========================================= */
 
 .welcome-section {
   max-width: 1100px;
@@ -295,9 +302,6 @@ body {
 }
 
 
-/* =========================================
-   STATISTIK
-   ========================================= */
 
 .stats-grid {
   max-width: 1100px;
@@ -342,9 +346,6 @@ body {
 }
 
 
-/* =========================================
-   DASHBOARD-BEREICHE
-   ========================================= */
 
 .dashboard-grid {
   max-width: 1100px;
@@ -388,9 +389,6 @@ body {
 }
 
 
-/* =========================================
-   KARTEN-ICONS
-   ========================================= */
 
 .card-icon {
   width: 50px;
@@ -415,9 +413,6 @@ body {
 }
 
 
-/* =========================================
-   KARTEN-TEXT
-   ========================================= */
 
 .dashboard-box h2 {
   margin: 0 0 8px;
@@ -439,8 +434,22 @@ body {
 
 @media (max-width: 700px) {
 
-  .navbar {
-    padding: 0 20px;
+  .navbar{
+
+      height:70px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      padding:0 32px;
+
+      background:#0f172a;
+
+      border-bottom:
+      1px solid rgba(255,255,255,.08);
   }
 
   .nav-links {
@@ -464,4 +473,45 @@ body {
     font-size: 28px;
   }
 
+}
+.logout-button:hover{
+
+    color:#ef4444;
+}
+
+.active-link{
+
+    color:#60a5fa !important;
+
+    font-weight:700;
+
+    position:relative;
+}
+
+.active-link{
+
+    color:#60a5fa !important;
+
+    font-weight:700;
+
+    position:relative;
+}
+
+.active-link::after{
+
+    content:'';
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:100%;
+
+    height:2px;
+
+    background:#60a5fa;
+
+    border-radius:999px;
 }

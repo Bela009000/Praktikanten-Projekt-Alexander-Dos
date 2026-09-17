@@ -2,56 +2,141 @@
 
     <nav class="navbar">
 
-        <a routerLink="/dashboard">
-            Dashboard
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
         </a>
 
-        <a routerLink="/topics">
-            Themen
-        </a>
+        <div class="nav-links">
 
-        <a routerLink="/flashcards">
-            Karteikarten
-        </a>
+            <a
+                routerLink="/dashboard"
+                routerLinkActive="active-link">
+
+                Dashboard
+
+            </a>
+
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
+
+                Themen
+
+            </a>
+
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
+
+                Karteikarten
+
+            </a>
+
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
+
+                Lernmodus
+
+            </a>
+
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
+
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
+
+        </div>
 
     </nav>
+    <section class="page-header">
 
-    <h1>
-        Quiz
-    </h1>
+        <h1>
+            Quiz
+        </h1>
+
+        <p>
+            Teste dein Wissen mit deinen Karteikarten.
+        </p>
+
+    </section>
+
+    <div class="quiz-start-card">
+
+    <h2>
+        Quiz starten
+    </h2>
 
     <div class="topic-selection">
 
-        <select [(ngModel)]="selectedTopic">
+            <select [(ngModel)]="selectedTopic">
 
-            <option value="">
-                Thema auswählen
-            </option>
-
-            @for(topic of topics; track topic){
-
-                <option [value]="topic.name">
-
-                    {{ topic.name }}
-
+                <option value="">
+                    Thema auswählen
                 </option>
 
-            }
+                @for(topic of topics; track topic){
 
-        </select>
+                    <option [value]="topic.name">
 
-        <button
-            class="start-btn"
-            (click)="startQuiz()">
+                        {{ topic.name }}
 
-            Quiz starten
+                    </option>
 
-        </button>
+                }
+
+            </select>
+
+            <button
+                class="start-btn"
+                (click)="startQuiz()">
+
+                Quiz starten
+
+            </button>
+
+        </div>
 
     </div>
 
     @if(questions.length > 0 && !quizFinished){
 
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                [style.width.%]="((currentIndex + 1) / questions.length) * 100">
+
+            </div>
+
+        </div>
         <div class="quiz-card">
 
             <h2>
@@ -84,6 +169,14 @@
                     (click)="checkAnswer()">
 
                     Antwort prüfen
+
+                </button>
+
+                <button
+                    class="cancel-quiz-btn"
+                    (click)="cancelQuiz()">
+
+                    Quiz beenden
 
                 </button>
 

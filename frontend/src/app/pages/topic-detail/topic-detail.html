@@ -2,31 +2,92 @@
 
     <nav class="navbar">
 
-        <a routerLink="/dashboard">
-            Dashboard
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
         </a>
 
-        <a routerLink="/topics">
-            Themen
-        </a>
+        <div class="nav-links">
 
-        <a routerLink="/flashcards">
-            Karteikarten
-        </a>
+            <a
+                routerLink="/dashboard"
+                routerLinkActive="active-link">
+
+                Dashboard
+
+            </a>
+
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
+
+                Themen
+
+            </a>
+
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
+
+                Karteikarten
+
+            </a>
+
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
+
+                Lernmodus
+
+            </a>
+
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
+
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
+
+        </div>
 
     </nav>
 
-    <h1>
+    <section class="page-header">
 
-        {{ topic?.name }}
+        <h1>
+            {{ topic?.name }}
+        </h1>
 
-    </h1>
+        <p>
+            Karteikarten dieses Themas verwalten
+        </p>
 
-    <p>
-
-        {{ topic?.description }}
-
-    </p>
+    </section>
 
     @if(editingCard){
 
@@ -79,15 +140,11 @@
             <div class="flashcard">
 
                 <h3>
-
                     {{ card.question }}
-
                 </h3>
 
                 <p>
-
                     {{ card.answer }}
-
                 </p>
 
                 <div class="card-actions">

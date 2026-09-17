@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLink, RouterLinkActive],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -30,8 +30,35 @@ export class DashboardComponent {
 
     if(savedTopics){
 
+      const topics =
+        JSON.parse(savedTopics);
+
       this.topicCount =
-        JSON.parse(savedTopics).length;
+        topics.length;
+
+      let totalCards = 0;
+
+      for(const topic of topics){
+
+        totalCards +=
+          topic.flashcards.length;
+
+      }
+
+      this.flashcardCount =
+        totalCards;
+
+    }
+    const savedSuccess =
+
+      localStorage.getItem(
+        'quizSuccess'
+      );
+
+    if(savedSuccess){
+
+      this.quizSuccess =
+        Number(savedSuccess);
 
     }
 

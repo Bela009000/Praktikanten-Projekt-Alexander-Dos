@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterLink,
-    FormsModule
+    FormsModule,
+    RouterLinkActive
   ],
   templateUrl: './learn.html',
   styleUrl: './learn.css'
@@ -32,7 +33,9 @@ export class LearnComponent {
 
   successRate = 0;
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
 
     const currentUser =
       localStorage.getItem('currentUser');
@@ -151,6 +154,36 @@ export class LearnComponent {
     this.showAnswer = false;
 
     this.learningFinished = false;
+
+    this.successRate = 0;
+
+  }
+  logout(): void {
+
+    localStorage.removeItem(
+      'currentUser'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
+    this.router.navigate([
+      '/login'
+    ]);
+
+  }
+  cancelLearning(): void {
+
+    this.flashcards = [];
+
+    this.currentIndex = 0;
+
+    this.showAnswer = false;
+
+    this.learningFinished = false;
+
+    this.wrongCards = [];
 
     this.successRate = 0;
 
