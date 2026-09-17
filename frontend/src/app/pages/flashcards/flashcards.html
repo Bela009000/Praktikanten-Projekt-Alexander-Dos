@@ -1,1 +1,312 @@
-<p>flashcards works!</p>
+<div class="flashcards-page">
+
+    <nav class="navbar">
+
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
+
+                Themen
+
+            </a>
+
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
+
+                Karteikarten
+
+            </a>
+
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
+
+                Lernmodus
+
+            </a>
+
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
+
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                type="button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
+
+        </div>
+
+    </nav>
+    <button
+        class="back-btn"
+        (click)="goBack()">
+
+        ← Zurück
+
+    </button>
+
+    <section class="page-header">
+
+        <h1>
+            Karteikarten erstellen
+        </h1>
+
+        <p>
+            Erstelle neue Karteikarten und verwalte bestehende Lernkarten.
+        </p>
+
+    </section>
+
+
+    <section class="form-card">
+
+        <h2>
+            Neue Karteikarte
+        </h2>
+
+
+        <div class="form-group">
+
+            <label for="topic">
+                Thema
+            </label>
+
+            <select
+                id="topic"
+                [(ngModel)]="selectedTopic">
+
+                <option value="">
+                    Thema auswählen
+                </option>
+
+                @for (topic of topics; track topic.name) {
+
+                    <option [value]="topic.name">
+
+                        {{ topic.name }}
+
+                    </option>
+
+                }
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="question">
+                Frage
+            </label>
+
+            <input
+                id="question"
+                type="text"
+                placeholder="Frage eingeben..."
+                [(ngModel)]="question">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="answer">
+                Antwort
+            </label>
+
+            <textarea
+                id="answer"
+                placeholder="Antwort eingeben..."
+                [(ngModel)]="answer">
+            </textarea>
+
+        </div>
+
+
+        <button
+            class="save-flashcard-btn"
+            type="button"
+            (click)="addFlashcard()">
+
+            Karteikarte speichern
+
+        </button>
+
+    </section>
+
+
+    <section class="cards-header">
+
+        <h2>
+            Gespeicherte Karteikarten
+        </h2>
+
+    </section>
+
+
+    <div class="cards-grid">
+
+        @for (topic of topics; track topic.name) {
+
+            @for (card of topic.flashcards; track card) {
+
+                <div class="flashcard">
+
+                    <div class="card-content">
+
+                        <h3>
+                            {{ card.question }}
+                        </h3>
+
+                        <p>
+                            {{ card.answer }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-actions">
+
+                        <button
+                            class="edit-btn"
+                            type="button"
+                            (click)="startEdit(card, topic)">
+
+                            Bearbeiten
+
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            type="button"
+                            (click)="deleteFlashcard(card, topic)">
+
+                            Löschen
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            }
+
+        }
+
+    </div>
+
+</div>
+
+
+@if (editingCard) {
+
+    <div class="modal-overlay">
+
+        <div class="edit-modal">
+
+            <button
+                class="close-btn"
+                type="button"
+                aria-label="Bearbeiten schließen"
+                (click)="cancelEdit()">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    width="24"
+                    height="24">
+
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+
+                </svg>
+
+            </button>
+
+
+            <h2>
+                Karteikarte bearbeiten
+            </h2>
+
+
+            <input
+                type="text"
+                placeholder="Frage"
+                [(ngModel)]="editQuestion">
+
+
+            <textarea
+                placeholder="Antwort"
+                [(ngModel)]="editAnswer">
+            </textarea>
+
+
+            <div class="modal-buttons">
+
+                <button
+                    class="save-btn"
+                    type="button"
+                    (click)="saveEdit()">
+
+                    Speichern
+
+                </button>
+
+
+                <button
+                    class="cancel-btn"
+                    type="button"
+                    (click)="cancelEdit()">
+
+                    Abbrechen
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+}

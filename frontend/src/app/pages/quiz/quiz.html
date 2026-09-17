@@ -1,0 +1,314 @@
+<div class="quiz-page">
+
+    <nav class="navbar">
+
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
+
+                Themen
+
+            </a>
+
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
+
+                Karteikarten
+
+            </a>
+
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
+
+                Lernmodus
+
+            </a>
+
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
+
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
+
+        </div>
+
+    </nav>
+    <button
+        class="back-btn"
+        (click)="goBack()">
+
+        ← Zurück
+
+    </button>
+    <section class="page-header">
+
+        <h1>
+            Quiz
+        </h1>
+
+        <p>
+            Teste dein Wissen mit deinen Karteikarten.
+        </p>
+
+    </section>
+
+    <div class="quiz-start-card">
+
+    <h2>
+        Quiz starten
+    </h2>
+
+    <div class="topic-selection">
+
+            <select [(ngModel)]="selectedTopic">
+
+                <option value="">
+                    Thema auswählen
+                </option>
+
+                @for(topic of topics; track topic){
+
+                    <option [value]="topic.name">
+
+                        {{ topic.name }}
+
+                    </option>
+
+                }
+
+            </select>
+
+            <button
+                class="start-btn"
+                (click)="startQuiz()">
+
+                Quiz starten
+
+            </button>
+
+        </div>
+
+    </div>
+
+    @if(questions.length > 0 && !quizFinished){
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                [style.width.%]="((currentIndex + 1) / questions.length) * 100">
+
+            </div>
+
+        </div>
+        <div class="quiz-card">
+
+            <h2>
+
+                Frage
+
+                {{ currentIndex + 1 }}
+
+                von
+
+                {{ questions.length }}
+
+            </h2>
+
+            <p class="question-text">
+
+                {{ questions[currentIndex].question }}
+
+            </p>
+
+            @if(!showSolution){
+
+                <input
+                    type="text"
+                    [(ngModel)]="userAnswer"
+                    placeholder="Antwort eingeben">
+
+                <button
+                    class="check-btn"
+                    (click)="checkAnswer()">
+
+                    Antwort prüfen
+
+                </button>
+
+                <button
+                    class="cancel-quiz-btn"
+                    (click)="cancelQuiz()">
+
+                    Quiz beenden
+
+                </button>
+
+            }
+
+            @if(showSolution){
+
+                <div class="solution-box">
+
+                    <h3>
+                        Deine Antwort
+                    </h3>
+
+                    <p>
+
+                        {{ userAnswer }}
+
+                    </p>
+
+                    <h3>
+                        Richtige Antwort
+                    </h3>
+
+                    <p>
+
+                        {{ questions[currentIndex].answer }}
+
+                    </p>
+
+                    @if(isCorrect){
+
+                        <div class="correct-result">
+
+                            Antwort richtig
+
+                        </div>
+
+                    }
+
+                    @else {
+
+                        <div class="wrong-result">
+
+                            Antwort falsch
+
+                        </div>
+
+                    }
+
+                    <button
+                        class="next-btn"
+                        (click)="nextQuestion()">
+
+                        Nächste Frage
+
+                    </button>
+
+                </div>
+
+            }
+
+        </div>
+
+    }
+
+    @if(quizFinished){
+
+        <div class="result-box">
+
+            <h2>
+                Quiz beendet
+            </h2>
+
+            <div class="result-item">
+
+                <span>
+
+                    Richtig:
+
+                    {{ correctAnswers }}
+
+                </span>
+
+            </div>
+
+            <div class="result-item">
+
+                <span>
+
+                    Falsch:
+
+                    {{ wrongCards.length }}
+
+                </span>
+
+            </div>
+
+            <div class="success-rate">
+
+                <h3>
+                    Erfolgsquote
+                </h3>
+
+                <div class="success-number">
+
+                    {{ successRate }}%
+
+                </div>
+
+            </div>
+
+            @if(wrongCards.length > 0){
+
+                <button
+                    class="retry-btn"
+                    (click)="retryWrongCards()">
+
+                    Fehler erneut üben
+
+                </button>
+
+            }
+
+            <button
+                class="dashboard-btn"
+                routerLink="/dashboard">
+
+                Zum Dashboard
+
+            </button>
+
+        </div>
+
+    }
+
+</div>

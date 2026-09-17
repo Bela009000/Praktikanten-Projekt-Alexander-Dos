@@ -1,0 +1,351 @@
+<div class="learn-page">
+
+    <nav class="navbar">
+
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
+
+                Themen
+
+            </a>
+
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
+
+                Karteikarten
+
+            </a>
+
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
+
+                Lernmodus
+
+            </a>
+
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
+
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                type="button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
+
+        </div>
+
+    </nav>
+    <button
+        class="back-btn"
+        (click)="goBack()">
+
+        ← Zurück
+
+    </button>
+
+    <section class="page-header">
+
+        <h1>
+            Lernmodus
+        </h1>
+
+        <p>
+            Wiederhole deine Karteikarten und trainiere dein Wissen.
+        </p>
+
+    </section>
+
+    @if(!isLearning){
+
+        <div class="learn-start-card">
+
+            <h2>
+                Lernrunde starten
+            </h2>
+
+            <div class="topic-selection">
+
+                <select [(ngModel)]="selectedTopic">
+
+                    <option value="">
+                        Thema auswählen
+                    </option>
+
+                    @for(topic of topics; track topic){
+
+                        <option [value]="topic.name">
+
+                            {{ topic.name }}
+
+                        </option>
+
+                    }
+
+                </select>
+
+                <button
+                    class="start-btn"
+                    (click)="startLearning()">
+
+                    Lernen starten
+
+                </button>
+
+            </div>
+
+        </div>
+
+    }
+    @if(flashcards.length > 0 && !learningFinished){
+
+        <div class="learn-card">
+
+            <h2>
+                Frage
+            </h2>
+
+            <p>
+
+                {{ flashcards[currentIndex].question }}
+
+            </p>
+
+            @if(showAnswer){
+
+                <div class="answer-box">
+
+                    <h3>
+                        Antwort
+                    </h3>
+
+                    <p>
+
+                        {{ flashcards[currentIndex].answer }}
+
+                    </p>
+
+                </div>
+
+                <div class="answer-buttons">
+
+                    <button
+                        class="correct-btn"
+                        (click)="markCorrect()">
+
+                        <svg
+                            class="button-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                            <path d="M20 6L9 17l-5-5"></path>
+
+                        </svg>
+
+                        <span>
+                            Richtig
+                        </span>
+
+                    </button>
+
+                    <button
+                        class="wrong-btn"
+                        (click)="markWrong()">
+
+                        <svg
+                            class="button-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                            <line
+                                x1="18"
+                                y1="6"
+                                x2="6"
+                                y2="18">
+                            </line>
+
+                            <line
+                                x1="6"
+                                y1="6"
+                                x2="18"
+                                y2="18">
+                            </line>
+
+                        </svg>
+
+                        <span>
+                            Falsch
+                        </span>
+
+                    </button>
+
+                    <button
+                        class="cancel-learning-btn"
+                        (click)="cancelLearning()">
+
+                        Lernen beenden
+
+                    </button>
+
+                </div>
+
+            }
+
+            @else {
+
+                <button
+                    class="show-btn"
+                    (click)="revealAnswer()">
+
+                    Antwort anzeigen
+
+                </button>
+
+            }
+
+        </div>
+
+    }
+
+    @if(learningFinished){
+
+        <div class="result-box">
+
+    <h2>
+        Lernrunde beendet
+    </h2>
+
+    <div class="result-item">
+
+        <svg
+            class="result-icon correct-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+
+            <path d="M20 6L9 17l-5-5"></path>
+
+        </svg>
+
+        <span>
+
+            Richtig:
+
+            {{ flashcards.length - wrongCards.length }}
+
+        </span>
+
+    </div>
+
+    <div class="result-item">
+
+            <svg
+                class="result-icon wrong-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <line
+                    x1="18"
+                    y1="6"
+                    x2="6"
+                    y2="18">
+                </line>
+
+                <line
+                    x1="6"
+                    y1="6"
+                    x2="18"
+                    y2="18">
+                </line>
+
+            </svg>
+
+            <span>
+
+                Falsch:
+
+                {{ wrongCards.length }}
+
+            </span>
+
+        </div>
+
+        <div class="success-rate">
+
+            <h3>
+                Erfolgsquote
+            </h3>
+
+            <div class="success-number">
+
+                {{ successRate }}%
+
+            </div>
+
+        </div>
+
+        @if(wrongCards.length > 0){
+
+            <button
+                class="retry-btn"
+                (click)="learnWrongCards()">
+
+                Fehler erneut lernen
+
+            </button>
+
+        }
+
+    </div>
+
+    }
+
+</div>

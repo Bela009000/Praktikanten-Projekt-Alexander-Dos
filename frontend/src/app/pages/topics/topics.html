@@ -1,70 +1,235 @@
 <div class="topics-page">
 
-  <div class="topics-card">
+    <nav class="navbar">
 
-    <div class="header">
+        <a
+            class="logo"
+            routerLink="/dashboard">
 
-      <button
-        class="back-button"
-        routerLink="/dashboard">
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
 
-        ← Dashboard
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
 
-      </button>
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
 
-      <h1>📂 Meine Themen</h1>
+            </svg>
 
-      <p>Erstelle und verwalte deine Lern-Themen.</p>
+            <span>Lernkarten App</span>
 
-    </div>
+        </a>
 
-    <div class="add-topic-section">
+        <div class="nav-links">
 
-      <input
-        type="text"
-        placeholder="Neues Thema eingeben..."
-        [(ngModel)]="topicName">
+            <a
+                routerLink="/topics"
+                routerLinkActive="active-link">
 
-      <button
-        class="add-button"
-        (click)="addTopic()">
+                Themen
 
-        Thema hinzufügen
+            </a>
 
-      </button>
+            <a
+                routerLink="/flashcards"
+                routerLinkActive="active-link">
 
-    </div>
+                Karteikarten
 
-    <div class="topics-list">
+            </a>
 
-      @for(topic of topics; track topic; let i = $index){
+            <a
+                routerLink="/learn"
+                routerLinkActive="active-link">
 
-      <div class="topic-item">
+                Lernmodus
 
-        <div class="topic-info">
+            </a>
 
-          <span class="topic-icon">📘</span>
+            <a
+                routerLink="/quiz"
+                routerLinkActive="active-link">
 
-          <span class="topic-name">
-            {{ topic }}
-          </span>
+                Quiz
+
+            </a>
+
+            <button
+                class="logout-button"
+                type="button"
+                (click)="logout()">
+
+                Abmelden
+
+            </button>
 
         </div>
 
-        <button
-          class="delete-button"
-          (click)="deleteTopic(i)">
+    </nav>
+    <button
+        class="back-btn"
+        (click)="goBack()">
 
-          Löschen
+        ← Zurück
+
+    </button>
+
+    <section class="topics-header">
+
+        <div class="header-icon">
+
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none">
+
+                <path
+                    d="M3 7.5C3 6.67 3.67 6 4.5 6H9L11 8H19.5C20.33 8 21 8.67 21 9.5V17.5C21 18.33 20.33 19 19.5 19H4.5C3.67 19 3 18.33 3 17.5V7.5Z"
+                    stroke="currentColor"
+                    stroke-width="2"/>
+
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h1>Meine Themen</h1>
+
+            <p>
+                Verwalte deine Themen und erstelle neue Lernbereiche
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="topic-input-section">
+
+        <input
+            type="text"
+            placeholder="Neues Thema eingeben..."
+            [(ngModel)]="topicName"
+            (keyup.enter)="addTopic()">
+
+        <button
+            class="add-button"
+            (click)="addTopic()">
+
+            Thema hinzufügen
 
         </button>
 
-      </div>
+    </section>
 
-      }
+    <section class="topics-grid">
 
-    </div>
+        @for(topic of topics; track topic; let i = $index){
 
-  </div>
+            <div class="topic-card">
+
+                @if(editingIndex === i){
+
+                    <div class="edit-area">
+
+                        <input
+                            type="text"
+                            [(ngModel)]="editingName"
+                            (keyup.enter)="saveEdit()">
+
+                        <div class="edit-buttons">
+
+                            <button
+                                class="save-button"
+                                (click)="saveEdit()">
+
+                                Speichern
+
+                            </button>
+
+                            <button
+                                class="cancel-button"
+                                (click)="cancelEdit()">
+
+                                Abbrechen
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                }
+
+                @else {
+
+                    <div class="topic-content">
+
+                        <div class="topic-icon">
+
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none">
+
+                                <path
+                                    d="M3 7.5C3 6.67 3.67 6 4.5 6H9L11 8H19.5C20.33 8 21 8.67 21 9.5V17.5C21 18.33 20.33 19 19.5 19H4.5C3.67 19 3 18.33 3 17.5V7.5Z"
+                                    stroke="currentColor"
+                                    stroke-width="2"/>
+
+                            </svg>
+
+                        </div>
+
+                        <h3>
+
+                            {{ topic.name }}
+
+                        </h3>
+
+                    </div>
+
+                    <div class="topic-actions">
+
+                        <button
+                            class="open-button"
+                            (click)="openTopic(topic)">
+
+                            Öffnen
+
+                        </button>
+
+                        <button
+                            class="edit-button"
+                            (click)="startEdit(i)">
+
+                            Bearbeiten
+
+                        </button>
+
+                        <button
+                            class="delete-button"
+                            (click)="deleteTopic(i)">
+
+                            Löschen
+
+                        </button>
+
+                    </div>
+
+                }
+
+            </div>
+
+        }
+
+    </section>
 
 </div>

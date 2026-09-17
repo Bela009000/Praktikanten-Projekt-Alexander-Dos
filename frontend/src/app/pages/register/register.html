@@ -1,36 +1,58 @@
-<div class="register-container">
-  <div class="register-card">
+<nav class="navbar">
 
-    <h1>Registrieren</h1>
+    <div class="logo">
+        Lernkarten App
+    </div>
 
-    <input
-        [disabled]="registrationSuccessful"
-        type="text"
-        placeholder="Benutzername"
-        [(ngModel)]="username">
+</nav>
+<div class="page">
 
-    <input
-        [disabled]="registrationSuccessful"
-        type="password"
-        placeholder="Passwort"
-        [(ngModel)]="password">
+    <div class="register-card">
 
-    <p class="error">
-        {{ errorMessage }}
-    </p>
+        <h1>Registrieren</h1>
 
-    <p class="success">
-        {{ successMessage }}
-    </p>
-    
-    @if(!registrationSuccessful){
-    <button (click)="register()">
-    Registrieren
-    </button>
-    }
-    <button routerLink="/login">
-        Zurück zum Login
-    </button>
+        <p class="subtitle">
+            Erstelle dein neues Konto
+        </p>
 
-  </div>
+        <input
+            type="text"
+            placeholder="Benutzername"
+            [(ngModel)]="username">
+
+        <input
+            type="password"
+            placeholder="Passwort"
+            [(ngModel)]="password">
+
+        <p class="error">
+            {{ errorMessage }}
+        </p>
+
+        <p class="success">
+            {{ successMessage }}
+        </p>
+
+        @if(!registrationSuccessful){
+
+        <button
+            class="register-button"
+            (click)="register()">
+
+            Registrieren
+
+        </button>
+
+        }
+
+        <button
+            class="login-button"
+            routerLink="/login">
+
+            Zurück zum Login
+
+        </button>
+
+    </div>
+
 </div>
