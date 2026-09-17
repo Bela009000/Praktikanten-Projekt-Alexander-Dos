@@ -26,14 +26,6 @@
         <div class="nav-links">
 
             <a
-                routerLink="/dashboard"
-                routerLinkActive="active-link">
-
-                Dashboard
-
-            </a>
-
-            <a
                 routerLink="/topics"
                 routerLinkActive="active-link">
 
@@ -77,6 +69,13 @@
         </div>
 
     </nav>
+    <button
+        class="back-btn"
+        (click)="goBack()">
+
+        ← Zurück
+
+    </button>
 
     <section class="page-header">
 
@@ -90,44 +89,47 @@
 
     </section>
 
-    <div class="learn-start-card">
+    @if(!isLearning){
 
-        <h2>
-            Lernrunde starten
-        </h2>
+        <div class="learn-start-card">
 
-        <div class="topic-selection">
+            <h2>
+                Lernrunde starten
+            </h2>
 
-            <select [(ngModel)]="selectedTopic">
+            <div class="topic-selection">
 
-                <option value="">
-                    Thema auswählen
-                </option>
+                <select [(ngModel)]="selectedTopic">
 
-                @for(topic of topics; track topic){
-
-                    <option [value]="topic.name">
-
-                        {{ topic.name }}
-
+                    <option value="">
+                        Thema auswählen
                     </option>
 
-                }
+                    @for(topic of topics; track topic){
 
-            </select>
+                        <option [value]="topic.name">
 
-            <button
-                class="start-btn"
-                (click)="startLearning()">
+                            {{ topic.name }}
 
-                Lernen starten
+                        </option>
 
-            </button>
+                    }
+
+                </select>
+
+                <button
+                    class="start-btn"
+                    (click)="startLearning()">
+
+                    Lernen starten
+
+                </button>
+
+            </div>
 
         </div>
 
-    </div>
-
+    }
     @if(flashcards.length > 0 && !learningFinished){
 
         <div class="learn-card">

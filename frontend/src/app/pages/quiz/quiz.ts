@@ -162,9 +162,14 @@ export class QuizComponent {
 
       );
 
+    const currentUser =
+      localStorage.getItem(
+        'currentUser'
+      );
+
     localStorage.setItem(
 
-      'quizSuccess',
+      `quizSuccess_${currentUser}`,
 
       this.successRate.toString()
 
@@ -215,6 +220,13 @@ export class QuizComponent {
     this.successRate = 0;
 
     this.isCorrect = false;
+
+  }
+  goBack(): void {
+
+      this.router.navigate([
+          '/dashboard'
+      ]);
 
   }
   logout(): void {

@@ -52,7 +52,9 @@ export class DashboardComponent {
     const savedSuccess =
 
       localStorage.getItem(
-        'quizSuccess'
+
+        `quizSuccess_${currentUser}`
+
       );
 
     if(savedSuccess){
@@ -61,6 +63,7 @@ export class DashboardComponent {
         Number(savedSuccess);
 
     }
+
 
   }
 

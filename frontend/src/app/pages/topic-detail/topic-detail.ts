@@ -24,6 +24,10 @@ export class TopicDetailComponent {
 
   editAnswer = '';
 
+  newQuestion = '';
+
+  newAnswer = '';
+
   constructor(private router: Router) {
 
     const currentUser =
@@ -141,6 +145,37 @@ export class TopicDetailComponent {
 
   }
 
+  addFlashcard(): void {
+
+      if(
+          !this.newQuestion.trim() ||
+          !this.newAnswer.trim()
+      ){
+          return;
+      }
+
+      this.topic.flashcards.push({
+
+          question: this.newQuestion,
+
+          answer: this.newAnswer
+
+      });
+
+      this.save();
+
+      this.newQuestion = '';
+
+      this.newAnswer = '';
+
+  }
+  goBack(): void {
+
+      this.router.navigate([
+          '/topics'
+      ]);
+
+  }
   logout(): void {
 
     localStorage.removeItem(

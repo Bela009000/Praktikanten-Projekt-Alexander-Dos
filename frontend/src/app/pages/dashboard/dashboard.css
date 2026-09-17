@@ -10,22 +10,10 @@ body{
 }
 
 .dashboard-page{
-
     min-height:100vh;
-
     padding:40px;
-
-    background:
-    linear-gradient(
-        135deg,
-        #0f172a,
-        #1a1745
-    );
-
-    color:white;
 }
 
-/* NAVBAR */
 
 .navbar{
 
@@ -78,6 +66,8 @@ body{
     align-items:center;
 
     gap:28px;
+
+    flex-wrap:wrap;
 }
 
 .nav-links a{
@@ -90,7 +80,9 @@ body{
 
     font-size:15px;
 
-    transition:.2s;
+    font-weight:500;
+
+    transition:.2s ease;
 }
 
 .nav-links a:hover{
@@ -106,11 +98,13 @@ body{
 
     color:#cbd5e1;
 
-    cursor:pointer;
-
     font-size:15px;
 
-    transition:.2s;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:.2s ease;
 }
 
 .logout-button:hover{
@@ -120,11 +114,11 @@ body{
 
 .active-link{
 
-    position:relative;
-
     color:#60a5fa !important;
 
     font-weight:700;
+
+    position:relative;
 }
 
 .active-link::after{
@@ -145,6 +139,7 @@ body{
 
     border-radius:999px;
 }
+
 
 /* HEADER */
 
@@ -219,7 +214,6 @@ body{
     color:#cbd5e1;
 }
 
-/* DASHBOARD CARDS */
 
 .dashboard-grid{
 
@@ -305,7 +299,6 @@ body{
     color:#cbd5e1;
 }
 
-/* RESPONSIVE */
 
 @media(max-width:700px){
 

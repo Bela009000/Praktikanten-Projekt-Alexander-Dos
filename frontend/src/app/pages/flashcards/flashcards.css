@@ -1,27 +1,24 @@
-.flashcards-page{
+.flashcards-page {
     min-height: 100vh;
-    padding: 25px;
-    background: linear-gradient(135deg, #0f172a, #1e1b4b);
+    padding: 40px;
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #1a1745
+        );
+    color: white;
 }
-
-.navbar{
-
-    height:70px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:0 32px;
-
-    background:#0f172a;
-
-    border-bottom:
-    1px solid rgba(255,255,255,.08);
+.navbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: #0f172a;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    box-sizing: border-box;
 }
-
 
 .logo{
 
@@ -49,29 +46,30 @@
     color:#3b82f6;
 }
 
-.nav-icon{
-    width:22px;
-
-    height:22px;
-
-    color:#3b82f6;
-}
-
 .nav-links{
+
     display:flex;
 
     align-items:center;
 
     gap:28px;
+
+    flex-wrap:wrap;
 }
 
 .nav-links a{
+
+    position:relative;
 
     color:#cbd5e1;
 
     text-decoration:none;
 
-    transition:.2s;
+    font-size:15px;
+
+    font-weight:500;
+
+    transition:.2s ease;
 }
 
 .nav-links a:hover{
@@ -79,24 +77,63 @@
     color:white;
 }
 
+.logout-button{
+
+    background:none;
+
+    border:none;
+
+    color:#cbd5e1;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.logout-button:hover{
+
+    color:#ef4444;
+}
+
 .active-link{
+
     color:#60a5fa !important;
 
     font-weight:700;
 
-    border-bottom:
-    2px solid #60a5fa;
+    position:relative;
+}
 
-    padding-bottom:4px;
+.active-link::after{
+
+    content:'';
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:100%;
+
+    height:2px;
+
+    background:#60a5fa;
+
+    border-radius:999px;
 }
 
 
 .page-header{
-    max-width:1200px;
+    max-width:1100px;
 
-    margin:50px auto 25px;
+    margin: 45px auto 35px;
 
-    padding:0 25px;
+    padding:0 20px;
 }
 
 .page-header h1{
@@ -117,7 +154,7 @@
 
 
 .form-card{
-    max-width:1200px;
+    max-width:1100px;
 
     margin:0 auto 40px;
 
@@ -227,7 +264,7 @@
 
 
 .cards-header{
-    max-width:1200px;
+    max-width:1100px;
 
     margin:0 auto;
 
@@ -242,7 +279,7 @@
 
 
 .cards-grid{
-    max-width:1200px;
+    max-width:1100px;
 
     margin:0 auto 60px;
 
@@ -472,10 +509,6 @@
 
 @media(max-width:768px){
 
-    .navbar{
-        padding:0 18px;
-    }
-
     .nav-links{
         gap:14px;
     }
@@ -492,32 +525,8 @@
         grid-template-columns:1fr;
     }
 }
-
-.logout-button{
-
-    background:none;
-
-    border:none;
-
-    color:#cbd5e1;
-
-    cursor:pointer;
-
-    font-size:15px;
-
-    transition:.2s;
-}
-
-.logout-button:hover{
-
-    color:#ef4444;
-}
-
-.active-link{
-
-    color:#60a5fa !important;
-
-    font-weight:700;
-
-    position:relative;
+.flashcards-page .navbar {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
 }

@@ -28,14 +28,6 @@
         <div class="nav-links">
 
             <a
-                routerLink="/dashboard"
-                routerLinkActive="active-link">
-
-                Dashboard
-
-            </a>
-
-            <a
                 routerLink="/topics"
                 routerLinkActive="active-link">
 
@@ -92,25 +84,29 @@
 
     </section>
 
+
     <section class="form-card">
 
         <h2>
             Neue Karteikarte
         </h2>
 
+
         <div class="form-group">
 
-            <label>
+            <label for="topic">
                 Thema
             </label>
 
-            <select [(ngModel)]="selectedTopic">
+            <select
+                id="topic"
+                [(ngModel)]="selectedTopic">
 
                 <option value="">
                     Thema auswählen
                 </option>
 
-                @for(topic of topics; track topic){
+                @for (topic of topics; track topic.name) {
 
                     <option [value]="topic.name">
 
@@ -124,34 +120,40 @@
 
         </div>
 
+
         <div class="form-group">
 
-            <label>
+            <label for="question">
                 Frage
             </label>
 
             <input
+                id="question"
                 type="text"
                 placeholder="Frage eingeben..."
                 [(ngModel)]="question">
 
         </div>
 
+
         <div class="form-group">
 
-            <label>
+            <label for="answer">
                 Antwort
             </label>
 
             <textarea
+                id="answer"
                 placeholder="Antwort eingeben..."
                 [(ngModel)]="answer">
             </textarea>
 
         </div>
 
+
         <button
             class="save-flashcard-btn"
+            type="button"
             (click)="addFlashcard()">
 
             Karteikarte speichern
@@ -159,6 +161,7 @@
         </button>
 
     </section>
+
 
     <section class="cards-header">
 
@@ -168,94 +171,43 @@
 
     </section>
 
-    @if(editingCard){
-
-        <div class="modal-overlay">
-
-            <div class="edit-modal">
-
-                <button
-                    class="close-btn"
-                    (click)="cancelEdit()">
-
-                    ✕
-
-                </button>
-
-                <h2>
-                    Karteikarte bearbeiten
-                </h2>
-
-                <input
-                    type="text"
-                    [(ngModel)]="editQuestion">
-
-                <textarea
-                    [(ngModel)]="editAnswer">
-                </textarea>
-
-                <div class="modal-buttons">
-
-                    <button
-                        class="save-btn"
-                        (click)="saveEdit()">
-
-                        Speichern
-
-                    </button>
-
-                    <button
-                        class="cancel-btn"
-                        (click)="cancelEdit()">
-
-                        Abbrechen
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    }
 
     <div class="cards-grid">
 
-        @for(topic of topics; track topic){
+        @for (topic of topics; track topic.name) {
 
-            @for(card of topic.flashcards; track card){
+            @for (card of topic.flashcards; track card) {
 
                 <div class="flashcard">
 
                     <div class="card-content">
 
                         <h3>
-
                             {{ card.question }}
-
                         </h3>
 
                         <p>
-
                             {{ card.answer }}
-
                         </p>
 
                     </div>
+
 
                     <div class="card-actions">
 
                         <button
                             class="edit-btn"
+                            type="button"
                             (click)="startEdit(card, topic)">
 
                             Bearbeiten
 
                         </button>
 
+
                         <button
                             class="delete-btn"
+                            type="button"
                             (click)="deleteFlashcard(card, topic)">
 
                             Löschen
@@ -273,3 +225,81 @@
     </div>
 
 </div>
+
+
+@if (editingCard) {
+
+    <div class="modal-overlay">
+
+        <div class="edit-modal">
+
+            <button
+                class="close-btn"
+                type="button"
+                aria-label="Bearbeiten schließen"
+                (click)="cancelEdit()">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    width="24"
+                    height="24">
+
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+
+                </svg>
+
+            </button>
+
+
+            <h2>
+                Karteikarte bearbeiten
+            </h2>
+
+
+            <input
+                type="text"
+                placeholder="Frage"
+                [(ngModel)]="editQuestion">
+
+
+            <textarea
+                placeholder="Antwort"
+                [(ngModel)]="editAnswer">
+            </textarea>
+
+
+            <div class="modal-buttons">
+
+                <button
+                    class="save-btn"
+                    type="button"
+                    (click)="saveEdit()">
+
+                    Speichern
+
+                </button>
+
+
+                <button
+                    class="cancel-btn"
+                    type="button"
+                    (click)="cancelEdit()">
+
+                    Abbrechen
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+}

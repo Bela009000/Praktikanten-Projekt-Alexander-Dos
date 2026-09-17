@@ -26,14 +26,6 @@
         <div class="nav-links">
 
             <a
-                routerLink="/dashboard"
-                routerLinkActive="active-link">
-
-                Dashboard
-
-            </a>
-
-            <a
                 routerLink="/topics"
                 routerLinkActive="active-link">
 
@@ -76,6 +68,13 @@
         </div>
 
     </nav>
+    <button
+        class="back-btn"
+        (click)="goBack()">
+
+        ← Zurück
+
+    </button>
     <section class="page-header">
 
         <h1>

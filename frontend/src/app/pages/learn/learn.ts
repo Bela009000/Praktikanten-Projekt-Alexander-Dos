@@ -33,6 +33,8 @@ export class LearnComponent {
 
   successRate = 0;
 
+  isLearning = false;
+
   constructor(
     private router: Router
   ) {
@@ -78,6 +80,8 @@ export class LearnComponent {
     this.wrongCards = [];
 
     this.successRate = 0;
+
+    this.isLearning = true;
 
   }
 
@@ -138,6 +142,8 @@ export class LearnComponent {
 
     this.learningFinished = true;
 
+    this.isLearning = false;
+
     this.showAnswer = false;
 
   }
@@ -156,6 +162,15 @@ export class LearnComponent {
     this.learningFinished = false;
 
     this.successRate = 0;
+
+    this.isLearning = true;
+
+  }
+  goBack(): void {
+
+      this.router.navigate([
+          '/dashboard'
+      ]);
 
   }
   logout(): void {
@@ -186,6 +201,8 @@ export class LearnComponent {
     this.wrongCards = [];
 
     this.successRate = 0;
+
+    this.isLearning = false;
 
   }
 

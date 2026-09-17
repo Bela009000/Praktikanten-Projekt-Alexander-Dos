@@ -26,14 +26,6 @@
         <div class="nav-links">
 
             <a
-                routerLink="/dashboard"
-                routerLinkActive="active-link">
-
-                Dashboard
-
-            </a>
-
-            <a
                 routerLink="/topics"
                 routerLinkActive="active-link">
 
@@ -76,6 +68,13 @@
         </div>
 
     </nav>
+        <button
+        class="back-btn"
+        (click)="goBack()">
+
+        ← Zurück
+
+    </button>
 
     <section class="page-header">
 
@@ -88,6 +87,29 @@
         </p>
 
     </section>
+    <div class="create-card-box">
+
+        <h2>Neue Karteikarte erstellen</h2>
+
+        <input
+            type="text"
+            [(ngModel)]="newQuestion"
+            placeholder="Frage">
+
+        <textarea
+            [(ngModel)]="newAnswer"
+            placeholder="Antwort">
+        </textarea>
+
+        <button
+            class="add-card-btn"
+            (click)="addFlashcard()">
+
+            Karteikarte erstellen
+
+        </button>
+
+    </div>
 
     @if(editingCard){
 
