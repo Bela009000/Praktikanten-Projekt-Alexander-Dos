@@ -5,7 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-topics',
   standalone: true,
-  imports: [FormsModule, RouterLink, RouterLinkActive],
+  imports: [FormsModule, RouterLink, RouterLinkActive,],
   templateUrl: './topics.html',
   styleUrl: './topics.css'
 })
@@ -131,6 +131,13 @@ export class TopicsComponent {
 
   }
 
+  goBack(): void {
+
+      this.router.navigate([
+          '/dashboard'
+      ]);
+
+  }
   logout(): void {
 
     localStorage.removeItem(

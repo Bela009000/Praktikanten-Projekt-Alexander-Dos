@@ -190,6 +190,13 @@ export class FlashcardsComponent {
     );
 
   }
+  goBack(): void {
+
+      this.router.navigate([
+          '/dashboard'
+      ]);
+
+  }
   logout(): void {
 
     localStorage.removeItem(

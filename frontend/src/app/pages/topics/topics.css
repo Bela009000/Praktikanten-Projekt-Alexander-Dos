@@ -494,3 +494,28 @@
         font-size:28px;
     }
 }
+.back-btn{
+
+    margin:20px 0;
+
+    background:none;
+
+    border:none;
+
+    color:#60a5fa;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.back-btn:hover{
+
+    color:white;
+
+}
