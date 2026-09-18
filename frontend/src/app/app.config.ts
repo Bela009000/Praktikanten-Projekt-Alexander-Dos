@@ -1,10 +1,44 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners
+} from '@angular/core';
+
 import { provideRouter } from '@angular/router';
+
 import { routes } from './app.routes';
+
+import {
+  provideFirebaseApp
+} from '@angular/fire/app';
+
+import {
+  initializeApp
+} from 'firebase/app';
+
+import {
+  provideFirestore
+} from '@angular/fire/firestore';
+
+import {
+  getFirestore
+} from 'firebase/firestore';
+
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
+
+    provideRouter(routes),
+
+    provideFirebaseApp(
+      () => initializeApp(environment.firebase)
+    ),
+
+    provideFirestore(
+      () => getFirestore()
+    )
+
   ]
 };

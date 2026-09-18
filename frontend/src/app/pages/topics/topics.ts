@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-topics',
@@ -20,8 +21,11 @@ export class TopicsComponent {
   editingName = '';
 
   constructor(
-    private router: Router
+    private router: Router,
+    private firebase: Firebase
   ) {
+
+    console.log('TOPICS GELADEN');
 
     const currentUser =
       localStorage.getItem('currentUser');
@@ -35,6 +39,34 @@ export class TopicsComponent {
 
       this.topics =
         JSON.parse(savedTopics);
+
+    }
+
+    this.loadTopics();
+
+  }
+  async loadTopics() {
+
+    try {
+
+      const topics =
+        await this.firebase.getTopics();
+
+      console.log(
+        'FIREBASE:',
+        topics
+      );
+
+      this.topics = topics;
+
+    }
+
+    catch(error) {
+
+      console.error(
+        'Firebase Fehler:',
+        error
+      );
 
     }
 
