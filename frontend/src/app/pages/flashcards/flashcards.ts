@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-flashcards',
@@ -34,28 +35,11 @@ export class FlashcardsComponent {
   editAnswer = '';
 
   constructor(
+    private firebase: Firebase,
     private router: Router
   ) {
 
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    const savedTopics =
-      localStorage.getItem(
-        `topics_${currentUser}`
-      );
-
-    if (savedTopics) {
-
-      this.topics =
-        JSON.parse(savedTopics);
-
-    }
-
-    this.selectedTopic =
-      localStorage.getItem(
-        'selectedTopic'
-      ) || '';
+    this.loadTopics();
 
   }
 
@@ -210,6 +194,23 @@ export class FlashcardsComponent {
     this.router.navigate([
       '/login'
     ]); 
+
+  }
+  async loadTopics() {
+
+    this.topics =
+      await this.firebase
+        .getTopics();
+
+    console.log(
+      'TOPICS:',
+      this.topics
+    );
+
+    console.log(
+      'ERSTES TOPIC:',
+      this.topics[0]
+    );
 
   }
 

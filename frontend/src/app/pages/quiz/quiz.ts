@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-quiz',
@@ -40,24 +41,14 @@ export class QuizComponent {
   isCorrect = false;
 
   constructor(
+    private firebase: Firebase,
     private router: Router
   ) {
 
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    this.topics =
-      JSON.parse(
-
-        localStorage.getItem(
-          `topics_${currentUser}`
-        ) || '[]'
-
-      );
-
+    this.loadTopics();
   }
 
-  startQuiz(): void {
+  async startQuiz() {
 
     const topic =
       this.topics.find(
@@ -68,12 +59,29 @@ export class QuizComponent {
 
       );
 
+    console.log(
+      'SELECTED TOPIC:',
+      this.selectedTopic
+    );
+
+    console.log(
+      'TOPICS:',
+      this.topics
+    );
     if (!topic) {
       return;
     }
 
     this.questions =
-      [...topic.flashcards];
+      await this.firebase
+        .getFlashcardsByTopic(
+          topic.id
+        );
+
+    console.log(
+      'QUIZ CARDS:',
+      this.questions
+    );
 
     this.currentIndex = 0;
 
@@ -242,6 +250,18 @@ export class QuizComponent {
     this.router.navigate([
       '/login'
     ]);
+
+  }
+  async loadTopics() {
+
+    this.topics =
+      await this.firebase
+        .getTopics();
+
+    console.log(
+      'QUIZ TOPICS:',
+      this.topics
+    );
 
   }
 

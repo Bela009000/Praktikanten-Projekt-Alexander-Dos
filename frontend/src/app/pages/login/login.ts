@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { Firebase } from '../../services/firebase';
 
 interface User {
   username: string;
@@ -16,14 +17,14 @@ interface User {
 })
 export class LoginComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private firebase: Firebase) {}
 
   username = '';
   password = '';
   errorMessage = '';
   isLoggedIn = false;
 
-  login(): void {
+  async login() {
 
     // Felder prüfen
     if (
@@ -37,23 +38,29 @@ export class LoginComponent {
       return;
     }
 
-    // Gespeicherte Benutzer holen
-    const savedUsers =
-      localStorage.getItem('users');
+    const users =
+      await this.firebase
+        .getUsers();
 
-    const users: User[] =
-      savedUsers
-        ? JSON.parse(savedUsers)
-        : [];
+    console.log(
+      'USERS:',
+      users
+    );
 
-    // Benutzer suchen
     const user =
       users.find(
-        user =>
-          user.username.toLowerCase() ===
-          this.username.trim().toLowerCase()
+        (user: any) =>
+
+          user.username
+            .toLowerCase() ===
+          this.username
+            .trim()
+            .toLowerCase()
+
           &&
-          user.password === this.password
+
+          user.password ===
+          this.password
       );
 
     // Benutzer gefunden
@@ -62,6 +69,10 @@ export class LoginComponent {
       localStorage.setItem(
         'currentUser',
         user.username
+      );
+      localStorage.setItem(
+        'currentUserId',
+        user.id
       );
 
       localStorage.setItem(

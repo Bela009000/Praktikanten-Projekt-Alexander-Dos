@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-learn',
@@ -36,32 +37,28 @@ export class LearnComponent {
   isLearning = false;
 
   constructor(
+    private firebase: Firebase,
     private router: Router
   ) {
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+    this.loadTopics();
+
+  }
+  async loadTopics() {
 
     this.topics =
-      JSON.parse(
-
-        localStorage.getItem(
-          `topics_${currentUser}`
-        ) || '[]'
-
-      );
+      await this.firebase
+        .getTopics();
 
   }
 
-  startLearning(): void {
+  async startLearning() {
 
     const topic =
       this.topics.find(
-
         t =>
-
-        t.name === this.selectedTopic
-
+        t.name ===
+        this.selectedTopic
       );
 
     if (!topic) {
@@ -69,7 +66,10 @@ export class LearnComponent {
     }
 
     this.flashcards =
-      [...topic.flashcards];
+      await this.firebase
+        .getFlashcardsByTopic(
+          topic.id
+        );
 
     this.currentIndex = 0;
 

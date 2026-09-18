@@ -27,21 +27,6 @@ export class TopicsComponent {
 
     console.log('TOPICS GELADEN');
 
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    const savedTopics =
-      localStorage.getItem(
-        `topics_${currentUser}`
-      );
-
-    if (savedTopics) {
-
-      this.topics =
-        JSON.parse(savedTopics);
-
-    }
-
     this.loadTopics();
 
   }
@@ -90,14 +75,17 @@ export class TopicsComponent {
 
       }
 
-  deleteTopic(index: number): void {
+  async deleteTopic(
+    index: number
+  ) {
 
-    this.topics.splice(
-      index,
-      1
+    await this.firebase.deleteTopic(
+
+      this.topics[index].id
+
     );
 
-    this.saveTopics();
+    await this.loadTopics();
 
   }
 
@@ -111,20 +99,29 @@ export class TopicsComponent {
 
   }
 
-  saveEdit(): void {
+  async saveEdit() {
 
-    if (this.editingName.trim() === '') {
-      return;
-    }
+      if (
+        this.editingName.trim() === ''
+      ) {
+        return;
+      }
 
-    this.topics[this.editingIndex].name =
-      this.editingName.trim();
+      await this.firebase.updateTopic(
 
-    this.saveTopics();
+        this.topics[
+          this.editingIndex
+        ].id,
 
-    this.editingIndex = -1;
+        this.editingName.trim()
 
-    this.editingName = '';
+      );
+
+      await this.loadTopics();
+
+      this.editingIndex = -1;
+
+      this.editingName = '';
 
   }
 
@@ -138,26 +135,14 @@ export class TopicsComponent {
 
   openTopic(topic: any): void {
 
-  localStorage.setItem(
-    'selectedTopic',
-    topic.name
-  );
-
-  this.router.navigate([
-    '/topic-cards'
-  ]);
-
-}
-
-  private saveTopics(): void {
-
-    const currentUser =
-      localStorage.getItem('currentUser');
-
     localStorage.setItem(
-      `topics_${currentUser}`,
-      JSON.stringify(this.topics)
+      'selectedTopicId',
+      topic.id
     );
+
+    this.router.navigate([
+      '/topic-cards'
+    ]);
 
   }
 
