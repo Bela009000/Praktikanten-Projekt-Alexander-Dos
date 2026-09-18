@@ -7,7 +7,8 @@ import {
 import {
   getFirestore,
   collection,
-  getDocs
+  getDocs,
+  addDoc
 } from 'firebase/firestore';
 
 import { environment } from '../../environments/environment';
@@ -39,6 +40,18 @@ export class Firebase {
       id: doc.id,
       ...doc.data()
     }));
+
+  }
+
+  async addTopic(topic: any) {
+
+    await addDoc(
+      collection(
+        this.db,
+        'topics'
+      ),
+      topic
+    );
 
   }
 

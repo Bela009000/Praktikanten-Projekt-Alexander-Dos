@@ -72,25 +72,23 @@ export class TopicsComponent {
 
   }
 
-  addTopic(): void {
+  async addTopic() {
 
     if (this.topicName.trim() === '') {
       return;
     }
 
-    this.topics.push({
+    await this.firebase.addTopic({
 
-      name: this.topicName.trim(),
-
-      flashcards: []
+      name: this.topicName.trim()
 
     });
 
-    this.saveTopics();
+    await this.loadTopics();
 
-    this.topicName = '';
+        this.topicName = '';
 
-  }
+      }
 
   deleteTopic(index: number): void {
 
