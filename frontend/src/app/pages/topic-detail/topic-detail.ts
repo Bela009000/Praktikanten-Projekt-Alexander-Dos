@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Router,
@@ -22,7 +22,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './topic-detail.html',
   styleUrl: './topic-detail.css'
 })
-export class TopicDetailComponent {
+export class TopicDetailComponent 
+implements OnInit {
 
   topic: any;
   editingCard: any = null;
@@ -40,25 +41,20 @@ export class TopicDetailComponent {
   constructor(
     private router: Router,
     private firebase: Firebase
-  ) {
-
-    this.loadTopic();
-  }
+  ) { }
   async loadFlashcards() {
 
     try {
 
-      const cards =
+      if (!this.topic) {
+        return;
+      }
 
+      const cards =
         await this.firebase
           .getFlashcardsByTopic(
             this.topic.id
           );
-
-      console.log(
-        'FLASHCARDS:',
-        cards
-      );    
       this.flashcards = cards;
 
     }
@@ -68,6 +64,11 @@ export class TopicDetailComponent {
       console.error(error);
 
     }
+
+  }
+  async ngOnInit() {
+
+    await this.loadTopic();
 
   }
   async loadTopic() {
@@ -84,11 +85,6 @@ export class TopicDetailComponent {
     this.topic =
       await this.firebase
         .getTopicById(topicId);
-
-    console.log(
-      'TOPIC:',
-      this.topic
-    );
 
     await this.loadFlashcards();
 
@@ -204,6 +200,10 @@ export class TopicDetailComponent {
 
     localStorage.removeItem(
       'currentUser'
+    );
+
+    localStorage.removeItem(
+      'currentUserId'
     );
 
     localStorage.removeItem(

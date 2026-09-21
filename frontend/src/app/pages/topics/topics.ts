@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
@@ -10,7 +10,8 @@ import { Firebase } from '../../services/firebase';
   templateUrl: './topics.html',
   styleUrl: './topics.css'
 })
-export class TopicsComponent {
+export class TopicsComponent
+implements OnInit {
 
   topicName = '';
 
@@ -23,12 +24,10 @@ export class TopicsComponent {
   constructor(
     private router: Router,
     private firebase: Firebase
-  ) {
+  ) {}
+  async ngOnInit() {
 
-    console.log('TOPICS GELADEN');
-
-    this.loadTopics();
-
+    await this.loadTopics();
   }
   async loadTopics() {
 
@@ -42,11 +41,6 @@ export class TopicsComponent {
           ) || ''
 
         );
-
-      console.log(
-        'FIREBASE:',
-        topics
-      );
 
       this.topics = topics;
 
@@ -172,6 +166,10 @@ export class TopicsComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
@@ -179,6 +177,6 @@ export class TopicsComponent {
       '/login'
     ]);
 
-}
+  }
 
 }

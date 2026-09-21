@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
 
@@ -9,7 +9,7 @@ import { Firebase } from '../../services/firebase';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   topicCount: number = 0;
 
@@ -22,14 +22,25 @@ export class DashboardComponent {
   constructor(
     private firebase: Firebase,
     private router: Router
-  ) {
-    this.loadDashboard();
+  ) { }
+  async ngOnInit() {
+
+    await this.loadDashboard();
+
   }
 
   logout() {
 
     localStorage.removeItem(
       'currentUser'
+    );
+
+    localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
     );
 
     this.router.navigate([
@@ -49,55 +60,19 @@ export class DashboardComponent {
         .getTopicsByUser(
           userId
         );
-    console.log(
-      'USER ID:',
-      userId
-    );
-
-    console.log(
-      'TOPICS:',
-      topics
-    );
 
     this.topicCount =
       topics.length;
 
-    let flashcardTotal = 0;
-
-    for (
-      const topic of topics
-    ) {
-
-      const cards =
-        await this.firebase
-          .getFlashcardsByTopic(
-            topic.id
-          );
-
-      flashcardTotal +=
-        cards.length;
-
-    }
-
-    console.log(
-      'FLASHCARDS:',
-      flashcardTotal
-    );
+    const cards =
+      await this.firebase
+        .getFlashcardsByUser(
+          userId
+        );
 
     this.flashcardCount =
-      flashcardTotal;
+      cards.length;
 
-    console.log(
-      'TOPIC COUNT:',
-      this.topicCount
-    );
-
-    console.log(
-      'FLASHCARD COUNT:',
-      this.flashcardCount
-    );
-    this.flashcardCount =
-      flashcardTotal;
   }
 
 }

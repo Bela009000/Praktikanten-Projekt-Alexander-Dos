@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -16,7 +16,8 @@ import { Firebase } from '../../services/firebase';
   templateUrl: './flashcards.html',
   styleUrl: './flashcards.css'
 })
-export class FlashcardsComponent {
+export class FlashcardsComponent
+implements OnInit {
 
   selectedTopic = '';
 
@@ -39,10 +40,11 @@ export class FlashcardsComponent {
   constructor(
     private firebase: Firebase,
     private router: Router
-  ) {
+  ) { }
 
-    this.loadTopics();
+  async ngOnInit() {
 
+    await this.loadTopics(); 
   }
 
   async addFlashcard() {
@@ -168,12 +170,16 @@ export class FlashcardsComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
     this.router.navigate([
       '/login'
-    ]); 
+    ]);
 
   }
   async loadTopics() {

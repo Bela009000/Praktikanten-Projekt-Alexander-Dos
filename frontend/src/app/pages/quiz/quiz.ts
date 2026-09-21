@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { Firebase } from '../../services/firebase';
   templateUrl: './quiz.html',
   styleUrl: './quiz.css'
 })
-export class QuizComponent {
+export class QuizComponent implements OnInit {
 
   topics: any[] = [];
 
@@ -43,9 +43,11 @@ export class QuizComponent {
   constructor(
     private firebase: Firebase,
     private router: Router
-  ) {
+  ) { }
+  async ngOnInit() {
 
-    this.loadTopics();
+    await this.loadTopics();
+
   }
 
   async startQuiz() {
@@ -58,16 +60,6 @@ export class QuizComponent {
         t.name === this.selectedTopic
 
       );
-
-    console.log(
-      'SELECTED TOPIC:',
-      this.selectedTopic
-    );
-
-    console.log(
-      'TOPICS:',
-      this.topics
-    );
     if (!topic) {
       return;
     }
@@ -77,11 +69,6 @@ export class QuizComponent {
         .getFlashcardsByTopic(
           topic.id
         );
-
-    console.log(
-      'QUIZ CARDS:',
-      this.questions
-    );
 
     this.currentIndex = 0;
 
@@ -160,6 +147,11 @@ export class QuizComponent {
 
     }
 
+    if (
+      this.questions.length === 0
+    ) {
+      return;
+    }
     this.successRate =
       Math.round(
 
@@ -169,24 +161,11 @@ export class QuizComponent {
         ) * 100
 
       );
-
-    const currentUser =
-      localStorage.getItem(
-        'currentUser'
-      );
-
-    localStorage.setItem(
-
-      `quizSuccess_${currentUser}`,
-
-      this.successRate.toString()
-
-    );
       this.quizFinished = true;
 
   }
 
-    retryWrongCards(): void {
+  retryWrongCards(): void {
 
     this.questions =
       [...this.wrongCards];
@@ -244,6 +223,10 @@ export class QuizComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
@@ -256,12 +239,13 @@ export class QuizComponent {
 
     this.topics =
       await this.firebase
-        .getTopics();
+        .getTopicsByUser(
 
-    console.log(
-      'QUIZ TOPICS:',
-      this.topics
-    );
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
+
+        );
 
   }
 

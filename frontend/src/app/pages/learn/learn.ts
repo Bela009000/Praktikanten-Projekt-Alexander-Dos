@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { Firebase } from '../../services/firebase';
   templateUrl: './learn.html',
   styleUrl: './learn.css'
 })
-export class LearnComponent {
+export class LearnComponent implements OnInit {
 
   topics: any[] = [];
 
@@ -39,16 +39,23 @@ export class LearnComponent {
   constructor(
     private firebase: Firebase,
     private router: Router
-  ) {
-
-    this.loadTopics();
-
-  }
+  ) { }
   async loadTopics() {
 
     this.topics =
       await this.firebase
-        .getTopics();
+        .getTopicsByUser(
+
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
+
+        );
+
+  }
+  async ngOnInit() {
+
+    await this.loadTopics();
 
   }
 
@@ -126,6 +133,11 @@ export class LearnComponent {
 
     }
 
+    if (
+      this.flashcards.length === 0
+    ) {
+      return;
+    }
     const correctAnswers =
       this.flashcards.length -
       this.wrongCards.length;
@@ -180,6 +192,10 @@ export class LearnComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
@@ -188,6 +204,7 @@ export class LearnComponent {
     ]);
 
   }
+
   cancelLearning(): void {
 
     this.flashcards = [];

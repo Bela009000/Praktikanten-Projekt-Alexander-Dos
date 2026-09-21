@@ -11,7 +11,10 @@ import {
   addDoc,
   deleteDoc,
   doc,
-  updateDoc
+  updateDoc,
+  query,
+  where,
+  getDoc
 } from 'firebase/firestore';
 
 import { environment } from '../../environments/environment';
@@ -49,16 +52,29 @@ export class Firebase {
     userId: string
   ) {
 
-    const topics =
-      await this.getTopics();
+    const q = query(
 
-    return topics.filter(
+      collection(
+        this.db,
+        'topics'
+      ),
 
-      (topic: any) =>
-
-        topic.userId ===
+      where(
+        'userId',
+        '==',
         userId
+      )
 
+    );
+
+    const snapshot =
+      await getDocs(q);
+
+    return snapshot.docs.map(
+      doc => ({
+        id: doc.id,
+        ...doc.data()
+      })
     );
 
   }
@@ -145,46 +161,98 @@ export class Firebase {
         );
 
     }
-
-    async getFlashcardsByTopic(
-    topicId: string
+    async getFlashcardsByUser(
+      userId: string
     ) {
 
-    const snapshot =
-        await getDocs(
+      const q = query(
 
         collection(
-            this.db,
-            'flashcards'
+          this.db,
+          'flashcards'
+        ),
+
+        where(
+          'userId',
+          '==',
+          userId
         )
 
-        );
+      );
 
-    return snapshot.docs
-        .map(doc => ({
+      const snapshot =
+        await getDocs(q);
 
-        id: doc.id,
+      return snapshot.docs.map(
+        doc => ({
 
-        ...doc.data()
+          id: doc.id,
 
-        }))
-        .filter(
-        (card: any) =>
-        card.topicId === topicId
-        );
+          ...doc.data()
+
+        })
+      );
+
+    }
+
+    async getFlashcardsByTopic(
+      topicId: string
+    ) {
+
+      const q = query(
+
+        collection(
+          this.db,
+          'flashcards'
+        ),
+
+        where(
+          'topicId',
+          '==',
+          topicId
+        )
+
+      );
+
+      const snapshot =
+        await getDocs(q);
+
+      return snapshot.docs.map(
+        doc => ({
+          id: doc.id,
+          ...doc.data()
+        })
+      );
 
     }
     async getTopicById(
-        topicId: string
+      topicId: string
     ) {
 
-        const topics =
-        await this.getTopics();
+      const snapshot =
+        await getDoc(
 
-        return topics.find(
-        (topic: any) =>
-        topic.id === topicId
+          doc(
+            this.db,
+            'topics',
+            topicId
+          )
+
         );
+
+      if (
+        !snapshot.exists()
+      ) {
+        return null;
+      }
+
+      return {
+
+        id: snapshot.id,
+
+        ...snapshot.data()
+
+      };
 
     }
 
