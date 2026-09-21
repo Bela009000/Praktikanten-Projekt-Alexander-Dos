@@ -170,11 +170,19 @@ export class TopicDetailComponent {
 
     await this.firebase.addFlashcard({
 
-      topicId: this.topic.id,
+      userId:
+        localStorage.getItem(
+          'currentUserId'
+        ),
 
-      question: this.newQuestion,
+      topicId:
+        this.topic.id,
 
-      answer: this.newAnswer
+      question:
+        this.newQuestion,
+
+      answer:
+        this.newAnswer
 
     });
 

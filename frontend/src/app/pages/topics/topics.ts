@@ -35,7 +35,13 @@ export class TopicsComponent {
     try {
 
       const topics =
-        await this.firebase.getTopics();
+        await this.firebase.getTopicsByUser(
+
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
+
+        );
 
       console.log(
         'FIREBASE:',
@@ -65,7 +71,13 @@ export class TopicsComponent {
 
     await this.firebase.addTopic({
 
-      name: this.topicName.trim()
+      userId:
+        localStorage.getItem(
+          'currentUserId'
+        ),
+
+      name:
+        this.topicName.trim()
 
     });
 

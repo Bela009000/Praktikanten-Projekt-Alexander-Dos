@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,53 +19,11 @@ export class DashboardComponent {
 
   successMessage: string = '';
 
-  constructor(private router: Router) {
-
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    const savedTopics =
-      localStorage.getItem(
-        `topics_${currentUser}`
-      );
-
-    if(savedTopics){
-
-      const topics =
-        JSON.parse(savedTopics);
-
-      this.topicCount =
-        topics.length;
-
-      let totalCards = 0;
-
-      for(const topic of topics){
-
-        totalCards +=
-          topic.flashcards.length;
-
-      }
-
-      this.flashcardCount =
-        totalCards;
-
-    }
-    const savedSuccess =
-
-      localStorage.getItem(
-
-        `quizSuccess_${currentUser}`
-
-      );
-
-    if(savedSuccess){
-
-      this.quizSuccess =
-        Number(savedSuccess);
-
-    }
-
-
+  constructor(
+    private firebase: Firebase,
+    private router: Router
+  ) {
+    this.loadDashboard();
   }
 
   logout() {
@@ -77,6 +36,68 @@ export class DashboardComponent {
       '/login'
     ]);
 
+  }
+  async loadDashboard() {
+
+    const userId =
+      localStorage.getItem(
+        'currentUserId'
+      ) || '';
+
+    const topics =
+      await this.firebase
+        .getTopicsByUser(
+          userId
+        );
+    console.log(
+      'USER ID:',
+      userId
+    );
+
+    console.log(
+      'TOPICS:',
+      topics
+    );
+
+    this.topicCount =
+      topics.length;
+
+    let flashcardTotal = 0;
+
+    for (
+      const topic of topics
+    ) {
+
+      const cards =
+        await this.firebase
+          .getFlashcardsByTopic(
+            topic.id
+          );
+
+      flashcardTotal +=
+        cards.length;
+
+    }
+
+    console.log(
+      'FLASHCARDS:',
+      flashcardTotal
+    );
+
+    this.flashcardCount =
+      flashcardTotal;
+
+    console.log(
+      'TOPIC COUNT:',
+      this.topicCount
+    );
+
+    console.log(
+      'FLASHCARD COUNT:',
+      this.flashcardCount
+    );
+    this.flashcardCount =
+      flashcardTotal;
   }
 
 }

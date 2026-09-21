@@ -45,6 +45,23 @@ export class Firebase {
     }));
 
   }
+  async getTopicsByUser(
+    userId: string
+  ) {
+
+    const topics =
+      await this.getTopics();
+
+    return topics.filter(
+
+      (topic: any) =>
+
+        topic.userId ===
+        userId
+
+    );
+
+  }
 
   async addTopic(topic: any) {
 

@@ -34,6 +34,8 @@ export class FlashcardsComponent {
 
   editAnswer = '';
 
+  flashcards: any [] = [];
+
   constructor(
     private firebase: Firebase,
     private router: Router
@@ -43,7 +45,7 @@ export class FlashcardsComponent {
 
   }
 
-  addFlashcard(): void {
+  async addFlashcard() {
 
     if (
       !this.question.trim() ||
@@ -54,46 +56,45 @@ export class FlashcardsComponent {
 
     const topic =
       this.topics.find(
-        t => t.name === this.selectedTopic
+        t => t.name ===
+        this.selectedTopic
       );
 
     if (!topic) {
       return;
     }
 
-    topic.flashcards.push({
+    await this.firebase
+      .addFlashcard({
 
-      question: this.question,
+        userId:
+          localStorage.getItem(
+            'currentUserId'
+          ),
 
-      answer: this.answer
+        topicId:
+          topic.id,
 
-    });
+        question:
+          this.question,
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+        answer:
+          this.answer
 
-    localStorage.setItem(
+      });
 
-      `topics_${currentUser}`,
-
-      JSON.stringify(this.topics)
-
-    );
+    await this.loadFlashcards();
 
     this.question = '';
-
     this.answer = '';
 
   }
 
   startEdit(
-    card: any,
-    topic: any
+    card: any
   ): void {
 
     this.editingCard = card;
-
-    this.editingTopic = topic;
 
     this.editQuestion =
       card.question;
@@ -103,7 +104,7 @@ export class FlashcardsComponent {
 
   }
 
-  saveEdit(): void {
+  async saveEdit() {
 
     if (
       !this.editQuestion.trim() ||
@@ -112,22 +113,18 @@ export class FlashcardsComponent {
       return;
     }
 
-    this.editingCard.question =
-      this.editQuestion;
+    await this.firebase
+      .updateFlashcard(
 
-    this.editingCard.answer =
-      this.editAnswer;
+        this.editingCard.id,
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+        this.editQuestion,
 
-    localStorage.setItem(
+        this.editAnswer
 
-      `topics_${currentUser}`,
+      );
 
-      JSON.stringify(this.topics)
-
-    );
+    await this.loadFlashcards();
 
     this.cancelEdit();
 
@@ -145,33 +142,16 @@ export class FlashcardsComponent {
 
   }
 
-  deleteFlashcard(
-    card: any,
-    topic: any
-  ): void {
+  async deleteFlashcard(
+    card: any
+  ) {
 
-    const index =
-      topic.flashcards.indexOf(card);
+    await this.firebase
+      .deleteFlashcard(
+        card.id
+      );
 
-    if (index === -1) {
-      return;
-    }
-
-    topic.flashcards.splice(
-      index,
-      1
-    );
-
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    localStorage.setItem(
-
-      `topics_${currentUser}`,
-
-      JSON.stringify(this.topics)
-
-    );
+    await this.loadFlashcards();
 
   }
   goBack(): void {
@@ -200,17 +180,37 @@ export class FlashcardsComponent {
 
     this.topics =
       await this.firebase
-        .getTopics();
+        .getTopicsByUser(
 
-    console.log(
-      'TOPICS:',
-      this.topics
-    );
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
 
-    console.log(
-      'ERSTES TOPIC:',
-      this.topics[0]
-    );
+        );
+
+  }
+  async loadFlashcards() {
+
+    const topic =
+      this.topics.find(
+        t => t.name ===
+        this.selectedTopic
+      );
+
+    if (!topic) {
+      return;
+    }
+
+    this.flashcards =
+      await this.firebase
+        .getFlashcardsByTopic(
+          topic.id
+        );
+
+  }
+  async onTopicChange() {
+
+    await this.loadFlashcards();
 
   }
 

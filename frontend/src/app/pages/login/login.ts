@@ -47,7 +47,17 @@ export class LoginComponent {
       users
     );
 
-    const user =
+    console.log(
+      'EINGABE USERNAME:',
+      this.username
+    );
+
+    console.log(
+      'EINGABE PASSWORT:',
+      this.password
+    );
+
+    const user: any =
       users.find(
         (user: any) =>
 
