@@ -108,7 +108,7 @@
             <select
                 id="topic"
                 [(ngModel)]="selectedTopic"
-                (change)="onTopicChange()">
+                (ngModelChange)="onTopicChange()">
 
                 <option value="">
                     Thema auswählen
@@ -116,7 +116,7 @@
 
                 @for (topic of topics; track topic.id) {
 
-                    <option [value]="topic.name">
+                    <option [value]="topic.id">
 
                         {{ topic.name }}
 

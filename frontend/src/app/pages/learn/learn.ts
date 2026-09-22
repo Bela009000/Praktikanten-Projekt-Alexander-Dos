@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -38,7 +38,8 @@ export class LearnComponent implements OnInit {
 
   constructor(
     private firebase: Firebase,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
   async loadTopics() {
 
@@ -51,6 +52,7 @@ export class LearnComponent implements OnInit {
           ) || ''
 
         );
+    this.cdr.detectChanges();
 
   }
   async ngOnInit() {
@@ -77,6 +79,7 @@ export class LearnComponent implements OnInit {
         .getFlashcardsByTopic(
           topic.id
         );
+    this.cdr.detectChanges();
 
     this.currentIndex = 0;
 

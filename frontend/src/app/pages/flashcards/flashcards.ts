@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -39,7 +39,8 @@ implements OnInit {
 
   constructor(
     private firebase: Firebase,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   async ngOnInit() {
@@ -58,7 +59,7 @@ implements OnInit {
 
     const topic =
       this.topics.find(
-        t => t.name ===
+        t => t.id ===
         this.selectedTopic
       );
 
@@ -191,15 +192,15 @@ implements OnInit {
           localStorage.getItem(
             'currentUserId'
           ) || ''
-
         );
+    this.cdr.detectChanges();
 
   }
   async loadFlashcards() {
 
     const topic =
       this.topics.find(
-        t => t.name ===
+        t => t.id ===
         this.selectedTopic
       );
 
@@ -212,6 +213,7 @@ implements OnInit {
         .getFlashcardsByTopic(
           topic.id
         );
+    this.cdr.detectChanges();
 
   }
   async onTopicChange() {

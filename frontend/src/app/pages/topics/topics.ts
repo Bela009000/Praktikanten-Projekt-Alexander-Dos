@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
@@ -23,7 +23,8 @@ implements OnInit {
 
   constructor(
     private router: Router,
-    private firebase: Firebase
+    private firebase: Firebase,
+    private cdr: ChangeDetectorRef
   ) {}
   async ngOnInit() {
 
@@ -43,6 +44,7 @@ implements OnInit {
         );
 
       this.topics = topics;
+      this.cdr.detectChanges();
 
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -42,7 +42,8 @@ export class QuizComponent implements OnInit {
 
   constructor(
     private firebase: Firebase,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
   async ngOnInit() {
 
@@ -57,7 +58,7 @@ export class QuizComponent implements OnInit {
 
         t =>
 
-        t.name === this.selectedTopic
+        t.id === this.selectedTopic
 
       );
     if (!topic) {
@@ -69,6 +70,7 @@ export class QuizComponent implements OnInit {
         .getFlashcardsByTopic(
           topic.id
         );
+    this.cdr.detectChanges();
 
     this.currentIndex = 0;
 
@@ -130,7 +132,7 @@ export class QuizComponent implements OnInit {
 
   }
 
-  nextQuestion(): void {
+  async nextQuestion() {
 
     if (
       this.currentIndex <
@@ -152,15 +154,27 @@ export class QuizComponent implements OnInit {
     ) {
       return;
     }
-    this.successRate =
-      Math.round(
+      this.successRate =
+        Math.round(
 
-        (
-          this.correctAnswers /
-          this.questions.length
-        ) * 100
+          (
+            this.correctAnswers /
+            this.questions.length
+          ) * 100
 
-      );
+        );
+
+      await this.firebase
+        .saveQuizResult(
+
+          localStorage.getItem(
+            'currentUserId'
+          ) || '',
+
+          this.successRate
+
+        );
+
       this.quizFinished = true;
 
   }
@@ -246,6 +260,7 @@ export class QuizComponent implements OnInit {
           ) || ''
 
         );
+    this.cdr.detectChanges();
 
   }
 

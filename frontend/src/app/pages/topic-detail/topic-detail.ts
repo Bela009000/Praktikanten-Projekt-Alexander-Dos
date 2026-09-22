@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Router,
@@ -40,6 +40,7 @@ implements OnInit {
 
   constructor(
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private firebase: Firebase
   ) { }
   async loadFlashcards() {
@@ -56,6 +57,7 @@ implements OnInit {
             this.topic.id
           );
       this.flashcards = cards;
+      this.cdr.detectChanges();
 
     }
 
@@ -85,6 +87,7 @@ implements OnInit {
     this.topic =
       await this.firebase
         .getTopicById(topicId);
+    this.cdr.detectChanges();
 
     await this.loadFlashcards();
 

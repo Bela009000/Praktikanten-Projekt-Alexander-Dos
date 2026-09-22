@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
 
@@ -21,7 +21,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private firebase: Firebase,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
   async ngOnInit() {
 
@@ -63,6 +64,12 @@ export class DashboardComponent implements OnInit {
 
     this.topicCount =
       topics.length;
+    
+    this.quizSuccess =
+      await this.firebase
+        .getQuizResult(
+          userId
+        );
 
     const cards =
       await this.firebase
@@ -72,6 +79,8 @@ export class DashboardComponent implements OnInit {
 
     this.flashcardCount =
       cards.length;
+    
+    this.cdr.detectChanges();
 
   }
 

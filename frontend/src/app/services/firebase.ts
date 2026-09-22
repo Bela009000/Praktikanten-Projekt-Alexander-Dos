@@ -332,4 +332,92 @@ export class Firebase {
     }));
 
     }
+    async saveQuizResult(
+      userId: string,
+      successRate: number
+    ) {
+
+      const q = query(
+
+        collection(
+          this.db,
+          'quizResults'
+        ),
+
+        where(
+          'userId',
+          '==',
+          userId
+        )
+
+      );
+
+      const snapshot =
+        await getDocs(q);
+
+      if (
+        snapshot.docs.length > 0
+      ) {
+
+        await updateDoc(
+
+          snapshot.docs[0].ref,
+
+          {
+            successRate
+          }
+
+        );
+
+      } else {
+
+        await addDoc(
+
+          collection(
+            this.db,
+            'quizResults'
+          ),
+
+          {
+            userId,
+            successRate
+          }
+
+        );
+
+      }
+
+    }
+    async getQuizResult(
+      userId: string
+    ) {
+
+      const q = query(
+
+        collection(
+          this.db,
+          'quizResults'
+        ),
+
+        where(
+          'userId',
+          '==',
+          userId
+        )
+
+      );
+
+      const snapshot =
+        await getDocs(q);
+
+      if (
+        snapshot.empty
+      ) {
+        return 0;
+      }
+
+      return snapshot.docs[0]
+        .data()['successRate'];
+
+    }
 }
