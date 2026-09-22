@@ -288,7 +288,7 @@
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fill,minmax(320px,1fr));
+    repeat(auto-fill,minmax(280px,1fr));
 
     gap:20px;
 }
@@ -509,21 +509,46 @@
 
 @media(max-width:768px){
 
-    .nav-links{
-        gap:14px;
+    .flashcards-page{
+        padding:16px;
     }
 
-    .page-header h1{
-        font-size:32px;
+    .navbar{
+        height:auto;
+        padding:16px;
+        flex-direction:column;
+        gap:16px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .nav-links{
+        width:100%;
+        justify-content:center;
+        gap:12px;
+    }
+
+    .page-header{
+        text-align:center;
+        padding:0;
     }
 
     .form-card{
-        margin:20px;
+        margin:20px 0;
+        padding:20px;
+    }
+
+    .save-flashcard-btn{
+        width:100%;
     }
 
     .cards-grid{
+        padding:0;
         grid-template-columns:1fr;
     }
+
 }
 .flashcards-page .navbar {
     margin: 0;
@@ -553,5 +578,55 @@
 .back-btn:hover{
 
     color:white;
+
+}
+@media(max-width:600px){
+
+    .edit-modal{
+
+        width:100%;
+
+        max-width:100%;
+
+        margin:16px;
+
+        padding:20px;
+
+    }
+
+    .modal-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .save-btn,
+    .cancel-btn{
+
+        width:100%;
+
+    }
+
+}
+@media(max-width:480px){
+
+    .card-actions{
+
+        flex-direction:column;
+
+    }
+
+    .edit-btn,
+    .delete-btn{
+
+        width:100%;
+
+    }
+
+    .flashcard{
+
+        padding:18px;
+
+    }
 
 }
