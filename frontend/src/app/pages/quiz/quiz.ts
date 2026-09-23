@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-quiz',
@@ -15,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './quiz.html',
   styleUrl: './quiz.css'
 })
-export class QuizComponent {
+export class QuizComponent implements OnInit {
 
   topics: any[] = [];
 
@@ -40,40 +41,36 @@ export class QuizComponent {
   isCorrect = false;
 
   constructor(
-    private router: Router
-  ) {
+    private firebase: Firebase,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
+  async ngOnInit() {
 
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    this.topics =
-      JSON.parse(
-
-        localStorage.getItem(
-          `topics_${currentUser}`
-        ) || '[]'
-
-      );
+    await this.loadTopics();
 
   }
 
-  startQuiz(): void {
+  async startQuiz() {
 
     const topic =
       this.topics.find(
 
         t =>
 
-        t.name === this.selectedTopic
+        t.id === this.selectedTopic
 
       );
-
     if (!topic) {
       return;
     }
 
     this.questions =
-      [...topic.flashcards];
+      await this.firebase
+        .getFlashcardsByTopic(
+          topic.id
+        );
+    this.cdr.detectChanges();
 
     this.currentIndex = 0;
 
@@ -135,7 +132,7 @@ export class QuizComponent {
 
   }
 
-  nextQuestion(): void {
+  async nextQuestion() {
 
     if (
       this.currentIndex <
@@ -152,33 +149,37 @@ export class QuizComponent {
 
     }
 
-    this.successRate =
-      Math.round(
+    if (
+      this.questions.length === 0
+    ) {
+      return;
+    }
+      this.successRate =
+        Math.round(
 
-        (
-          this.correctAnswers /
-          this.questions.length
-        ) * 100
+          (
+            this.correctAnswers /
+            this.questions.length
+          ) * 100
 
-      );
+        );
 
-    const currentUser =
-      localStorage.getItem(
-        'currentUser'
-      );
+      await this.firebase
+        .saveQuizResult(
 
-    localStorage.setItem(
+          localStorage.getItem(
+            'currentUserId'
+          ) || '',
 
-      `quizSuccess_${currentUser}`,
+          this.successRate
 
-      this.successRate.toString()
+        );
 
-    );
       this.quizFinished = true;
 
   }
 
-    retryWrongCards(): void {
+  retryWrongCards(): void {
 
     this.questions =
       [...this.wrongCards];
@@ -236,12 +237,30 @@ export class QuizComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
     this.router.navigate([
       '/login'
     ]);
+
+  }
+  async loadTopics() {
+
+    this.topics =
+      await this.firebase
+        .getTopicsByUser(
+
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
+
+        );
+    this.cdr.detectChanges();
 
   }
 

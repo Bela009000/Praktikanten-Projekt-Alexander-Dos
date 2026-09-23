@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-flashcards',
@@ -15,7 +16,8 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './flashcards.html',
   styleUrl: './flashcards.css'
 })
-export class FlashcardsComponent {
+export class FlashcardsComponent
+implements OnInit {
 
   selectedTopic = '';
 
@@ -33,33 +35,20 @@ export class FlashcardsComponent {
 
   editAnswer = '';
 
+  flashcards: any [] = [];
+
   constructor(
-    private router: Router
-  ) {
+    private firebase: Firebase,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+  async ngOnInit() {
 
-    const savedTopics =
-      localStorage.getItem(
-        `topics_${currentUser}`
-      );
-
-    if (savedTopics) {
-
-      this.topics =
-        JSON.parse(savedTopics);
-
-    }
-
-    this.selectedTopic =
-      localStorage.getItem(
-        'selectedTopic'
-      ) || '';
-
+    await this.loadTopics(); 
   }
 
-  addFlashcard(): void {
+  async addFlashcard() {
 
     if (
       !this.question.trim() ||
@@ -70,46 +59,45 @@ export class FlashcardsComponent {
 
     const topic =
       this.topics.find(
-        t => t.name === this.selectedTopic
+        t => t.id ===
+        this.selectedTopic
       );
 
     if (!topic) {
       return;
     }
 
-    topic.flashcards.push({
+    await this.firebase
+      .addFlashcard({
 
-      question: this.question,
+        userId:
+          localStorage.getItem(
+            'currentUserId'
+          ),
 
-      answer: this.answer
+        topicId:
+          topic.id,
 
-    });
+        question:
+          this.question,
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+        answer:
+          this.answer
 
-    localStorage.setItem(
+      });
 
-      `topics_${currentUser}`,
-
-      JSON.stringify(this.topics)
-
-    );
+    await this.loadFlashcards();
 
     this.question = '';
-
     this.answer = '';
 
   }
 
   startEdit(
-    card: any,
-    topic: any
+    card: any
   ): void {
 
     this.editingCard = card;
-
-    this.editingTopic = topic;
 
     this.editQuestion =
       card.question;
@@ -119,7 +107,7 @@ export class FlashcardsComponent {
 
   }
 
-  saveEdit(): void {
+  async saveEdit() {
 
     if (
       !this.editQuestion.trim() ||
@@ -128,22 +116,18 @@ export class FlashcardsComponent {
       return;
     }
 
-    this.editingCard.question =
-      this.editQuestion;
+    await this.firebase
+      .updateFlashcard(
 
-    this.editingCard.answer =
-      this.editAnswer;
+        this.editingCard.id,
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+        this.editQuestion,
 
-    localStorage.setItem(
+        this.editAnswer
 
-      `topics_${currentUser}`,
+      );
 
-      JSON.stringify(this.topics)
-
-    );
+    await this.loadFlashcards();
 
     this.cancelEdit();
 
@@ -161,33 +145,16 @@ export class FlashcardsComponent {
 
   }
 
-  deleteFlashcard(
-    card: any,
-    topic: any
-  ): void {
+  async deleteFlashcard(
+    card: any
+  ) {
 
-    const index =
-      topic.flashcards.indexOf(card);
+    await this.firebase
+      .deleteFlashcard(
+        card.id
+      );
 
-    if (index === -1) {
-      return;
-    }
-
-    topic.flashcards.splice(
-      index,
-      1
-    );
-
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    localStorage.setItem(
-
-      `topics_${currentUser}`,
-
-      JSON.stringify(this.topics)
-
-    );
+    await this.loadFlashcards();
 
   }
   goBack(): void {
@@ -204,12 +171,54 @@ export class FlashcardsComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
     this.router.navigate([
       '/login'
-    ]); 
+    ]);
+
+  }
+  async loadTopics() {
+
+    this.topics =
+      await this.firebase
+        .getTopicsByUser(
+
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
+        );
+    this.cdr.detectChanges();
+
+  }
+  async loadFlashcards() {
+
+    const topic =
+      this.topics.find(
+        t => t.id ===
+        this.selectedTopic
+      );
+
+    if (!topic) {
+      return;
+    }
+
+    this.flashcards =
+      await this.firebase
+        .getFlashcardsByTopic(
+          topic.id
+        );
+    this.cdr.detectChanges();
+
+  }
+  async onTopicChange() {
+
+    await this.loadFlashcards();
 
   }
 

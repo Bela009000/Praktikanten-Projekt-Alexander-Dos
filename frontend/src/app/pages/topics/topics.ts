@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-topics',
@@ -9,7 +10,8 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './topics.html',
   styleUrl: './topics.css'
 })
-export class TopicsComponent {
+export class TopicsComponent
+implements OnInit {
 
   topicName = '';
 
@@ -20,54 +22,78 @@ export class TopicsComponent {
   editingName = '';
 
   constructor(
-    private router: Router
-  ) {
+    private router: Router,
+    private firebase: Firebase,
+    private cdr: ChangeDetectorRef
+  ) {}
+  async ngOnInit() {
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+    await this.loadTopics();
+  }
+  async loadTopics() {
 
-    const savedTopics =
-      localStorage.getItem(
-        `topics_${currentUser}`
+    try {
+
+      const topics =
+        await this.firebase.getTopicsByUser(
+
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
+
+        );
+
+      this.topics = topics;
+      this.cdr.detectChanges();
+
+    }
+
+    catch(error) {
+
+      console.error(
+        'Firebase Fehler:',
+        error
       );
-
-    if (savedTopics) {
-
-      this.topics =
-        JSON.parse(savedTopics);
 
     }
 
   }
 
-  addTopic(): void {
+  async addTopic() {
 
     if (this.topicName.trim() === '') {
       return;
     }
 
-    this.topics.push({
+    await this.firebase.addTopic({
 
-      name: this.topicName.trim(),
+      userId:
+        localStorage.getItem(
+          'currentUserId'
+        ),
 
-      flashcards: []
+      name:
+        this.topicName.trim()
 
     });
 
-    this.saveTopics();
+    await this.loadTopics();
 
-    this.topicName = '';
+        this.topicName = '';
 
-  }
+      }
 
-  deleteTopic(index: number): void {
+  async deleteTopic(
+    index: number
+  ) {
 
-    this.topics.splice(
-      index,
-      1
+    await this.firebase.deleteTopic(
+
+      this.topics[index].id
+
     );
 
-    this.saveTopics();
+    await this.loadTopics();
 
   }
 
@@ -81,20 +107,29 @@ export class TopicsComponent {
 
   }
 
-  saveEdit(): void {
+  async saveEdit() {
 
-    if (this.editingName.trim() === '') {
-      return;
-    }
+      if (
+        this.editingName.trim() === ''
+      ) {
+        return;
+      }
 
-    this.topics[this.editingIndex].name =
-      this.editingName.trim();
+      await this.firebase.updateTopic(
 
-    this.saveTopics();
+        this.topics[
+          this.editingIndex
+        ].id,
 
-    this.editingIndex = -1;
+        this.editingName.trim()
 
-    this.editingName = '';
+      );
+
+      await this.loadTopics();
+
+      this.editingIndex = -1;
+
+      this.editingName = '';
 
   }
 
@@ -108,26 +143,14 @@ export class TopicsComponent {
 
   openTopic(topic: any): void {
 
-  localStorage.setItem(
-    'selectedTopic',
-    topic.name
-  );
-
-  this.router.navigate([
-    '/topic-cards'
-  ]);
-
-}
-
-  private saveTopics(): void {
-
-    const currentUser =
-      localStorage.getItem('currentUser');
-
     localStorage.setItem(
-      `topics_${currentUser}`,
-      JSON.stringify(this.topics)
+      'selectedTopicId',
+      topic.id
     );
+
+    this.router.navigate([
+      '/topic-cards'
+    ]);
 
   }
 
@@ -145,6 +168,10 @@ export class TopicsComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
@@ -152,6 +179,6 @@ export class TopicsComponent {
       '/login'
     ]);
 
-}
+  }
 
 }

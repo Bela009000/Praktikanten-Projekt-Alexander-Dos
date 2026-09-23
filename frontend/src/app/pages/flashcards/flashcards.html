@@ -107,15 +107,16 @@
 
             <select
                 id="topic"
-                [(ngModel)]="selectedTopic">
+                [(ngModel)]="selectedTopic"
+                (ngModelChange)="onTopicChange()">
 
                 <option value="">
                     Thema auswählen
                 </option>
 
-                @for (topic of topics; track topic.name) {
+                @for (topic of topics; track topic.id) {
 
-                    <option [value]="topic.name">
+                    <option [value]="topic.id">
 
                         {{ topic.name }}
 
@@ -181,51 +182,48 @@
 
     <div class="cards-grid">
 
-        @for (topic of topics; track topic.name) {
+        @for (
+            card of flashcards;
+            track card.id
+        ) {
 
-            @for (card of topic.flashcards; track card) {
+            <div class="flashcard">
 
-                <div class="flashcard">
+                <div class="card-content">
 
-                    <div class="card-content">
+                    <h3>
+                        {{ card.question }}
+                    </h3>
 
-                        <h3>
-                            {{ card.question }}
-                        </h3>
-
-                        <p>
-                            {{ card.answer }}
-                        </p>
-
-                    </div>
-
-
-                    <div class="card-actions">
-
-                        <button
-                            class="edit-btn"
-                            type="button"
-                            (click)="startEdit(card, topic)">
-
-                            Bearbeiten
-
-                        </button>
-
-
-                        <button
-                            class="delete-btn"
-                            type="button"
-                            (click)="deleteFlashcard(card, topic)">
-
-                            Löschen
-
-                        </button>
-
-                    </div>
+                    <p>
+                        {{ card.answer }}
+                    </p>
 
                 </div>
 
-            }
+                <div class="card-actions">
+
+                    <button
+                        class="edit-btn"
+                        type="button"
+                        (click)="startEdit(card)">
+
+                        Bearbeiten
+
+                    </button>
+
+                    <button
+                        class="delete-btn"
+                        type="button"
+                        (click)="deleteFlashcard(card)">
+
+                        Löschen
+
+                    </button>
+
+                </div>
+
+            </div>
 
         }
 

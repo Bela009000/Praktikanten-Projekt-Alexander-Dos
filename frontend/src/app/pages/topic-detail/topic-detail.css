@@ -14,13 +14,12 @@
 
 .page-header h1{
 
-    margin:0;
+    font-size:clamp(
+        28px,
+        5vw,
+        42px
+    );
 
-    color:white;
-
-    font-size:42px;
-
-    font-weight:700;
 }
 
 .page-header p{
@@ -32,18 +31,17 @@
     font-size:16px;
 }
 .cards-grid{
-
     max-width:1200px;
-
     margin:0 auto;
 
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fill,minmax(320px,1fr));
+    repeat(auto-fill,minmax(320px,320px));
 
     gap:20px;
 }
+
 
 .flashcard{
 
@@ -568,4 +566,134 @@
 .back-btn:hover{
 
     color:white;
+}
+@media (max-width: 1024px){
+
+    .cards-grid{
+
+        grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                280px,
+                1fr
+            )
+        );
+
+    }
+
+}
+@media (max-width: 768px){
+
+    .topic-page{
+
+        padding:16px;
+
+    }
+
+    .navbar{
+
+        height:auto;
+
+        padding:16px;
+
+        flex-direction:column;
+
+        gap:16px;
+
+    }
+
+    .logo{
+
+        font-size:20px;
+
+    }
+
+    .nav-links{
+
+        width:100%;
+
+        justify-content:center;
+
+        gap:12px;
+
+    }
+
+    .page-header{
+
+        text-align:center;
+
+        padding:0;
+
+    }
+
+    .create-card-box{
+
+        padding:20px;
+
+    }
+
+    .cards-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media (max-width: 480px){
+
+    .flashcard{
+
+        padding:18px;
+
+    }
+
+    .card-actions{
+
+        flex-direction:column;
+
+    }
+
+    .edit-btn,
+    .delete-btn{
+
+        width:100%;
+
+    }
+
+    .add-card-btn{
+
+        width:100%;
+
+    }
+
+}
+@media (max-width: 600px){
+
+    .edit-modal{
+
+        width:100%;
+
+        max-width:100%;
+
+        margin:16px;
+
+        padding:20px;
+
+    }
+
+    .modal-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .save-btn,
+    .cancel-btn{
+
+        width:100%;
+
+    }
+
 }

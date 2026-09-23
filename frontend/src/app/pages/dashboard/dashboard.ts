@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +9,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   topicCount: number = 0;
 
@@ -18,52 +19,14 @@ export class DashboardComponent {
 
   successMessage: string = '';
 
-  constructor(private router: Router) {
+  constructor(
+    private firebase: Firebase,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
+  async ngOnInit() {
 
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    const savedTopics =
-      localStorage.getItem(
-        `topics_${currentUser}`
-      );
-
-    if(savedTopics){
-
-      const topics =
-        JSON.parse(savedTopics);
-
-      this.topicCount =
-        topics.length;
-
-      let totalCards = 0;
-
-      for(const topic of topics){
-
-        totalCards +=
-          topic.flashcards.length;
-
-      }
-
-      this.flashcardCount =
-        totalCards;
-
-    }
-    const savedSuccess =
-
-      localStorage.getItem(
-
-        `quizSuccess_${currentUser}`
-
-      );
-
-    if(savedSuccess){
-
-      this.quizSuccess =
-        Number(savedSuccess);
-
-    }
-
+    await this.loadDashboard();
 
   }
 
@@ -73,9 +36,51 @@ export class DashboardComponent {
       'currentUser'
     );
 
+    localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
     this.router.navigate([
       '/login'
     ]);
+
+  }
+  async loadDashboard() {
+
+    const userId =
+      localStorage.getItem(
+        'currentUserId'
+      ) || '';
+
+    const topics =
+      await this.firebase
+        .getTopicsByUser(
+          userId
+        );
+
+    this.topicCount =
+      topics.length;
+    
+    this.quizSuccess =
+      await this.firebase
+        .getQuizResult(
+          userId
+        );
+
+    const cards =
+      await this.firebase
+        .getFlashcardsByUser(
+          userId
+        );
+
+    this.flashcardCount =
+      cards.length;
+    
+    this.cdr.detectChanges();
 
   }
 

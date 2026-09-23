@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Firebase } from '../../services/firebase';
 
 interface User {
   username: string;
@@ -16,6 +17,10 @@ interface User {
 })
 export class RegisterComponent {
 
+  constructor(
+    private firebase: Firebase
+  ) {}
+
   username: string = '';
   password: string = '';
 
@@ -24,7 +29,7 @@ export class RegisterComponent {
 
   registrationSuccessful: boolean = false;
 
-  register(): void {
+  async register() {
 
     const usernamePattern = /^[a-zA-Z0-9]+$/;
 
@@ -62,17 +67,30 @@ export class RegisterComponent {
 
     const username = this.username.trim();
 
-    const savedUsers =
-      localStorage.getItem('users');
+      console.log(
+        'USER WIRD GESPEICHERT:',
+        username
+      );    
 
-    const users: User[] =
-      savedUsers
-        ? JSON.parse(savedUsers)
-        : [];
+      const users =
+        await this.firebase
+          .getUsers();
+
+      console.log(
+        'USERS AUS FIREBASE:',
+        users
+      );
+
 
     const userExists =
       users.some(
-        user => user.username.toLowerCase() === username.toLowerCase()
+
+        (user: any) =>
+
+          user.username
+            .toLowerCase() ===
+          username.toLowerCase()
+
       );
 
     if (userExists) {
@@ -83,15 +101,16 @@ export class RegisterComponent {
       return;
     }
 
-    users.push({
-      username: username,
-      password: this.password
-    });
+    await this.firebase
+      .addUser({
 
-    localStorage.setItem(
-      'users',
-      JSON.stringify(users)
-    );
+        username:
+          username,
+
+        password:
+          this.password
+
+      });
 
     
     this.errorMessage = '';
