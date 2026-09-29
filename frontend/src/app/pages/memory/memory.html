@@ -1,1 +1,186 @@
-<p>memory works!</p>
+<div class="memory-page">
+
+    <nav class="navbar">
+
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a routerLink="/topics">
+                Themen
+            </a>
+
+            <a routerLink="/flashcards">
+                Karteikarten
+            </a>
+
+            <a routerLink="/learn">
+                Lernmodus
+            </a>
+
+            <a routerLink="/quiz">
+                Quiz
+            </a>
+
+            <a
+                routerLink="/memory"
+                routerLinkActive="active-link">
+
+                Memory
+
+            </a>
+
+            <a routerLink="/profile">
+                Profil
+            </a>
+
+            <button
+                class="logout-button"
+                type="button"
+                (click)="logout()">
+
+                <span>Abmelden</span>
+
+            </button>
+
+        </div>
+
+    </nav>
+    <button
+        class="back-btn"
+        routerLink="/dashboard">
+
+        ← Zurück
+
+    </button>
+
+    <section class="memory-header">
+
+        <h1>Memory</h1>
+
+        <p>
+            Trainiere dein Wissen spielerisch
+        </p>
+
+    </section>
+
+    <div class="memory-controls">
+
+        <select
+            [(ngModel)]="selectedTopic">
+
+            <option value="">
+                Thema auswählen
+            </option>
+
+            @for(
+                topic of topics;
+                track topic.id
+            ){
+
+            <option
+                [value]="topic.id">
+
+                {{ topic.name }}
+
+            </option>
+
+            }
+
+        </select>
+
+        <button
+            (click)="startMemory()">
+
+            Memory starten
+
+        </button>
+
+    </div>
+
+    @if(memoryCards.length > 0){
+
+    <div class="stats">
+
+        <span>
+            Züge:
+            {{ moves }}
+        </span>
+
+        <span>
+            Paare:
+            {{ matches }}
+        </span>
+
+    </div>
+
+    <div class="memory-grid">
+
+        @for(
+            card of memoryCards;
+            track card
+        ){
+
+        <div
+            class="memory-card"
+            [class.flipped]="card.flipped"
+            [class.matched]="card.matched"
+            (click)="flipCard(card)">
+
+            @if(card.flipped){
+
+                {{ card.text }}
+
+            }
+
+            @else{
+
+                ?
+
+            }
+
+        </div>
+
+        }
+
+    </div>
+
+    }
+
+    @if(gameFinished){
+
+    <div class="win-box">
+
+        🎉 Memory abgeschlossen
+
+        <br><br>
+
+        Züge:
+        {{ moves }}
+
+    </div>
+
+    }
+
+</div>

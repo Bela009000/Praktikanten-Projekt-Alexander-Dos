@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Firebase } from '../../services/firebase';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
@@ -18,9 +18,11 @@ export class ProfileComponent {
   profileImage = '';
   successMessage = '';
   errorMessage = '';
+  showPassword = false;
 
   constructor(
-    private firebase: Firebase
+    private firebase: Firebase,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -50,6 +52,7 @@ export class ProfileComponent {
 
     this.profileImage =
       user.profileImage || '';
+    this.cdr.detectChanges();
   }
 
   async saveProfile() {

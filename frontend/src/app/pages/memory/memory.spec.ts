@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Memory } from './memory';
+import { MemoryComponent } from './memory';
 
-describe('Memory', () => {
-  let component: Memory;
-  let fixture: ComponentFixture<Memory>;
+describe('MemoryComponent', () => {
+  let component: MemoryComponent;
+  let fixture: ComponentFixture<MemoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Memory],
+      imports: [MemoryComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Memory);
+    fixture = TestBed.createComponent(MemoryComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
