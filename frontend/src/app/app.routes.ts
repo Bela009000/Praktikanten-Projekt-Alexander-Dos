@@ -8,6 +8,7 @@ import { FlashcardsComponent } from './pages/flashcards/flashcards';
 import { TopicDetailComponent } from './pages/topic-detail/topic-detail';
 import { LearnComponent } from './pages/learn/learn';
 import { QuizComponent } from './pages/quiz/quiz';
+import { ProfileComponent } from './pages/profile/profile';
 
 export const routes: Routes = [
 
@@ -51,5 +52,9 @@ export const routes: Routes = [
   {
     path: 'quiz',
     component: QuizComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 ];

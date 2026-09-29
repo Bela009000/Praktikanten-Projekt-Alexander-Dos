@@ -58,6 +58,18 @@
 
       </a>
 
+      <a
+          routerLink="/profile"
+          routerLinkActive="active-link">
+
+          Profil
+
+      </a>
+
+      <img
+        *ngIf="profileImage"
+        [src]="profileImage"
+        class="navbar-avatar">
       <button
         class="logout-button"
         type="button"
@@ -74,7 +86,7 @@
   <section class="welcome-section">
 
     <h1>
-      Willkommen Alexander
+      Willkommen zurück, {{ username }}!
     </h1>     
 
   </section>
@@ -233,6 +245,38 @@
       <h2>Quiz</h2>
 
       <p>Wissen testen</p>
+
+    </div>
+
+    <div
+      class="dashboard-box"
+      routerLink="/profile">
+
+      <div class="card-icon">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
+
+          <circle
+            cx="12"
+            cy="8"
+            r="4">
+          </circle>
+
+          <path
+            d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6">
+          </path>
+
+        </svg>
+
+      </div>
+
+      <h2>Profil</h2>
+
+      <p>Profil bearbeiten</p>
 
     </div>
 

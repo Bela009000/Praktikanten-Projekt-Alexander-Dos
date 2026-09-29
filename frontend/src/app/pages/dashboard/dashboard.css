@@ -299,7 +299,19 @@ body{
     color:#cbd5e1;
 }
 
+.navbar-avatar{
 
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid
+    rgba(255,255,255,.15);
+}
 @media (max-width: 768px) {
 
     .dashboard-page {

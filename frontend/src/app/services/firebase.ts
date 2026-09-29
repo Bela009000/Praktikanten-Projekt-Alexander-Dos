@@ -420,4 +420,41 @@ export class Firebase {
         .data()['successRate'];
 
     }
+    async getUserById(
+      userId: string
+    ) {
+
+      const snapshot =
+        await getDoc(
+          doc(
+            this.db,
+            'users',
+            userId
+          )
+        );
+
+      if (!snapshot.exists()) {
+        return null;
+      }
+
+      return {
+        id: snapshot.id,
+        ...snapshot.data()
+      };
+    }
+    async updateUser(
+      userId: string,
+      data: any
+    ) {
+
+      await updateDoc(
+        doc(
+          this.db,
+          'users',
+          userId
+        ),
+        data
+      );
+
+    }
 }

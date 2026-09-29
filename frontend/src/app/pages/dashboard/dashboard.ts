@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -19,12 +20,31 @@ export class DashboardComponent implements OnInit {
 
   successMessage: string = '';
 
+  username: string = '';
+
+  profileImage: string = '';
+
   constructor(
     private firebase: Firebase,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) { }
   async ngOnInit() {
+    const userId =
+      localStorage.getItem(
+        'currentUserId'
+      );
+
+    if (userId) {
+
+      const user: any =
+        await this.firebase
+          .getUserById(userId);
+
+      this.profileImage =
+        user?.profileImage || '';
+
+    }
 
     await this.loadDashboard();
 
