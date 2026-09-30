@@ -123,6 +123,21 @@
       <p>Quiz-Erfolg</p>
 
     </div>
+    <div class="stat-card">
+
+        <h2>
+
+            {{ bestMemoryTime }}s
+
+        </h2>
+
+        <p>
+
+            Beste Memory-Zeit
+
+        </p>
+
+    </div>
 
   </section>
 
@@ -345,5 +360,12 @@
 
 
   </section>
+  <button
+      class="theme-switch"
+      (click)="theme.toggleTheme()">
+
+      {{ theme.isDarkMode ? '☀' : '🌙' }}
+
+  </button>
 
 </div>

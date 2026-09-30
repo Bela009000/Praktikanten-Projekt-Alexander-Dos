@@ -149,7 +149,7 @@
 
 .back-btn{
 
-    margin:20px 0;
+    margin:24px 0 32px;
 
     background:none;
 
@@ -163,17 +163,6 @@
 
     cursor:pointer;
 }
-
-.back-btn:hover{
-
-    color:white;
-}
-
-.back-btn:hover{
-
-    color:white;
-}
-
 .back-btn:hover{
 
     color:white;
@@ -185,7 +174,7 @@
 
     max-width:700px;
 
-    margin:60px auto 35px;
+    margin:0 auto 35px;
 
     text-align:center;
 }

@@ -28,6 +28,10 @@ export class MemoryComponent {
 
   secondCard: any = null;
 
+  seconds = 0;
+
+  timer: any;
+
   moves = 0;
 
   matches = 0;
@@ -110,9 +114,22 @@ export class MemoryComponent {
     );
     this.cdr.detectChanges();
 
+    clearInterval(
+      this.timer
+    );
+
+    this.seconds = 0;
+
+    this.timer =
+      setInterval(() => {
+
+        this.seconds++;
+
+      }, 1000);
+
   }
 
-  flipCard(card: any) {
+  async flipCard(card: any) {
 
     if (
       card.flipped ||
@@ -167,6 +184,21 @@ export class MemoryComponent {
         this.matches === totalPairs
       ) {
 
+        clearInterval(
+          this.timer
+        );
+
+        const userId =
+          localStorage.getItem(
+            'currentUserId'
+          ) || '';
+
+        await this.firebase
+          .saveMemoryResult(
+            userId,
+            this.moves,
+            this.seconds
+          );
         this.gameFinished = true;
 
       }

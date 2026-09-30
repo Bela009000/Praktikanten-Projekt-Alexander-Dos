@@ -312,6 +312,42 @@ body{
     border:2px solid
     rgba(255,255,255,.15);
 }
+.theme-switch{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    width:60px;
+
+    height:60px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#3b82f6;
+
+    color:white;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    z-index:999;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.3);
+
+    transition:.2s;
+}
+
+.theme-switch:hover{
+
+    transform:scale(1.08);
+}
 @media (max-width: 768px) {
 
     .dashboard-page {

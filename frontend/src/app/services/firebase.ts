@@ -457,4 +457,70 @@ export class Firebase {
       );
 
     }
+  async saveMemoryResult(
+    userId: string,
+    moves: number,
+    seconds: number
+  ) {
+
+    await addDoc(
+
+      collection(
+        this.db,
+        'memoryResults'
+      ),
+
+      {
+        userId,
+        moves,
+        seconds,
+        createdAt:
+          new Date()
+      }
+
+    );
+
+  }
+  async getBestMemoryResult(
+    userId: string
+  ) {
+
+    const q = query(
+
+      collection(
+        this.db,
+        'memoryResults'
+      ),
+
+      where(
+        'userId',
+        '==',
+        userId
+      )
+
+    );
+
+    const snapshot =
+      await getDocs(q);
+
+    if(
+      snapshot.empty
+    ){
+      return null;
+    }
+
+    const results =
+      snapshot.docs.map(
+        doc => doc.data()
+      );
+
+    results.sort(
+      (a:any,b:any) =>
+        a.seconds - b.seconds
+    );
+
+    return results[0];
+
+  }
+
 }

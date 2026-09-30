@@ -1,43 +1,200 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-* {
-	box-sizing: border-box;
+/* =========================================
+   RESET
+   ========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html,
-body {
-	margin: 0;
-	min-height: 100%;
-	font-family: Arial, sans-serif;
-	color: #222;
-	background: #f5f5f5;
+body{
+    min-height:100%;
 }
 
 /* =========================================
-   GLOBALES DESIGN
+   DARK MODE (STANDARD)
    ========================================= */
 
-* {
-  box-sizing: border-box;
-}
+body{
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-}
+    font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-
-  background:
+    background:
     linear-gradient(
-      135deg,
-      #0f172a 0%,
-      #141835 50%,
-      #1a1745 100%
+        135deg,
+        #0f172a 0%,
+        #141835 50%,
+        #1a1745 100%
     );
 
-  color: #f8fafc;
+    color:#f8fafc;
+
+    transition:
+    background .3s ease,
+    color .3s ease;
+}
+
+/* =========================================
+   LIGHT MODE
+   ========================================= */
+
+body.light-mode{
+
+    background:#f8fafc;
+
+    color:#0f172a;
+}
+
+/* Navbar */
+
+body.light-mode .navbar{
+
+    background:#ffffff;
+
+    border-bottom:
+    1px solid #e2e8f0;
+}
+
+body.light-mode .logo{
+
+    color:#0f172a;
+}
+
+body.light-mode .nav-links a{
+
+    color:#334155;
+}
+
+body.light-mode .logout-button{
+
+    color:#334155;
+}
+
+body.light-mode .logout-button:hover{
+
+    color:#dc2626;
+}
+
+/* Aktiver Link */
+
+body.light-mode .active-link{
+
+    color:#2563eb !important;
+}
+
+/* Dashboard */
+
+body.light-mode .dashboard-box,
+
+body.light-mode .stat-card{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Profile */
+
+body.light-mode .profile-card{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Quiz */
+
+body.light-mode .quiz-card,
+
+body.light-mode .quiz-start-card,
+
+body.light-mode .result-box{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Memory */
+
+body.light-mode .memory-controls,
+
+body.light-mode .memory-card,
+
+body.light-mode .win-box{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Themen */
+
+body.light-mode .topic-card,
+
+body.light-mode .topic-box{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Inputs */
+
+body.light-mode input,
+
+body.light-mode select,
+
+body.light-mode textarea{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #cbd5e1;
+}
+
+/* Überschriften */
+
+body.light-mode h1,
+
+body.light-mode h2,
+
+body.light-mode h3{
+
+    color:#0f172a;
+}
+
+/* Texte */
+
+body.light-mode p,
+
+body.light-mode span,
+
+body.light-mode label{
+
+    color:#475569;
 }

@@ -27,19 +27,23 @@
 
         <div class="nav-links">
 
-            <a routerLink="/topics">
+            <a routerLink="/topics"
+                routerLinkActive="active-link">
                 Themen
             </a>
 
-            <a routerLink="/flashcards">
+            <a routerLink="/flashcards"
+                routerLinkActive="active-link">
                 Karteikarten
             </a>
 
-            <a routerLink="/learn">
+            <a routerLink="/learn"
+                routerLinkActive="active-link">
                 Lernmodus
             </a>
 
-            <a routerLink="/quiz">
+            <a routerLink="/quiz"
+                routerLinkActive="active-link">
                 Quiz
             </a>
 
@@ -133,6 +137,11 @@
             {{ matches }}
         </span>
 
+        <span> 
+            Zeit:
+            {{ seconds }}s
+        </span>
+
     </div>
 
     <div class="memory-grid">
@@ -172,7 +181,7 @@
 
     <div class="win-box">
 
-        🎉 Memory abgeschlossen
+        Memory abgeschlossen
 
         <br><br>
 

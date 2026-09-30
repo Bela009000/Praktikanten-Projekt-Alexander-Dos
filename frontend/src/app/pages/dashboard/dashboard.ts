@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
 import { CommonModule } from '@angular/common';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,16 +19,20 @@ export class DashboardComponent implements OnInit {
 
   quizSuccess: number = 0;
 
+  bestMemoryTime = 0;
+
   successMessage: string = '';
 
   username: string = '';
 
   profileImage: string = '';
 
+
   constructor(
     private firebase: Firebase,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public theme: Theme
   ) { }
   async ngOnInit() {
     const userId =
@@ -96,6 +101,20 @@ export class DashboardComponent implements OnInit {
         .getFlashcardsByUser(
           userId
         );
+    const bestMemory: any =
+      await this.firebase
+        .getBestMemoryResult(
+          userId
+        );
+
+    if(
+      bestMemory
+    ){
+
+      this.bestMemoryTime =
+        bestMemory.seconds;
+
+    }
 
     this.flashcardCount =
       cards.length;

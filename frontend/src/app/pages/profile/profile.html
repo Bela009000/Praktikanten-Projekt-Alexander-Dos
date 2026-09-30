@@ -27,19 +27,23 @@
 
         <div class="nav-links">
 
-            <a routerLink="/topics">
+            <a routerLink="/topics"
+                routerLinkActive="active-link">
                 Themen
             </a>
 
-            <a routerLink="/flashcards">
+            <a routerLink="/flashcards"
+                routerLinkActive="active-link">
                 Karteikarten
             </a>
 
-            <a routerLink="/learn">
+            <a routerLink="/learn"
+                routerLinkActive="active-link">
                 Lernmodus
             </a>
 
-            <a routerLink="/quiz">
+            <a routerLink="/quiz"
+                routerLinkActive="active-link">
                 Quiz
             </a>
             <a
@@ -52,7 +56,8 @@
 
             <a
                 routerLink="/profile"
-                routerLinkActive="active-link">
+                routerLinkActive="active-link"
+                [routerLinkActiveOptions]="{ exact: true }">
 
                 Profil
 
