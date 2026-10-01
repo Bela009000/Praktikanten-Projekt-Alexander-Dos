@@ -49,6 +49,9 @@ export class DashboardComponent implements OnInit {
       this.profileImage =
         user?.profileImage || '';
 
+      this.username =
+        user?.username || '';
+
     }
 
     await this.loadDashboard();

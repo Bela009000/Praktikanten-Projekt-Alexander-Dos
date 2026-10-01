@@ -202,19 +202,24 @@ body{
 
 .stat-card h2{
 
-    color:white;
+    font-size:42px;
 
-    font-size:32px;
+    font-weight:700;
 
-    margin-bottom:8px;
+    color:#2563eb;
+
+    margin-bottom:10px;
 }
+body.light-mode .stat-card h2{
 
+    color:#2563eb;
+}
 .stat-card p{
 
-    color:#cbd5e1;
+    color:#475569;
+
+    font-weight:600;
 }
-
-
 .dashboard-grid{
 
     max-width:1100px;
@@ -245,6 +250,12 @@ body{
     cursor:pointer;
 
     transition:.2s;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:flex-start;
 }
 
 .dashboard-box:hover{
@@ -260,9 +271,11 @@ body{
 
 .card-icon{
 
-    width:50px;
+    width:56px;
 
-    height:50px;
+    height:56px;
+
+    border-radius:16px;
 
     display:flex;
 
@@ -270,14 +283,13 @@ body{
 
     justify-content:center;
 
-    margin-bottom:20px;
-
-    border-radius:12px;
-
     background:
-    rgba(59,130,246,.15);
-}
+    rgba(37,99,235,.12);
 
+    color:#2563eb;
+
+    margin-bottom:24px;
+}
 .card-icon svg{
 
     width:26px;
@@ -289,9 +301,7 @@ body{
 
 .dashboard-box h2{
 
-    color:white;
-
-    margin-bottom:8px;
+    color:inherit;
 }
 
 .dashboard-box p{
@@ -316,9 +326,9 @@ body{
 
     position:fixed;
 
-    right:25px;
+    right:24px;
 
-    bottom:25px;
+    bottom:24px;
 
     width:60px;
 
@@ -328,26 +338,72 @@ body{
 
     border-radius:50%;
 
-    background:#3b82f6;
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
 
     color:white;
 
-    font-size:24px;
+    font-size:20px;
+
+    font-weight:700;
 
     cursor:pointer;
 
-    z-index:999;
-
     box-shadow:
-    0 10px 25px rgba(0,0,0,.3);
+    0 12px 30px rgba(37,99,235,.35);
 
-    transition:.2s;
+    transition:.25s ease;
+
+    z-index:1000;
 }
 
 .theme-switch:hover{
 
-    transform:scale(1.08);
+    transform:
+    scale(1.08);
 }
+body.light-mode .stat-card p{
+
+    color:#475569;
+}
+body.light-mode .dashboard-box h2{
+
+    color:#0f172a !important;
+
+    font-size:34px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+    line-height:1.2;
+}
+body.light-mode .dashboard-box p{
+
+    color:#475569 !important;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    line-height:1.5;
+}
+body.light-mode .dashboard-box p{
+
+    color:#64748b;
+}
+body.light-mode .card-icon{
+
+    background:
+    rgba(37,99,235,.12);
+
+    color:#2563eb;
+}
+
 @media (max-width: 768px) {
 
     .dashboard-page {

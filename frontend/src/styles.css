@@ -47,19 +47,32 @@ body{
 
 body.light-mode{
 
-    background:#f8fafc;
+    background:
+    linear-gradient(
+        180deg,
+        #eef3f8 0%,
+        #e8eef5 100%
+    );
 
     color:#0f172a;
 }
+
 
 /* Navbar */
 
 body.light-mode .navbar{
 
-    background:#ffffff;
+    background:
+    rgba(255,255,255,.95);
+
+    backdrop-filter:
+    blur(16px);
 
     border-bottom:
-    1px solid #e2e8f0;
+    1px solid #dbe4ee;
+
+    box-shadow:
+    0 2px 10px rgba(15,23,42,.05);
 }
 
 body.light-mode .logo{
@@ -69,7 +82,13 @@ body.light-mode .logo{
 
 body.light-mode .nav-links a{
 
-    color:#334155;
+    color:#475569;
+
+    font-weight:600;
+}
+body.light-mode .nav-links a:hover{
+
+    color:#2563eb;
 }
 
 body.light-mode .logout-button{
@@ -92,15 +111,32 @@ body.light-mode .active-link{
 /* Dashboard */
 
 body.light-mode .dashboard-box,
-
 body.light-mode .stat-card{
 
     background:#ffffff;
 
+    border:
+    1px solid #dbe4ee;
+
+    box-shadow:
+    0 8px 24px rgba(15,23,42,.08);
+
     color:#0f172a;
 
-    border:
-    1px solid #e2e8f0;
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+body.light-mode .dashboard-box:hover{
+
+    transform:
+    translateY(-6px);
+
+    border-color:#3b82f6;
+
+    box-shadow:
+    0 14px 32px rgba(37,99,235,.18);
 }
 
 /* Profile */
@@ -113,6 +149,11 @@ body.light-mode .profile-card{
 
     border:
     1px solid #e2e8f0;
+}
+body.light-mode .stat-card{
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,.06);
 }
 
 /* Quiz */
@@ -180,9 +221,7 @@ body.light-mode textarea{
 /* Überschriften */
 
 body.light-mode h1,
-
 body.light-mode h2,
-
 body.light-mode h3{
 
     color:#0f172a;
@@ -191,9 +230,6 @@ body.light-mode h3{
 /* Texte */
 
 body.light-mode p,
-
-body.light-mode span,
-
 body.light-mode label{
 
     color:#475569;
