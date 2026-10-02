@@ -61,7 +61,7 @@
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -83,7 +83,7 @@
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 
@@ -379,23 +379,38 @@
 
     max-width:1100px;
 
-    margin:0 auto 30px;
+    margin:40px auto 30px;
 
-    padding:0 20px;
+    text-align:center;
 }
 
 .page-header h1{
 
     margin:0;
 
-    font-size:42px;
+    color:white;
+
+    font-size:clamp(
+        32px,
+        5vw,
+        48px
+    );
+}
+
+.page-header p{
+
+    margin-top:12px;
+
+    color:var(--text);
+
+    font-size:16px;
 }
 
 .page-header p{
 
     margin-top:10px;
 
-    color:#cbd5e1;
+    color:var(--text);
 }
 
 .quiz-start-card{
@@ -409,7 +424,7 @@
     border-radius:20px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border:
     1px solid rgba(255,255,255,.08);
@@ -481,4 +496,104 @@
 .back-btn:hover{
 
     color:white;
+}
+@media (max-width: 1024px){
+
+    .quiz-card{
+        max-width:100%;
+    }
+
+    .topic-selection{
+        flex-direction:column;
+    }
+
+    .topic-selection select,
+    .start-btn{
+        width:100%;
+    }
+
+}
+@media (max-width: 768px){
+
+    .quiz-page{
+        padding:16px;
+    }
+
+    .navbar{
+        height:auto;
+        padding:16px;
+        flex-direction:column;
+        gap:16px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .nav-links{
+        width:100%;
+        justify-content:center;
+        gap:12px;
+    }
+
+    .page-header{
+        text-align:center;
+        padding:0;
+    }
+
+    .quiz-start-card{
+        padding:20px;
+    }
+
+    .quiz-card{
+        padding:20px;
+    }
+
+    .result-box{
+        padding:24px;
+    }
+
+    .question-text{
+        font-size:18px;
+    }
+
+    .success-number{
+        font-size:42px;
+    }
+
+}
+@media (max-width: 480px){
+
+    .check-btn,
+    .next-btn,
+    .retry-btn,
+    .dashboard-btn,
+    .cancel-quiz-btn{
+
+        width:100%;
+
+        margin-left:0;
+    }
+
+    .quiz-card input{
+
+        font-size:16px;
+
+    }
+
+    .result-item{
+
+        font-size:18px;
+
+    }
+
+}
+@media (max-width: 600px){
+
+    .answer-buttons{
+
+        flex-direction:column;
+
+    }
+
 }

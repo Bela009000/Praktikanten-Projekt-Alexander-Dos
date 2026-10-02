@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive
+} from '@angular/router';
+
+import { Firebase }
+from '../../services/firebase';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -15,7 +22,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './topic-detail.html',
   styleUrl: './topic-detail.css'
 })
-export class TopicDetailComponent {
+export class TopicDetailComponent 
+implements OnInit {
 
   topic: any;
   editingCard: any = null;
@@ -28,44 +36,75 @@ export class TopicDetailComponent {
 
   newAnswer = '';
 
-  constructor(private router: Router) {
+  flashcards: any[] = [];
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private firebase: Firebase
+  ) { }
+  async loadFlashcards() {
 
-    const selectedTopic =
-      localStorage.getItem('selectedTopic');
+    try {
 
-    const topics =
-      JSON.parse(
+      if (!this.topic) {
+        return;
+      }
 
-        localStorage.getItem(
-          `topics_${currentUser}`
-        ) || '[]'
+      const cards =
+        await this.firebase
+          .getFlashcardsByTopic(
+            this.topic.id
+          );
+      this.flashcards = cards;
+      this.cdr.detectChanges();
 
-      );
+    }
 
-    this.topic =
-      topics.find(
-        (t: any) =>
-        t.name === selectedTopic
-      );
+    catch(error) {
+
+      console.error(error);
+
+    }
 
   }
-  deleteCard(card: any): void {
+  async ngOnInit() {
 
-    const index =
-      this.topic.flashcards.indexOf(card);
+    await this.loadTopic();
 
-    if (index === -1) {
+  }
+  async loadTopic() {
+
+    const topicId =
+      localStorage.getItem(
+        'selectedTopicId'
+      );
+
+    if (!topicId) {
       return;
     }
 
-    this.topic.flashcards.splice(index, 1);
+    this.topic =
+      await this.firebase
+        .getTopicById(topicId);
+    this.cdr.detectChanges();
 
-    this.save();
+    await this.loadFlashcards();
 
   }
+  async deleteCard(
+    card: any
+  ) {
+
+    await this.firebase
+      .deleteFlashcard(
+        card.id
+      );
+
+    await this.loadFlashcards();
+
+  }
+
 
   startEdit(card: any): void {
 
@@ -79,7 +118,7 @@ export class TopicDetailComponent {
 
   }
 
-  saveEdit(): void {
+  async saveEdit() {
 
     if (
       !this.editQuestion.trim() ||
@@ -88,50 +127,24 @@ export class TopicDetailComponent {
       return;
     }
 
-    this.editingCard.question =
-      this.editQuestion;
+    await this.firebase
+      .updateFlashcard(
 
-    this.editingCard.answer =
-      this.editAnswer;
+        this.editingCard.id,
+
+        this.editQuestion,
+
+        this.editAnswer
+
+      );
+
+    await this.loadFlashcards();
 
     this.editingCard = null;
 
-    this.save();
+    this.editQuestion = '';
 
-  }
-
-  save(): void {
-
-    const currentUser =
-      localStorage.getItem('currentUser');
-
-    const topics =
-      JSON.parse(
-
-        localStorage.getItem(
-          `topics_${currentUser}`
-        ) || '[]'
-
-      );
-
-    const index =
-      topics.findIndex(
-
-        (t: any) =>
-
-        t.name === this.topic.name
-
-      );
-
-    topics[index] = this.topic;
-
-    localStorage.setItem(
-
-      `topics_${currentUser}`,
-
-      JSON.stringify(topics)
-
-    );
+    this.editAnswer = '';
 
   }
 
@@ -145,28 +158,38 @@ export class TopicDetailComponent {
 
   }
 
-  addFlashcard(): void {
+  async addFlashcard() {
 
-      if(
-          !this.newQuestion.trim() ||
-          !this.newAnswer.trim()
-      ){
-          return;
-      }
+    if (
+      !this.newQuestion.trim() ||
+      !this.newAnswer.trim()
+    ) {
+      return;
+    }
 
-      this.topic.flashcards.push({
+    await this.firebase.addFlashcard({
 
-          question: this.newQuestion,
+      userId:
+        localStorage.getItem(
+          'currentUserId'
+        ),
 
-          answer: this.newAnswer
+      topicId:
+        this.topic.id,
 
-      });
+      question:
+        this.newQuestion,
 
-      this.save();
+      answer:
+        this.newAnswer
 
-      this.newQuestion = '';
+    });
 
-      this.newAnswer = '';
+    await this.loadFlashcards();
+
+    this.newQuestion = '';
+
+    this.newAnswer = '';
 
   }
   goBack(): void {
@@ -180,6 +203,10 @@ export class TopicDetailComponent {
 
     localStorage.removeItem(
       'currentUser'
+    );
+
+    localStorage.removeItem(
+      'currentUserId'
     );
 
     localStorage.removeItem(

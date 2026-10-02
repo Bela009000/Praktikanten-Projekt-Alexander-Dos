@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Firebase } from '../../services/firebase';
 
 @Component({
   selector: 'app-learn',
@@ -15,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './learn.html',
   styleUrl: './learn.css'
 })
-export class LearnComponent {
+export class LearnComponent implements OnInit {
 
   topics: any[] = [];
 
@@ -36,32 +37,37 @@ export class LearnComponent {
   isLearning = false;
 
   constructor(
-    private router: Router
-  ) {
-
-    const currentUser =
-      localStorage.getItem('currentUser');
+    private firebase: Firebase,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
+  async loadTopics() {
 
     this.topics =
-      JSON.parse(
+      await this.firebase
+        .getTopicsByUser(
 
-        localStorage.getItem(
-          `topics_${currentUser}`
-        ) || '[]'
+          localStorage.getItem(
+            'currentUserId'
+          ) || ''
 
-      );
+        );
+    this.cdr.detectChanges();
+
+  }
+  async ngOnInit() {
+
+    await this.loadTopics();
 
   }
 
-  startLearning(): void {
+  async startLearning() {
 
     const topic =
       this.topics.find(
-
         t =>
-
-        t.name === this.selectedTopic
-
+        t.name ===
+        this.selectedTopic
       );
 
     if (!topic) {
@@ -69,7 +75,11 @@ export class LearnComponent {
     }
 
     this.flashcards =
-      [...topic.flashcards];
+      await this.firebase
+        .getFlashcardsByTopic(
+          topic.id
+        );
+    this.cdr.detectChanges();
 
     this.currentIndex = 0;
 
@@ -126,6 +136,11 @@ export class LearnComponent {
 
     }
 
+    if (
+      this.flashcards.length === 0
+    ) {
+      return;
+    }
     const correctAnswers =
       this.flashcards.length -
       this.wrongCards.length;
@@ -180,6 +195,10 @@ export class LearnComponent {
     );
 
     localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
       'loginSuccess'
     );
 
@@ -188,6 +207,7 @@ export class LearnComponent {
     ]);
 
   }
+
   cancelLearning(): void {
 
     this.flashcards = [];

@@ -112,7 +112,7 @@ input{
 
 input::placeholder{
 
-    color:#cbd5e1;
+    color:var(--text);
 }
 
 input:focus{
@@ -226,7 +226,7 @@ input:focus{
 
     margin-top:20px;
 
-    color:#cbd5e1;
+    color:var(--text);
 }
 
 .register-link a{
