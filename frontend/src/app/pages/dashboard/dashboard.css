@@ -74,7 +74,7 @@ body{
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -96,7 +96,7 @@ body{
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 
@@ -163,7 +163,7 @@ body{
 
 .welcome-section p{
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:18px;
 }
@@ -190,7 +190,7 @@ body{
     padding:25px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border-radius:14px;
 
@@ -240,7 +240,7 @@ body.light-mode .stat-card h2{
     padding:30px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border-radius:14px;
 
@@ -306,7 +306,7 @@ body.light-mode .stat-card h2{
 
 .dashboard-box p{
 
-    color:#cbd5e1;
+    color:var(--text);
 }
 
 .navbar-avatar{

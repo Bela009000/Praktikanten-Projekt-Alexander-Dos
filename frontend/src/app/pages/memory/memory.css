@@ -55,7 +55,7 @@
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -114,7 +114,7 @@
 
 .memory-header p{
 
-    color:#cbd5e1;
+    color:var(--text);
 
     margin-top:10px;
 }
@@ -130,7 +130,7 @@
     border-radius:20px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border:
     1px solid rgba(255,255,255,.08);
@@ -296,7 +296,7 @@
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 

@@ -62,7 +62,7 @@
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -84,7 +84,7 @@
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 
@@ -168,7 +168,7 @@
     margin:30px auto;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border-radius:20px;
 
@@ -417,7 +417,7 @@
 
     margin-top:10px;
 
-    color:#cbd5e1;
+    color:var(--text);
 }
 
 .learn-start-card{
@@ -431,7 +431,7 @@
     border-radius:20px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border:
     1px solid rgba(255,255,255,.08);

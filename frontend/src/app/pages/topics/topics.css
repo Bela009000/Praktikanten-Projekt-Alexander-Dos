@@ -62,7 +62,7 @@
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -84,7 +84,7 @@
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 
@@ -172,7 +172,7 @@
 .topics-header p{
     margin:8px 0 0;
 
-    color:#cbd5e1;
+    color:var(--text);
 }
 
 .topic-input-section{
@@ -266,7 +266,7 @@
     padding:24px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border-radius:14px;
 

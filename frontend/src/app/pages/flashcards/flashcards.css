@@ -1,13 +1,9 @@
-.flashcards-page {
-    min-height: 100vh;
-    padding: 40px;
+.flashcards-page{
+
+    min-height:100vh;
+
     background:
-        linear-gradient(
-            135deg,
-            #0f172a,
-            #1a1745
-        );
-    color: white;
+    transparent;
 }
 .navbar {
     height: 70px;
@@ -61,7 +57,7 @@
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -83,7 +79,7 @@
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 
@@ -147,7 +143,7 @@
 .page-header p{
     margin-top:12px;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:16px;
 }
@@ -161,7 +157,7 @@
     padding:30px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border-radius:18px;
 
@@ -189,7 +185,7 @@
 
     margin-bottom:8px;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-weight:600;
 }
@@ -308,7 +304,7 @@
     border-radius:16px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border:1px solid
     rgba(255,255,255,.08);
@@ -338,7 +334,7 @@
 .flashcard p{
     margin:0;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     line-height:1.6;
 }

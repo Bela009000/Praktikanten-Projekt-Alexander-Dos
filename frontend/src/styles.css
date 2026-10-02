@@ -1,5 +1,129 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
+.theme-switch-container{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:24px;
+
+    z-index:99999;
+}
+.theme-switch{
+
+    position:relative;
+
+    display:inline-block;
+
+    width:64px;
+
+    height:34px;
+}
+.theme-switch input{
+
+    opacity:0;
+
+    width:0;
+
+    height:0;
+}
+.slider{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    cursor:pointer;
+
+    border-radius:999px;
+
+    background:#1e293b;
+
+    transition:.3s;
+}
+.slider:before{
+
+    content:'';
+
+    position:absolute;
+
+    height:26px;
+
+    width:26px;
+
+    left:4px;
+
+    top:4px;
+
+    border-radius:50%;
+
+    background:white;
+
+    transition:.3s;
+}
+input:checked + .slider{
+
+    background:#2563eb;
+}
+input:checked + .slider:before{
+
+    transform:
+    translateX(30px);
+}
+.theme-switch-container{
+
+    filter:
+    drop-shadow(
+        0 12px 20px
+        rgba(0,0,0,.25)
+    );
+}
+
+:root{
+
+    --light-bg:
+    #eef3f8;
+
+    --light-surface:
+    #ffffff;
+
+    --light-title:
+    #0f172a;
+
+    --light-text:
+    #334155;
+
+    --light-muted:
+    #64748b;
+
+    --light-border:
+    #dbe4ee;
+
+    --light-shadow:
+    0 8px 24px rgba(15,23,42,.08);
+
+    --accent:
+    #2563eb;
+    --surface-dark: rgba(49,52,78,.95);
+    --surface-light: #ffffff;
+
+    --title-dark: #ffffff;
+    --title-light: #0f172a;
+
+    --text-dark: #cbd5e1;
+    --text-light: #334155;
+
+    --muted-dark: #94a3b8;
+    --muted-light: #64748b;
+  }
+
 /* =========================================
    RESET
    ========================================= */
@@ -50,11 +174,12 @@ body.light-mode{
     background:
     linear-gradient(
         180deg,
-        #eef3f8 0%,
-        #e8eef5 100%
+        #eff4f8,
+        #e7edf5
     );
 
-    color:#0f172a;
+    color:
+    var(--light-title);
 }
 
 
@@ -215,16 +340,18 @@ body.light-mode textarea{
     color:#0f172a;
 
     border:
-    1px solid #cbd5e1;
+    1px solid var(--text);
 }
 
 /* Überschriften */
 
 body.light-mode h1,
 body.light-mode h2,
-body.light-mode h3{
+body.light-mode h3,
+body.light-mode h4{
 
-    color:#0f172a;
+    color:
+    var(--title) !important;
 }
 
 /* Texte */
@@ -232,5 +359,56 @@ body.light-mode h3{
 body.light-mode p,
 body.light-mode label{
 
-    color:#475569;
+    color:
+    var(--text) !important;
+}
+
+body.light-mode small,
+body.light-mode .subtitle,
+body.light-mode .description{
+
+    color:
+    var(--muted) !important;
+}
+body.light-mode .dashboard-box,
+body.light-mode .stat-card,
+body.light-mode .topic-card,
+body.light-mode .profile-card,
+body.light-mode .quiz-card,
+body.light-mode .quiz-start-card,
+body.light-mode .memory-controls,
+body.light-mode .win-box,
+body.light-mode .learn-card{
+
+    background:
+    var(--light-surface);
+
+    border:
+    1px solid var(--light-border);
+
+    box-shadow:
+    var(--light-shadow);
+}
+body.light-mode .dashboard-box:hover,
+body.light-mode .topic-card:hover{
+
+    transform:
+    translateY(-4px);
+
+    box-shadow:
+    0 16px 32px rgba(37,99,235,.15);
+}
+body.light-mode{
+
+    --surface:var(--surface-light);
+    --title:var(--title-light);
+    --text:var(--text-light);
+    --muted:var(--muted-light);
+}
+body:not(.light-mode){
+
+    --surface:var(--surface-dark);
+    --title:var(--title-dark);
+    --text:var(--text-dark);
+    --muted:var(--muted-dark);
 }
