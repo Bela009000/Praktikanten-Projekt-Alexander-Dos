@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-flashcards',
@@ -40,7 +41,8 @@ implements OnInit {
   constructor(
     private firebase: Firebase,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private theme: Theme
   ) { }
 
   async ngOnInit() {
@@ -178,6 +180,8 @@ implements OnInit {
       'loginSuccess'
     );
 
+    this.theme.setDarkMode();
+    
     this.router.navigate([
       '/login'
     ]);

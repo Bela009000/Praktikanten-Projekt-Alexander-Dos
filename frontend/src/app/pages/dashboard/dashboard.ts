@@ -72,6 +72,8 @@ export class DashboardComponent implements OnInit {
       'loginSuccess'
     );
 
+    this.theme.setDarkMode();
+    
     this.router.navigate([
       '/login'
     ]);

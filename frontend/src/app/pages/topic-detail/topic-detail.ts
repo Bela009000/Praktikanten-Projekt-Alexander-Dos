@@ -5,6 +5,7 @@ import {
   RouterLink,
   RouterLinkActive
 } from '@angular/router';
+import { Theme } from '../../services/theme';
 
 import { Firebase }
 from '../../services/firebase';
@@ -41,6 +42,7 @@ implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private theme: Theme,
     private firebase: Firebase
   ) { }
   async loadFlashcards() {
@@ -212,6 +214,8 @@ implements OnInit {
     localStorage.removeItem(
       'loginSuccess'
     );
+
+    this.theme.setDarkMode();
 
     this.router.navigate([
       '/login'

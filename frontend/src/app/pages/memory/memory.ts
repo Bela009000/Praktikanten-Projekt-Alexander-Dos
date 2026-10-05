@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-memory',
@@ -40,6 +41,7 @@ export class MemoryComponent {
 
   constructor(
     private firebase: Firebase,
+    private theme: Theme,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -235,6 +237,8 @@ export class MemoryComponent {
     localStorage.removeItem(
       'loginSuccess'
     );
+
+    this.theme.setDarkMode();
 
   }
 
