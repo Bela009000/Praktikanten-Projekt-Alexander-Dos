@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Theme } from './services/theme';
 
 @Component({
@@ -10,6 +10,18 @@ import { Theme } from './services/theme';
   styleUrl: './app.css'
 })
 export class App {
-  constructor(public theme: Theme
+
+  constructor(
+    public theme: Theme,
+    public router: Router
   ) {}
+
+  get showThemeSwitch(): boolean {
+
+    return (
+      this.router.url !== '/login' &&
+      this.router.url !== '/register'
+    );
+
+  }
 }

@@ -1,20 +1,24 @@
 <router-outlet></router-outlet>
 
-<div
-    class="theme-switch-container">
+@if (showThemeSwitch) {
 
-    <label
-        class="theme-switch">
+    <div
+        class="theme-switch-container">
 
-        <input
-            type="checkbox"
-            [checked]="!theme.isDarkMode"
-            (change)="theme.toggleTheme()">
+        <label
+            class="theme-switch">
 
-        <span
-            class="slider">
-        </span>
+            <input
+                type="checkbox"
+                [checked]="!theme.isDarkMode"
+                (change)="theme.toggleTheme()">
 
-    </label>
+            <span
+                class="slider">
+            </span>
 
-</div>
+        </label>
+
+    </div>
+
+}

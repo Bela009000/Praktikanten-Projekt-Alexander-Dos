@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Firebase } from '../../services/firebase';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-topics',
@@ -24,7 +25,8 @@ implements OnInit {
   constructor(
     private router: Router,
     private firebase: Firebase,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private theme: Theme
   ) {}
   async ngOnInit() {
 
@@ -175,10 +177,11 @@ implements OnInit {
       'loginSuccess'
     );
 
+    this.theme.setDarkMode();
+
     this.router.navigate([
       '/login'
     ]);
 
   }
-
 }

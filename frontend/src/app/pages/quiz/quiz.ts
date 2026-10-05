@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Firebase } from '../../services/firebase';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-quiz',
@@ -43,6 +44,7 @@ export class QuizComponent implements OnInit {
   constructor(
     private firebase: Firebase,
     private router: Router,
+    private theme: Theme,
     private cdr: ChangeDetectorRef
   ) { }
   async ngOnInit() {
@@ -243,6 +245,8 @@ export class QuizComponent implements OnInit {
     localStorage.removeItem(
       'loginSuccess'
     );
+
+    this.theme.setDarkMode();
 
     this.router.navigate([
       '/login'

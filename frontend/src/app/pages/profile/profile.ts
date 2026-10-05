@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Firebase } from '../../services/firebase';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ export class ProfileComponent {
   constructor(
     private firebase: Firebase,
     private cdr: ChangeDetectorRef,
+    private theme: Theme,
     private router: Router
   ) {}
 
@@ -179,6 +181,8 @@ if (
       'loginSuccess'
     );
 
+    this.theme.setDarkMode();
+    
     this.router.navigate([
       '/login'
     ]);

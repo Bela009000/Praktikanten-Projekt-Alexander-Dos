@@ -10,9 +10,7 @@ export class Theme {
   constructor() {
 
     const savedTheme =
-      localStorage.getItem(
-        'theme'
-      );
+      localStorage.getItem('theme');
 
     this.isDarkMode =
       savedTheme !== 'light';
@@ -33,6 +31,20 @@ export class Theme {
     );
 
     this.applyTheme();
+  }
+
+  setDarkMode() {
+
+    this.isDarkMode = true;
+
+    document.body.classList.remove(
+      'light-mode'
+    );
+
+    localStorage.setItem(
+      'theme',
+      'dark'
+    );
   }
 
   private applyTheme() {
