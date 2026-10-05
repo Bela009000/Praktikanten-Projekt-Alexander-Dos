@@ -1,13 +1,9 @@
-.flashcards-page {
-    min-height: 100vh;
-    padding: 40px;
+.flashcards-page{
+
+    min-height:100vh;
+
     background:
-        linear-gradient(
-            135deg,
-            #0f172a,
-            #1a1745
-        );
-    color: white;
+    transparent;
 }
 .navbar {
     height: 70px;
@@ -61,7 +57,7 @@
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -83,7 +79,7 @@
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 
@@ -147,7 +143,7 @@
 .page-header p{
     margin-top:12px;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:16px;
 }
@@ -161,7 +157,7 @@
     padding:30px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border-radius:18px;
 
@@ -189,7 +185,7 @@
 
     margin-bottom:8px;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-weight:600;
 }
@@ -288,7 +284,7 @@
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fill,minmax(320px,1fr));
+    repeat(auto-fill,minmax(280px,1fr));
 
     gap:20px;
 }
@@ -308,7 +304,7 @@
     border-radius:16px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border:1px solid
     rgba(255,255,255,.08);
@@ -338,7 +334,7 @@
 .flashcard p{
     margin:0;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     line-height:1.6;
 }
@@ -509,21 +505,46 @@
 
 @media(max-width:768px){
 
-    .nav-links{
-        gap:14px;
+    .flashcards-page{
+        padding:16px;
     }
 
-    .page-header h1{
-        font-size:32px;
+    .navbar{
+        height:auto;
+        padding:16px;
+        flex-direction:column;
+        gap:16px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .nav-links{
+        width:100%;
+        justify-content:center;
+        gap:12px;
+    }
+
+    .page-header{
+        text-align:center;
+        padding:0;
     }
 
     .form-card{
-        margin:20px;
+        margin:20px 0;
+        padding:20px;
+    }
+
+    .save-flashcard-btn{
+        width:100%;
     }
 
     .cards-grid{
+        padding:0;
         grid-template-columns:1fr;
     }
+
 }
 .flashcards-page .navbar {
     margin: 0;
@@ -553,5 +574,55 @@
 .back-btn:hover{
 
     color:white;
+
+}
+@media(max-width:600px){
+
+    .edit-modal{
+
+        width:100%;
+
+        max-width:100%;
+
+        margin:16px;
+
+        padding:20px;
+
+    }
+
+    .modal-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .save-btn,
+    .cancel-btn{
+
+        width:100%;
+
+    }
+
+}
+@media(max-width:480px){
+
+    .card-actions{
+
+        flex-direction:column;
+
+    }
+
+    .edit-btn,
+    .delete-btn{
+
+        width:100%;
+
+    }
+
+    .flashcard{
+
+        padding:18px;
+
+    }
 
 }

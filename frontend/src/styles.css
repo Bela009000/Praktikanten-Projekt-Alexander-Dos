@@ -1,43 +1,414 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-* {
-	box-sizing: border-box;
+.theme-switch-container{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:24px;
+
+    z-index:99999;
+}
+.theme-switch{
+
+    position:relative;
+
+    display:inline-block;
+
+    width:64px;
+
+    height:34px;
+}
+.theme-switch input{
+
+    opacity:0;
+
+    width:0;
+
+    height:0;
+}
+.slider{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    cursor:pointer;
+
+    border-radius:999px;
+
+    background:#1e293b;
+
+    transition:.3s;
+}
+.slider:before{
+
+    content:'';
+
+    position:absolute;
+
+    height:26px;
+
+    width:26px;
+
+    left:4px;
+
+    top:4px;
+
+    border-radius:50%;
+
+    background:white;
+
+    transition:.3s;
+}
+input:checked + .slider{
+
+    background:#2563eb;
+}
+input:checked + .slider:before{
+
+    transform:
+    translateX(30px);
+}
+.theme-switch-container{
+
+    filter:
+    drop-shadow(
+        0 12px 20px
+        rgba(0,0,0,.25)
+    );
+}
+
+:root{
+
+    --light-bg:
+    #eef3f8;
+
+    --light-surface:
+    #ffffff;
+
+    --light-title:
+    #0f172a;
+
+    --light-text:
+    #334155;
+
+    --light-muted:
+    #64748b;
+
+    --light-border:
+    #dbe4ee;
+
+    --light-shadow:
+    0 8px 24px rgba(15,23,42,.08);
+
+    --accent:
+    #2563eb;
+    --surface-dark: rgba(49,52,78,.95);
+    --surface-light: #ffffff;
+
+    --title-dark: #ffffff;
+    --title-light: #0f172a;
+
+    --text-dark: #cbd5e1;
+    --text-light: #334155;
+
+    --muted-dark: #94a3b8;
+    --muted-light: #64748b;
+  }
+
+/* =========================================
+   RESET
+   ========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html,
-body {
-	margin: 0;
-	min-height: 100%;
-	font-family: Arial, sans-serif;
-	color: #222;
-	background: #f5f5f5;
+body{
+    min-height:100%;
 }
 
 /* =========================================
-   GLOBALES DESIGN
+   DARK MODE (STANDARD)
    ========================================= */
 
-* {
-  box-sizing: border-box;
-}
+body{
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-}
+    font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-
-  background:
+    background:
     linear-gradient(
-      135deg,
-      #0f172a 0%,
-      #141835 50%,
-      #1a1745 100%
+        135deg,
+        #0f172a 0%,
+        #141835 50%,
+        #1a1745 100%
     );
 
-  color: #f8fafc;
+    color:#f8fafc;
+
+    transition:
+    background .3s ease,
+    color .3s ease;
+}
+
+/* =========================================
+   LIGHT MODE
+   ========================================= */
+
+body.light-mode{
+
+    background:
+    linear-gradient(
+        180deg,
+        #eff4f8,
+        #e7edf5
+    );
+
+    color:
+    var(--light-title);
+}
+
+
+/* Navbar */
+
+body.light-mode .navbar{
+
+    background:
+    rgba(255,255,255,.95);
+
+    backdrop-filter:
+    blur(16px);
+
+    border-bottom:
+    1px solid #dbe4ee;
+
+    box-shadow:
+    0 2px 10px rgba(15,23,42,.05);
+}
+
+body.light-mode .logo{
+
+    color:#0f172a;
+}
+
+body.light-mode .nav-links a{
+
+    color:#475569;
+
+    font-weight:600;
+}
+body.light-mode .nav-links a:hover{
+
+    color:#2563eb;
+}
+
+body.light-mode .logout-button{
+
+    color:#334155;
+}
+
+body.light-mode .logout-button:hover{
+
+    color:#dc2626;
+}
+
+/* Aktiver Link */
+
+body.light-mode .active-link{
+
+    color:#2563eb !important;
+}
+
+/* Dashboard */
+
+body.light-mode .dashboard-box,
+body.light-mode .stat-card{
+
+    background:#ffffff;
+
+    border:
+    1px solid #dbe4ee;
+
+    box-shadow:
+    0 8px 24px rgba(15,23,42,.08);
+
+    color:#0f172a;
+
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+body.light-mode .dashboard-box:hover{
+
+    transform:
+    translateY(-6px);
+
+    border-color:#3b82f6;
+
+    box-shadow:
+    0 14px 32px rgba(37,99,235,.18);
+}
+
+/* Profile */
+
+body.light-mode .profile-card{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+body.light-mode .stat-card{
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,.06);
+}
+
+/* Quiz */
+
+body.light-mode .quiz-card,
+
+body.light-mode .quiz-start-card,
+
+body.light-mode .result-box{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Memory */
+
+body.light-mode .memory-controls,
+
+body.light-mode .memory-card,
+
+body.light-mode .win-box{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Themen */
+
+body.light-mode .topic-card,
+
+body.light-mode .topic-box{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid #e2e8f0;
+}
+
+/* Inputs */
+
+body.light-mode input,
+
+body.light-mode select,
+
+body.light-mode textarea{
+
+    background:#ffffff;
+
+    color:#0f172a;
+
+    border:
+    1px solid var(--text);
+}
+
+/* Überschriften */
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4{
+
+    color:
+    var(--title) !important;
+}
+
+/* Texte */
+
+body.light-mode p,
+body.light-mode label{
+
+    color:
+    var(--text) !important;
+}
+
+body.light-mode small,
+body.light-mode .subtitle,
+body.light-mode .description{
+
+    color:
+    var(--muted) !important;
+}
+body.light-mode .dashboard-box,
+body.light-mode .stat-card,
+body.light-mode .topic-card,
+body.light-mode .profile-card,
+body.light-mode .quiz-card,
+body.light-mode .quiz-start-card,
+body.light-mode .memory-controls,
+body.light-mode .win-box,
+body.light-mode .learn-card{
+
+    background:
+    var(--light-surface);
+
+    border:
+    1px solid var(--light-border);
+
+    box-shadow:
+    var(--light-shadow);
+}
+body.light-mode .dashboard-box:hover,
+body.light-mode .topic-card:hover{
+
+    transform:
+    translateY(-4px);
+
+    box-shadow:
+    0 16px 32px rgba(37,99,235,.15);
+}
+body.light-mode{
+
+    --surface:var(--surface-light);
+    --title:var(--title-light);
+    --text:var(--text-light);
+    --muted:var(--muted-light);
+}
+body:not(.light-mode){
+
+    --surface:var(--surface-dark);
+    --title:var(--title-dark);
+    --text:var(--text-dark);
+    --muted:var(--muted-dark);
 }

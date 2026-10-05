@@ -62,7 +62,7 @@
 
     position:relative;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -84,7 +84,7 @@
 
     border:none;
 
-    color:#cbd5e1;
+    color:var(--text);
 
     font-size:15px;
 
@@ -168,7 +168,7 @@
     margin:30px auto;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border-radius:20px;
 
@@ -417,7 +417,7 @@
 
     margin-top:10px;
 
-    color:#cbd5e1;
+    color:var(--text);
 }
 
 .learn-start-card{
@@ -431,7 +431,7 @@
     border-radius:20px;
 
     background:
-    rgba(49,52,78,.95);
+    var(--surface);
 
     border:
     1px solid rgba(255,255,255,.08);
@@ -503,4 +503,110 @@
 .back-btn:hover{
 
     color:white;
+}
+/* Tablet */
+@media (max-width: 768px){
+
+    .learn-page{
+        padding:16px;
+    }
+
+    .navbar{
+        height:auto;
+        padding:16px;
+        flex-direction:column;
+        gap:16px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .nav-links{
+        width:100%;
+        justify-content:center;
+        gap:12px;
+        flex-wrap:wrap;
+    }
+
+    .page-header{
+        padding:0;
+        text-align:center;
+    }
+
+    .page-header h1{
+        font-size:32px;
+    }
+
+    .learn-start-card{
+        padding:20px;
+    }
+
+    .topic-selection{
+        flex-direction:column;
+    }
+
+    .topic-selection select{
+        width:100%;
+    }
+
+    .start-btn{
+        width:100%;
+    }
+
+    .learn-card{
+        padding:24px;
+    }
+
+    .answer-buttons{
+        flex-direction:column;
+    }
+
+    .correct-btn,
+    .wrong-btn,
+    .cancel-learning-btn{
+        width:100%;
+        justify-content:center;
+    }
+}
+
+/* Handy */
+@media (max-width: 480px){
+
+    .logo{
+        font-size:18px;
+    }
+
+    .nav-links{
+        gap:8px;
+    }
+
+    .nav-links a,
+    .logout-button{
+        font-size:14px;
+    }
+
+    .page-header h1{
+        font-size:28px;
+    }
+
+    .learn-start-card{
+        padding:16px;
+    }
+
+    .learn-card{
+        padding:18px;
+    }
+
+    .success-number{ 
+        font-size:42px;
+    }
+
+    .result-box{
+        padding:20px;
+    }
+
+    .result-item{
+        font-size:18px;
+    }
 }

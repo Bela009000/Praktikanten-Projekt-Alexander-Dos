@@ -1,0 +1,165 @@
+<div class="profile-page">
+
+    <nav class="navbar">
+
+        <a
+            class="logo"
+            routerLink="/dashboard">
+
+            <svg
+                class="nav-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+
+                <path d="M6.5 2H20V20H6.5A2.5 2.5 0 0 0 4 22V4.5A2.5 2.5 0 0 1 6.5 2Z"></path>
+
+            </svg>
+
+            <span>Lernkarten App</span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a routerLink="/topics"
+                routerLinkActive="active-link">
+                Themen
+            </a>
+
+            <a routerLink="/flashcards"
+                routerLinkActive="active-link">
+                Karteikarten
+            </a>
+
+            <a routerLink="/learn"
+                routerLinkActive="active-link">
+                Lernmodus
+            </a>
+
+            <a routerLink="/quiz"
+                routerLinkActive="active-link">
+                Quiz
+            </a>
+            <a
+                routerLink="/memory"
+                routerLinkActive="active-link">
+
+                Memory
+
+            </a>
+
+            <a
+                routerLink="/profile"
+                routerLinkActive="active-link"
+                [routerLinkActiveOptions]="{ exact: true }">
+
+                Profil
+
+            </a>
+
+            <a
+                routerLink="/dashboard">
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <button
+        class="back-btn"
+        routerLink="/dashboard">
+
+        ← Zurück
+
+    </button>
+    <section class="profile-title">
+
+        <h1>Profil</h1>
+
+        <p>
+            Verwalte dein Benutzerkonto
+        </p>
+
+    </section>
+
+    <div class="profile-card">
+
+        <div class="profile-header">
+
+            <div class="avatar">
+
+                <img
+                    *ngIf="profileImage"
+                    [src]="profileImage">
+
+                <span *ngIf="!profileImage">
+                    {{ username.charAt(0).toUpperCase() }}
+                </span>
+
+            </div>
+
+            <h2>{{ username }}</h2>
+
+            <p>
+                Profil verwalten
+            </p>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Benutzername</label>
+
+            <input
+                type="text"
+                [(ngModel)]="username">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Passwort</label>
+
+            <input
+                type="password"
+                [(ngModel)]="password">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Profilbild URL</label>
+
+            <input
+                type="text"
+                [(ngModel)]="profileImage">
+
+        </div>
+
+        <div
+        class="success-message"
+        *ngIf="successMessage">
+
+        {{ successMessage }}
+
+        </div>
+        <button
+            class="save-button"
+            (click)="saveProfile()">
+
+            Änderungen speichern
+
+        </button>
+
+    </div>
+
+</div>

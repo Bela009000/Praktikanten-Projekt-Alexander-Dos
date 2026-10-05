@@ -58,6 +58,20 @@
                 Quiz
 
             </a>
+            <a
+                routerLink="/memory"
+                routerLinkActive="active-link">
+
+                Memory
+
+            </a>
+            <a
+                routerLink="/profile"
+                routerLinkActive="active-link">
+
+                Profil
+
+            </a>
 
             <button
                 class="logout-button"
@@ -130,7 +144,7 @@
 
     <section class="topics-grid">
 
-        @for(topic of topics; track topic; let i = $index){
+        @for(topic of topics; track topic.id; let i = $index){
 
             <div class="topic-card">
 

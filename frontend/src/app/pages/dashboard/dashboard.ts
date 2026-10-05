@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Firebase } from '../../services/firebase';
+import { CommonModule } from '@angular/common';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   topicCount: number = 0;
 
@@ -16,54 +19,42 @@ export class DashboardComponent {
 
   quizSuccess: number = 0;
 
+  bestMemoryTime = 0;
+
   successMessage: string = '';
 
-  constructor(private router: Router) {
+  username: string = '';
 
-    const currentUser =
-      localStorage.getItem('currentUser');
+  profileImage: string = '';
 
-    const savedTopics =
+
+  constructor(
+    private firebase: Firebase,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    public theme: Theme
+  ) { }
+  async ngOnInit() {
+    const userId =
       localStorage.getItem(
-        `topics_${currentUser}`
+        'currentUserId'
       );
 
-    if(savedTopics){
+    if (userId) {
 
-      const topics =
-        JSON.parse(savedTopics);
+      const user: any =
+        await this.firebase
+          .getUserById(userId);
 
-      this.topicCount =
-        topics.length;
+      this.profileImage =
+        user?.profileImage || '';
 
-      let totalCards = 0;
-
-      for(const topic of topics){
-
-        totalCards +=
-          topic.flashcards.length;
-
-      }
-
-      this.flashcardCount =
-        totalCards;
-
-    }
-    const savedSuccess =
-
-      localStorage.getItem(
-
-        `quizSuccess_${currentUser}`
-
-      );
-
-    if(savedSuccess){
-
-      this.quizSuccess =
-        Number(savedSuccess);
+      this.username =
+        user?.username || '';
 
     }
 
+    await this.loadDashboard();
 
   }
 
@@ -73,9 +64,65 @@ export class DashboardComponent {
       'currentUser'
     );
 
+    localStorage.removeItem(
+      'currentUserId'
+    );
+
+    localStorage.removeItem(
+      'loginSuccess'
+    );
+
     this.router.navigate([
       '/login'
     ]);
+
+  }
+  async loadDashboard() {
+
+    const userId =
+      localStorage.getItem(
+        'currentUserId'
+      ) || '';
+
+    const topics =
+      await this.firebase
+        .getTopicsByUser(
+          userId
+        );
+
+    this.topicCount =
+      topics.length;
+    
+    this.quizSuccess =
+      await this.firebase
+        .getQuizResult(
+          userId
+        );
+
+    const cards =
+      await this.firebase
+        .getFlashcardsByUser(
+          userId
+        );
+    const bestMemory: any =
+      await this.firebase
+        .getBestMemoryResult(
+          userId
+        );
+
+    if(
+      bestMemory
+    ){
+
+      this.bestMemoryTime =
+        bestMemory.seconds;
+
+    }
+
+    this.flashcardCount =
+      cards.length;
+    
+    this.cdr.detectChanges();
 
   }
 
